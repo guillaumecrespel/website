@@ -1,0 +1,15 @@
+---
+import Head from '../components/Head.astro';
+---
+<html lang="fr">
+  <head>
+    <Head />
+    <slot name="head" />
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html> 
