@@ -1,12 +1,12 @@
 ---
 import BackgroundHalos from '../components/BackgroundHalos.astro';
 import Head from '../components/Head.astro';
+import '../styles/global.css';
 ---
 <html lang="fr">
   <head>
     <Head />
     <slot name="head" />
-    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
     <BackgroundHalos />
