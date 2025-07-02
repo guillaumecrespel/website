@@ -1,0 +1,150 @@
+---
+// Pas de props nécessaires
+---
+<div class="background-halos" aria-hidden="true">
+  <div class="halo" id="halo-1"></div>
+  <div class="halo" id="halo-2"></div>
+</div>
+<script type="module">
+  function getVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+  function lerpColor(a, b, t) {
+    function hexToRgb(hex) {
+      hex = hex.replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map(x => x + x).join('');
+      const num = parseInt(hex, 16);
+      return [num >> 16, (num >> 8) & 255, num & 255];
+    }
+    let ca = a.startsWith('#') ? hexToRgb(a) : a.match(/\d+/g).map(Number);
+    let cb = b.startsWith('#') ? hexToRgb(b) : b.match(/\d+/g).map(Number);
+    return `rgb(${Math.round(lerp(ca[0], cb[0], t))},${Math.round(lerp(ca[1], cb[1], t))},${Math.round(lerp(ca[2], cb[2], t))})`;
+  }
+  function randomBetween(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+  function pickColor(exclude, palette) {
+    let color;
+    let tries = 0;
+    do {
+      color = palette[Math.floor(Math.random() * palette.length)];
+      tries++;
+    } while ((Array.isArray(exclude) ? exclude.includes(color) : color === exclude) && tries < 10);
+    return color;
+  }
+  // Positions fixes
+  const POSITIONS = [
+    { left: '0vw', top: '50vh', transform: 'translate(-50%, -50%)' }, // Halo 1
+    { left: '100vw', top: '0vh', transform: 'translate(-50%, -50%)' } // Halo 2
+  ];
+  function getConfig() {
+    return {
+      count: 2,
+      colors: [
+        getVar('--halo-color-1'),
+        getVar('--halo-color-2'),
+        getVar('--halo-color-3'),
+        getVar('--halo-color-4'),
+        getVar('--halo-color-5'),
+      ],
+      blur: getVar('--halo-blur'),
+      opacity: 1,
+      durationMin: 6000,
+      durationMax: 10000,
+      sizeMinPercent: 30,
+      sizeMaxPercent: 50,
+      zIndex: -1,
+    };
+  }
+  let HALO_CONFIG = getConfig();
+  function makeInitialState(idx, palette) {
+    const size = randomBetween(HALO_CONFIG.sizeMinPercent, HALO_CONFIG.sizeMaxPercent);
+    return {
+      size,
+      color: palette[idx % palette.length],
+      // Animation
+      target: null,
+      start: null,
+      duration: null,
+      from: null,
+      to: null
+    };
+  }
+  const palette = HALO_CONFIG.colors;
+  const halos = [
+    { el: document.getElementById('halo-1'), state: makeInitialState(0, palette) },
+    { el: document.getElementById('halo-2'), state: makeInitialState(1, palette) }
+  ];
+  function setNewTarget(idx) {
+    const otherIdx = idx === 0 ? 1 : 0;
+    const palette = HALO_CONFIG.colors;
+    const otherColor = halos[otherIdx].state.color;
+    const size = randomBetween(HALO_CONFIG.sizeMinPercent, HALO_CONFIG.sizeMaxPercent);
+    const to = {
+      size,
+      color: pickColor(otherColor, palette)
+    };
+    const from = {
+      size: halos[idx].state.size,
+      color: halos[idx].state.color
+    };
+    halos[idx].state.from = from;
+    halos[idx].state.to = to;
+    halos[idx].state.start = performance.now();
+    halos[idx].state.duration = randomBetween(HALO_CONFIG.durationMin, HALO_CONFIG.durationMax);
+    halos[idx].state.target = to;
+  }
+  setNewTarget(0);
+  setNewTarget(1);
+  function animate(now) {
+    for (let i = 0; i < halos.length; i++) {
+      const s = halos[i].state;
+      if (!s.start || !s.duration || !s.from || !s.to) continue;
+      let t = Math.min(1, (now - s.start) / s.duration);
+      t = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+      s.size = lerp(s.from.size, s.to.size, t);
+      s.color = lerpColor(s.from.color, s.to.color, t);
+      const halo = halos[i].el;
+      const pos = POSITIONS[i];
+      halo.style.left = pos.left;
+      halo.style.top = pos.top;
+      halo.style.transform = pos.transform;
+      halo.style.width = s.size + 'vw';
+      halo.style.height = s.size + 'vw';
+      halo.style.opacity = HALO_CONFIG.opacity;
+      halo.style.background = `radial-gradient(circle, ${s.color} 0%, transparent 70%)`;
+      halo.style.filter = `blur(${HALO_CONFIG.blur})`;
+      halo.style.zIndex = HALO_CONFIG.zIndex;
+      if ((now - s.start) >= s.duration) {
+        setNewTarget(i);
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+  const observer = new MutationObserver(() => {
+    HALO_CONFIG = getConfig();
+    console.log('[Halos] Thème ou variables CSS changées, nouvelle config:', HALO_CONFIG);
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+</script>
+<style>
+.background-halos {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--halos-bg);
+  z-index: var(--halos-z-index, -1);
+  overflow: hidden;
+}
+.halo {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: opacity 1s;
+}
+</style> 
