@@ -1,3 +1,5 @@
+![Deploy](https://github.com/guillaumecrespel/website/actions/workflows/fly-deploy.yml/badge.svg)
+
 # Guillaume CRESPEL Portfolio
 
 Modern and high-performance professional portfolio built with the latest web technologies.
@@ -153,13 +155,6 @@ SITE_URL=https://guillaumecrespel.com
 - **First Input Delay** : < 100ms
 
 ## 🔧 Configuration
-
-### Tailwind CSS
-The `tailwind.config.mjs` file contains:
-- Custom color palette
-- Custom CSS animations
-- Responsive configuration
-- Production optimizations
 
 ### Astro
 The `astro.config.mjs` file configures:
