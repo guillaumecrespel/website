@@ -2,9 +2,18 @@
 import BackgroundHalos from '../components/BackgroundHalos.astro';
 import Head from '../components/Head.astro';
 import '../styles/global.css';
+
+// Get the profile data for the title
+import { profile } from '../data/profile';
 ---
+
 <html lang="fr">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{profile.name} - {profile.title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <Head />
     <slot name="head" />
   </head>

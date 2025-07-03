@@ -1,19 +1,42 @@
 ---
-import Head from "@/components/Head.astro";
-import DefaultLayout from '../layouts/DefaultLayout.astro';
+import { Icon } from "astro-icon/components";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { profile } from "@/data/profile";
+import { softSkills } from "@/data/soft-skills";
+import DefaultLayout from "../layouts/DefaultLayout.astro";
 ---
-<Head />
+
 <DefaultLayout>
-	<html lang="en">
-		<head>
-			<meta charset="utf-8" />
-			<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-			<meta name="viewport" content="width=device-width" />
-			<meta name="generator" content={Astro.generator} />
-			<title>Guillaume CRESPEL - Développeur Full Stack</title>
-		</head>
-		<body>
-			
-		</body>
-	</html>
+  <section class="flex flex-col gap-4 items-start md:p-6 p-4">
+    <p class="w-fit font-bold text-3xl md:text-4xl">{profile.title}</p>
+    <p class="w-fit md:text-lg text-sm">{profile.description}</p>
+    <section class="flex gap-2 justify-center mt-4">
+      {
+        profile.socialLinks.map((link) => (
+          <a href={link.url} target="_blank">
+            <Button variant="outline" className="rounded-full" size="icon">
+              <Icon name={link.icon} class="size-5" />
+            </Button>
+          </a>
+        ))
+      }
+    </section>
+    <section class="mt-4">
+      <p class="w-fit font-bold text-sm">{softSkills.title}</p>
+      <section class="flex flex-col gap-4 mt-4">
+        {
+          softSkills.skills.map((skill) => (
+            <Card className="flex flex-col gap-2 p-4 relative overflow-hidden">
+              <Icon name={skill.icon} class="h-[50px] w-[100px] absolute -top-2 -right-2" />
+              <p class="w-fit font-bold text-2xl">
+                {skill.name}
+              </p>
+              <p class="w-fit md:text-lg text-sm">{skill.description}</p>
+            </Card>
+          ))
+        }
+      </section>
+    </section>
+  </section>
 </DefaultLayout>
