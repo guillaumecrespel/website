@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for guillaume-crepel-website on 2025-07-02T17:39:56+02:00
+# fly.toml app configuration file generated for guillaume-crespel-website on 2025-07-04T16:33:06+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'guillaume-crepel-website'
+app = 'guillaume-crespel-website'
 primary_region = 'cdg'
 
 [build]
