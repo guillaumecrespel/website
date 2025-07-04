@@ -3,17 +3,17 @@ export const softSkills = {
   skills: [
     {
       name: 'Pragmatisme',
-      description: 'Solutions simples et efficaces, adaptées aux besoins réels',
+      description: 'Focus sur les solutions qui résolvent les vrais problèmes, pas les problèmes imaginaires',
       icon: 'shape1',
     },
     {
       name: 'Priorisation',
-      description: 'Solutions simples et efficaces, adaptées aux besoins réels',
+      description: 'Concentration sur les tâches à fort impact qui font avancer le projet rapidement',
       icon: 'shape2',
     },
     {
       name: 'Leadership',
-      description: "Construction d'équipes soudées et performantes",
+      description: 'Mentorat technique et animation d\'équipes pour maximiser la productivité collective',
       icon: 'shape3',
     },
   ],
