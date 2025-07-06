@@ -205,4 +205,35 @@
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
   }
+  
+  /* Smooth theme transitions */
+  html {
+    transition: color-scheme 0.3s ease-in-out;
+  }
+  
+  html * {
+    transition: 
+      background-color 0.3s ease-in-out,
+      border-color 0.3s ease-in-out,
+      color 0.3s ease-in-out,
+      box-shadow 0.3s ease-in-out;
+  }
+  
+  /* Prevent transitions on specific elements */
+  html *:not([data-no-transition]) {
+    transition: 
+      background-color 0.3s ease-in-out,
+      border-color 0.3s ease-in-out,
+      color 0.3s ease-in-out,
+      box-shadow 0.3s ease-in-out;
+  }
+  
+  /* Hide content until theme is loaded to prevent flash */
+  html:not(.theme-loaded) {
+    visibility: hidden;
+  }
+  
+  html.theme-loaded {
+    visibility: visible;
+  }
 }

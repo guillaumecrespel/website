@@ -125,11 +125,6 @@
     requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
-  const observer = new MutationObserver(() => {
-    HALO_CONFIG = getConfig();
-    console.log('[Halos] Thème ou variables CSS changées, nouvelle config:', HALO_CONFIG);
-  });
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 </script>
 <style>
 .background-halos {

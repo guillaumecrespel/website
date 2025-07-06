@@ -16,6 +16,31 @@ import { profile } from '../data/profile';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <Head />
     <slot name="head" />
+    
+    <!-- Theme initialization script to prevent flash -->
+    <script is:inline>
+      (function() {
+        try {
+          const theme = localStorage.getItem('theme') || 'system';
+          const getSystemTheme = () => {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          };
+          const effectiveTheme = theme === 'system' ? getSystemTheme() : theme;
+          
+          const root = document.documentElement;
+          root.classList.remove('light', 'dark');
+          root.classList.add(effectiveTheme);
+          root.setAttribute('data-theme', effectiveTheme);
+          
+          // Add theme-loaded class to show content
+          root.classList.add('theme-loaded');
+        } catch (e) {
+          // Fallback to light theme if localStorage is not available
+          console.warn('Theme initialization failed:', e);
+          document.documentElement.classList.add('theme-loaded');
+        }
+      })();
+    </script>
   </head>
   <body>
     <BackgroundHalos />
