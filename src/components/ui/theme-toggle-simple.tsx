@@ -1,4 +1,4 @@
-import { Monitor, Moon, Sun } from 'lucide-react';
+import { Icon } from '@iconify/react';
 import { useCallback, useSyncExternalStore } from 'react';
 import { Button } from '@/components/ui/button';
 import type { Theme } from '@/lib/theme';
@@ -13,9 +13,9 @@ interface ThemeToggleProps {
 }
 
 const THEMES: Record<Theme, { label: string; icon: React.ReactNode }> = {
-  light: { label: 'Clair', icon: <Sun className="size-4" /> },
-  dark: { label: 'Sombre', icon: <Moon className="size-4" /> },
-  system: { label: 'Système', icon: <Monitor className="size-4" /> },
+  light: { label: 'Clair', icon: <Icon icon="solar:sun-bold" className="size-4" /> },
+  dark: { label: 'Sombre', icon: <Icon icon="solar:moon-bold" className="size-4" /> },
+  system: { label: 'Système', icon: <Icon icon="solar:monitor-bold" className="size-4" /> },
 };
 
 /**

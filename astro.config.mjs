@@ -13,6 +13,14 @@ export default defineConfig({
   },
   integrations: [react(), icon()],
 
+  i18n: {
+    locales: ["fr", "en"],
+    defaultLocale: "fr",
+    routing: {
+      prefixDefaultLocale: false
+    }
+  },
+
   experimental: {
     fonts: [
       {

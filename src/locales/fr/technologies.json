@@ -1,0 +1,214 @@
+{
+  "react": {
+    "name": "React",
+    "description": "Framework JavaScript pour construire des interfaces utilisateur interactives et performantes avec des composants réutilisables."
+  },
+  "nextjs": {
+    "name": "Next.js",
+    "description": "Framework React full-stack avec rendu côté serveur, génération statique et optimisation automatique."
+  },
+  "reactRouter": {
+    "name": "React Router v7",
+    "description": "Bibliothèque de routage pour React permettant la navigation entre les composants et la gestion de l'historique."
+  },
+  "astro": {
+    "name": "Astro",
+    "description": "Framework moderne pour créer des sites web rapides, orienté contenu statique et composants multi-framework."
+  },
+  "zustand": {
+    "name": "Zustand",
+    "description": "Gestionnaire d'état minimaliste et scalable pour React."
+  },
+  "reduxToolkit": {
+    "name": "Redux Toolkit",
+    "description": "Outils officiels pour simplifier l'utilisation de Redux dans les applications modernes."
+  },
+  "vite": {
+    "name": "Vite",
+    "description": "Outil de build ultra-rapide pour le développement web moderne."
+  },
+  "vitest": {
+    "name": "Vitest",
+    "description": "Framework de test ultra-rapide pour Vite et l'écosystème moderne."
+  },
+  "playwright": {
+    "name": "Playwright",
+    "description": "Framework de test end-to-end moderne pour applications web."
+  },
+  "cypress": {
+    "name": "Cypress",
+    "description": "Outil de test end-to-end pour applications web modernes."
+  },
+  "jest": {
+    "name": "Jest",
+    "description": "Framework de test JavaScript avec une API simple et des snapshots."
+  },
+  "tailwindcss": {
+    "name": "Tailwind CSS",
+    "description": "Framework CSS utilitaire pour un développement rapide et moderne."
+  },
+  "sass": {
+    "name": "Sass",
+    "description": "Préprocesseur CSS puissant pour écrire des styles maintenables."
+  },
+  "typescript": {
+    "name": "TypeScript",
+    "description": "Sur-ensemble de JavaScript typé pour des applications robustes."
+  },
+  "javascript": {
+    "name": "JavaScript",
+    "description": "Langage de programmation principal du web."
+  },
+  "nodejs": {
+    "name": "Node.js",
+    "description": "Environnement d'exécution JavaScript côté serveur."
+  },
+  "hono": {
+    "name": "hono",
+    "description": "Framework web ultraléger pour JavaScript/TypeScript."
+  },
+  "postgresql": {
+    "name": "PostgreSQL",
+    "description": "Système de gestion de base de données relationnelle open source."
+  },
+  "mongodb": {
+    "name": "MongoDB",
+    "description": "Base de données NoSQL orientée documents."
+  },
+  "redis": {
+    "name": "Redis",
+    "description": "Base de données clé-valeur en mémoire, rapide et open source."
+  },
+  "elasticsearch": {
+    "name": "Elasticsearch",
+    "description": "Moteur de recherche et d'analyse distribué."
+  },
+  "docker": {
+    "name": "Docker",
+    "description": "Plateforme de conteneurisation pour le développement et le déploiement."
+  },
+  "kubernetes": {
+    "name": "Kubernetes",
+    "description": "Orchestrateur de conteneurs open source."
+  },
+  "terraform": {
+    "name": "Terraform",
+    "description": "Outil d'infrastructure as code pour le provisioning cloud."
+  },
+  "ansible": {
+    "name": "Ansible",
+    "description": "Outil d'automatisation configuration et de déploiement."
+  },
+  "aws": {
+    "name": "AWS",
+    "description": "Plateforme cloud leader pour l'hébergement, le stockage et les services web."
+  },
+  "azure": {
+    "name": "Azure",
+    "description": "Plateforme cloud de Microsoft pour le développement et le déploiement."
+  },
+  "googleCloud": {
+    "name": "Google Cloud",
+    "description": "Plateforme cloud de Google pour l'hébergement, l'IA et les services web."
+  },
+  "git": {
+    "name": "Git",
+    "description": "Système de gestion de versions distribué."
+  },
+  "github": {
+    "name": "GitHub",
+    "description": "Plateforme d'hébergement et de collaboration pour le code source."
+  },
+  "figma": {
+    "name": "Figma",
+    "description": "Outil de design collaboratif pour interfaces et prototypes."
+  },
+  "graphql": {
+    "name": "GraphQL",
+    "description": "Langage de requête pour API flexible et typée."
+  },
+  "supabase": {
+    "name": "Supabase",
+    "description": "Backend as a Service open source basé sur PostgreSQL."
+  },
+  "firebase": {
+    "name": "Firebase",
+    "description": "Plateforme de développement d'applications mobiles et web par Google."
+  },
+  "vercel": {
+    "name": "Vercel",
+    "description": "Plateforme de déploiement cloud pour sites statiques et applications serverless."
+  },
+  "netlify": {
+    "name": "Netlify",
+    "description": "Plateforme de déploiement et d'hébergement pour sites statiques."
+  },
+  "heroku": {
+    "name": "Heroku",
+    "description": "Plateforme cloud PaaS pour déployer, gérer et faire évoluer des applications."
+  },
+  "datadog": {
+    "name": "Datadog",
+    "description": "Plateforme de monitoring cloud et d'analytique."
+  },
+  "prometheus": {
+    "name": "Prometheus",
+    "description": "Système de monitoring et d'alerte open source."
+  },
+  "grafana": {
+    "name": "Grafana",
+    "description": "Plateforme open source de visualisation et d'analytique."
+  },
+  "sentry": {
+    "name": "Sentry",
+    "description": "Plateforme de monitoring d'erreurs pour applications."
+  },
+  "oauth2": {
+    "name": "OAuth 2.0",
+    "description": "Protocole d'autorisation standard pour sécuriser les accès API."
+  },
+  "jwt": {
+    "name": "JWT",
+    "description": "Standard ouvert pour la transmission sécurisée d'informations entre parties."
+  },
+  "openai": {
+    "name": "OpenAI API",
+    "description": "API d'intelligence artificielle avancée par OpenAI."
+  },
+  "langchain": {
+    "name": "LangChain",
+    "description": "Framework pour construire des applications LLM composables."
+  },
+  "rag": {
+    "name": "RAG (Retrieval-Augmented Generation)",
+    "description": "Technique combinant recherche documentaire et génération IA."
+  },
+  "nlp": {
+    "name": "NLP (Natural Language Processing)",
+    "description": "Traitement automatique du langage naturel par ordinateur."
+  },
+  "huggingface": {
+    "name": "Hugging Face",
+    "description": "Plateforme open source pour modèles et outils IA."
+  },
+  "mcp": {
+    "name": "MCP (Model Context Protocol)",
+    "description": "Protocole pour la gestion du contexte des modèles IA."
+  },
+  "vibeCoding": {
+    "name": "Vibe Coding",
+    "description": "Plateforme ou outil lié au développement IA."
+  },
+  "claude": {
+    "name": "Anthropic Claude",
+    "description": "Modèle d'IA générative développé par Anthropic."
+  },
+  "mistral": {
+    "name": "Mistral",
+    "description": "Modèles de langage open source et API d'IA générative européenne."
+  },
+  "pinecone": {
+    "name": "Pinecone",
+    "description": "Base de données vectorielle pour l'IA et la recherche sémantique."
+  }
+} 

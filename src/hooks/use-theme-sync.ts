@@ -1,4 +1,4 @@
-import { useSyncExternalStore, useCallback } from "react"
+import { useCallback, useSyncExternalStore } from "react"
 import type { Theme } from "@/lib/theme"
 import { themeStore } from "@/lib/theme-store"
 

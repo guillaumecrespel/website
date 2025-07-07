@@ -2,38 +2,76 @@
 import BackgroundHalos from '../components/BackgroundHalos.astro';
 import Head from '../components/Head.astro';
 import '../styles/global.css';
+import { getProfile } from '@/data/profile';
+import type { Locale } from '@/lib/i18n';
+
+// Déduction automatique de la locale à partir de l'URL
+const locale: Locale = Astro.url.pathname.startsWith('/en') ? 'en' : 'fr';
 
 // Get the profile data for the title
-import { profile } from '../data/profile';
+const profile = await getProfile(locale);
 ---
 
-<html lang="fr">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Performance optimization -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+    
     <title>{profile.name} - {profile.title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <Head />
     <slot name="head" />
     
-    <!-- Theme initialization script to prevent flash -->
+    <!-- Enhanced theme initialization script -->
     <script is:inline>
       (function() {
         try {
-          const theme = localStorage.getItem('theme') || 'system';
-          const getSystemTheme = () => {
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          // Performance: Use requestIdleCallback if available
+          const scheduleTask = window.requestIdleCallback || window.setTimeout;
+          
+          const initTheme = () => {
+            const theme = localStorage.getItem('theme') || 'system';
+            const getSystemTheme = () => {
+              return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            };
+            const effectiveTheme = theme === 'system' ? getSystemTheme() : theme;
+            
+            const root = document.documentElement;
+            root.classList.remove('light', 'dark');
+            root.classList.add(effectiveTheme);
+            root.setAttribute('data-theme', effectiveTheme);
+            
+            // Add theme-loaded class to show content
+            root.classList.add('theme-loaded');
+            
+            // Dispatch custom event for other scripts
+            window.dispatchEvent(new CustomEvent('theme-loaded', { 
+              detail: { theme: effectiveTheme } 
+            }));
           };
-          const effectiveTheme = theme === 'system' ? getSystemTheme() : theme;
           
-          const root = document.documentElement;
-          root.classList.remove('light', 'dark');
-          root.classList.add(effectiveTheme);
-          root.setAttribute('data-theme', effectiveTheme);
+          // Initialize immediately for critical rendering
+          initTheme();
           
-          // Add theme-loaded class to show content
-          root.classList.add('theme-loaded');
+          // Listen for system theme changes
+          const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+          mediaQuery.addEventListener('change', (e) => {
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'system') {
+              scheduleTask(() => initTheme());
+            }
+          });
+          
         } catch (e) {
           // Fallback to light theme if localStorage is not available
           console.warn('Theme initialization failed:', e);

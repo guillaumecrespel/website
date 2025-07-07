@@ -1,0 +1,46 @@
+{
+  "profile": {
+    "name": "Guillaume Crespel",
+    "title": "Concepteur de solutions pragmatiques avec un impact business.",
+    "description": "C(P)TO & développeur freelance, j'accompagne les startups dans la création de produits innovants de A à Z."
+  },
+  "social": {
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "malt": "Malt",
+    "strava": "Strava"
+  },
+  "softSkills": {
+    "title": "Je m'intègre à votre équipe",
+    "pragmatism": {
+      "name": "Pragmatisme",
+      "description": "Focus sur les solutions qui résolvent les vrais problèmes, pas les problèmes imaginaires"
+    },
+    "prioritization": {
+      "name": "Priorisation",
+      "description": "Concentration sur les tâches à fort impact qui font avancer le projet rapidement"
+    },
+    "leadership": {
+      "name": "Leadership",
+      "description": "Mentorat technique et animation d'équipes pour maximiser la productivité collective"
+    }
+  },
+  "productSkills": {
+    "title": "J'apporte à votre produit",
+    "scalability": {
+      "name": "Scalabilité",
+      "description": "Architectures cloud-native qui évoluent avec votre croissance sans refactoring coûteux"
+    },
+    "business": {
+      "name": "Business",
+      "description": "Décisions techniques qui optimisent les coûts et accélèrent le time-to-market"
+    },
+    "vision": {
+      "name": "Vision",
+      "description": "Solutions pragmatiques qui évitent la sur-ingénierie et livrent de la valeur rapidement"
+    }
+  },
+  "technologies": {
+    "title": "J'assure la partie technique"
+  }
+} 

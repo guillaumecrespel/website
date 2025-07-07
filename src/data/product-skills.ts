@@ -1,20 +1,41 @@
-export const productSkills = {
-  title: "J'apporte à votre produit",
-  skills: [
-    {
-      name: 'Scalabilité',
-      description: 'Architectures cloud-native qui évoluent avec votre croissance sans refactoring coûteux',
-      icon: 'shape4',
-    },
-    {
-      name: 'Business',
-      description: 'Décisions techniques qui optimisent les coûts et accélèrent le time-to-market',
-      icon: 'shape5',
-    },
-    {
-      name: 'Vision',
-      description: 'Solutions pragmatiques qui évitent la sur-ingénierie et livrent de la valeur rapidement',
-      icon: 'shape6',
-    },
-  ],
-};
+import type { Locale } from '@/lib/i18n';
+import { getUIDictionary } from '@/lib/i18n';
+
+export interface ProductSkill {
+  name: string;
+  description: string;
+  icon: string;
+}
+
+export interface ProductSkills {
+  title: string;
+  skills: ProductSkill[];
+}
+
+/**
+ * Get product skills data for the current locale
+ */
+export async function getProductSkills(locale: Locale): Promise<ProductSkills> {
+  const ui = await getUIDictionary(locale);
+  
+  return {
+    title: ui.productSkills.title,
+    skills: [
+      {
+        name: ui.productSkills.scalability.name,
+        description: ui.productSkills.scalability.description,
+        icon: 'shape4',
+      },
+      {
+        name: ui.productSkills.business.name,
+        description: ui.productSkills.business.description,
+        icon: 'shape5',
+      },
+      {
+        name: ui.productSkills.vision.name,
+        description: ui.productSkills.vision.description,
+        icon: 'shape6',
+      },
+    ],
+  };
+}

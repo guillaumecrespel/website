@@ -1,0 +1,85 @@
+---
+import { Icon } from "astro-icon/components";
+import avatar from "@/assets/images/avatar.png";
+import Avatar from "@/components/Avatar.astro";
+import LanguageSelector from "@/components/LanguageSelector.astro";
+import Technologies from "@/components/sections/Technologies.astro";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { getProductSkills } from "@/data/product-skills";
+import { getProfile } from "@/data/profile";
+import { getSoftSkills } from "@/data/soft-skills";
+import DefaultLayout from "../../layouts/DefaultLayout.astro";
+
+const profile = await getProfile("fr");
+const softSkills = await getSoftSkills("fr");
+const productSkills = await getProductSkills("fr");
+---
+
+<DefaultLayout>
+  <section
+    class="flex flex-col gap-10 items-start md:p-6 p-4 w-full md:max-w-screen-lg mx-auto"
+  >
+    <section class="flex flex-col gap-6 w-full">
+      <div class="flex justify-between items-start">
+        <Avatar
+          src={avatar}
+          alt="Guillaume Crespel"
+        />
+        <div class="flex gap-2 items-center">
+          <LanguageSelector />
+          <ThemeToggle client:load variant="ghost" size="icon" />
+        </div>
+      </div>
+      <Icon name="me" class="text-3xl" />
+      <p class="w-fit font-bold text-3xl md:text-4xl">{profile.title}</p>
+      <p class="w-fit md:text-lg text-sm">{profile.description}</p>
+    </section>
+    <section class="flex gap-4 justify-center mt-4">
+      {
+        profile.socialLinks.map((link) => (
+          <a href={link.url} target="_blank" class="cursor-pointer">
+            <Button variant="outline" className="rounded-full" size="icon" className="cursor-pointer">
+              <Icon name={link.icon} class="size-5" />
+            </Button>
+          </a>
+        ))
+      }
+    </section>
+    <section class="mt-4 w-full">
+      <p class="w-fit font-bold text-sm">{softSkills.title}</p>
+      <section class="flex flex-col gap-4 mt-4">
+        {
+          softSkills.skills.map((skill) => (
+            <Card className="flex flex-col gap-2 p-4 relative overflow-hidden">
+              <Icon
+                name={skill.icon}
+                class="h-[50px] w-[100px] absolute -top-2 -right-2"
+              />
+              <p class="w-fit font-bold text-2xl">{skill.name}</p>
+              <p class="w-fit md:text-lg text-sm">{skill.description}</p>
+            </Card>
+          ))
+        }
+      </section>
+    </section>
+    <section class="mt-4 w-full">
+      <p class="w-fit font-bold text-sm">{productSkills.title}</p>
+      <section class="flex flex-col gap-4 mt-4">
+        {
+          productSkills.skills.map((skill) => (
+            <Card className="flex flex-row gap-2 p-4 relative overflow-hidden items-center">
+              <Icon name={skill.icon} class="h-[72px] min-w-[72px]" />
+              <div class="flex flex-col gap-2">
+                <p class="w-fit font-bold text-2xl">{skill.name}</p>
+                <p class="w-fit md:text-lg text-sm">{skill.description}</p>
+              </div>
+            </Card>
+          ))
+        }
+      </section>
+    </section>
+  </section>
+  <Technologies />
+</DefaultLayout> 

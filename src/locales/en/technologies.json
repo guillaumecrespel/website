@@ -1,0 +1,214 @@
+{
+  "react": {
+    "name": "React",
+    "description": "JavaScript framework for building interactive and performant user interfaces with reusable components."
+  },
+  "nextjs": {
+    "name": "Next.js",
+    "description": "Full-stack React framework with server-side rendering, static generation and automatic optimization."
+  },
+  "reactRouter": {
+    "name": "React Router v7",
+    "description": "Routing library for React enabling navigation between components and history management."
+  },
+  "astro": {
+    "name": "Astro",
+    "description": "Modern framework for creating fast websites, focused on static content and multi-framework components."
+  },
+  "zustand": {
+    "name": "Zustand",
+    "description": "Minimalist and scalable state manager for React."
+  },
+  "reduxToolkit": {
+    "name": "Redux Toolkit",
+    "description": "Official tools to simplify Redux usage in modern applications."
+  },
+  "vite": {
+    "name": "Vite",
+    "description": "Ultra-fast build tool for modern web development."
+  },
+  "vitest": {
+    "name": "Vitest",
+    "description": "Ultra-fast test framework for Vite and modern ecosystem."
+  },
+  "playwright": {
+    "name": "Playwright",
+    "description": "Modern end-to-end testing framework for web applications."
+  },
+  "cypress": {
+    "name": "Cypress",
+    "description": "End-to-end testing tool for modern web applications."
+  },
+  "jest": {
+    "name": "Jest",
+    "description": "JavaScript testing framework with simple API and snapshots."
+  },
+  "tailwindcss": {
+    "name": "Tailwind CSS",
+    "description": "Utility-first CSS framework for rapid and modern development."
+  },
+  "sass": {
+    "name": "Sass",
+    "description": "Powerful CSS preprocessor for writing maintainable styles."
+  },
+  "typescript": {
+    "name": "TypeScript",
+    "description": "Typed superset of JavaScript for robust applications."
+  },
+  "javascript": {
+    "name": "JavaScript",
+    "description": "Primary programming language of the web."
+  },
+  "nodejs": {
+    "name": "Node.js",
+    "description": "JavaScript runtime environment for server-side execution."
+  },
+  "hono": {
+    "name": "hono",
+    "description": "Ultralight web framework for JavaScript/TypeScript."
+  },
+  "postgresql": {
+    "name": "PostgreSQL",
+    "description": "Open source relational database management system."
+  },
+  "mongodb": {
+    "name": "MongoDB",
+    "description": "Document-oriented NoSQL database."
+  },
+  "redis": {
+    "name": "Redis",
+    "description": "In-memory key-value database, fast and open source."
+  },
+  "elasticsearch": {
+    "name": "Elasticsearch",
+    "description": "Distributed search and analytics engine."
+  },
+  "docker": {
+    "name": "Docker",
+    "description": "Containerization platform for development and deployment."
+  },
+  "kubernetes": {
+    "name": "Kubernetes",
+    "description": "Open source container orchestrator."
+  },
+  "terraform": {
+    "name": "Terraform",
+    "description": "Infrastructure as code tool for cloud provisioning."
+  },
+  "ansible": {
+    "name": "Ansible",
+    "description": "Configuration automation and deployment tool."
+  },
+  "aws": {
+    "name": "AWS",
+    "description": "Leading cloud platform for hosting, storage and web services."
+  },
+  "azure": {
+    "name": "Azure",
+    "description": "Microsoft's cloud platform for development and deployment."
+  },
+  "googleCloud": {
+    "name": "Google Cloud",
+    "description": "Google's cloud platform for hosting, AI and web services."
+  },
+  "git": {
+    "name": "Git",
+    "description": "Distributed version control system."
+  },
+  "github": {
+    "name": "GitHub",
+    "description": "Code hosting and collaboration platform."
+  },
+  "figma": {
+    "name": "Figma",
+    "description": "Collaborative design tool for interfaces and prototypes."
+  },
+  "graphql": {
+    "name": "GraphQL",
+    "description": "Flexible and typed query language for APIs."
+  },
+  "supabase": {
+    "name": "Supabase",
+    "description": "Open source Backend as a Service based on PostgreSQL."
+  },
+  "firebase": {
+    "name": "Firebase",
+    "description": "Google's mobile and web application development platform."
+  },
+  "vercel": {
+    "name": "Vercel",
+    "description": "Cloud deployment platform for static sites and serverless applications."
+  },
+  "netlify": {
+    "name": "Netlify",
+    "description": "Deployment and hosting platform for static websites."
+  },
+  "heroku": {
+    "name": "Heroku",
+    "description": "Cloud PaaS platform for deploying, managing and scaling applications."
+  },
+  "datadog": {
+    "name": "Datadog",
+    "description": "Cloud monitoring and analytics platform."
+  },
+  "prometheus": {
+    "name": "Prometheus",
+    "description": "Open source monitoring and alerting system."
+  },
+  "grafana": {
+    "name": "Grafana",
+    "description": "Open source visualization and analytics platform."
+  },
+  "sentry": {
+    "name": "Sentry",
+    "description": "Error monitoring platform for applications."
+  },
+  "oauth2": {
+    "name": "OAuth 2.0",
+    "description": "Standard authorization protocol for securing API access."
+  },
+  "jwt": {
+    "name": "JWT",
+    "description": "Open standard for secure information transmission between parties."
+  },
+  "openai": {
+    "name": "OpenAI API",
+    "description": "Advanced artificial intelligence API by OpenAI."
+  },
+  "langchain": {
+    "name": "LangChain",
+    "description": "Framework for building composable LLM applications."
+  },
+  "rag": {
+    "name": "RAG (Retrieval-Augmented Generation)",
+    "description": "Technique combining document retrieval and AI generation."
+  },
+  "nlp": {
+    "name": "NLP (Natural Language Processing)",
+    "description": "Automatic natural language processing by computer."
+  },
+  "huggingface": {
+    "name": "Hugging Face",
+    "description": "Open source platform for AI models and tools."
+  },
+  "mcp": {
+    "name": "MCP (Model Context Protocol)",
+    "description": "Protocol for managing AI model context."
+  },
+  "vibeCoding": {
+    "name": "Vibe Coding",
+    "description": "Platform or tool related to AI development."
+  },
+  "claude": {
+    "name": "Anthropic Claude",
+    "description": "Generative AI model developed by Anthropic."
+  },
+  "mistral": {
+    "name": "Mistral",
+    "description": "Open source language models and European generative AI API."
+  },
+  "pinecone": {
+    "name": "Pinecone",
+    "description": "Vector database for AI and semantic search."
+  }
+} 
