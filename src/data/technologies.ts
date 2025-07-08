@@ -65,8 +65,8 @@ export async function getTechnologies(locale: Locale): Promise<Technologies> {
     // State Management
     {
       name: techDict.zustand.name,
-      iconBlack: "",
-      iconColor: "",
+      iconBlack: "devicon-plain:zustand",
+      iconColor: "devicon:zustand",
       description: techDict.zustand.description,
       link: "https://zustand-demo.pmnd.rs/",
       color: "#000000",

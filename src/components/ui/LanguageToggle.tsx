@@ -3,11 +3,9 @@ import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export function LanguageToggle({
-  variant = "ghost",
   size = "icon",
   className = "",
 }: {
-  variant?: "default" | "outline" | "ghost";
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
 }) {
@@ -33,7 +31,6 @@ export function LanguageToggle({
 
   return (
     <Button
-      variant={variant}
       size={size}
       onClick={toggleLang}
       className={className}

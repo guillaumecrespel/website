@@ -21,7 +21,6 @@ const THEMES: Record<Theme, { label: string; icon: React.ReactNode }> = {
  * Theme toggle component with smooth transitions
  */
 export function ThemeToggle({
-  variant = 'ghost',
   size = 'icon',
   showLabels = false,
   className,
@@ -30,7 +29,6 @@ export function ThemeToggle({
 
   return (
     <Button
-      variant={variant}
       size={size}
       onClick={toggleTheme}
       className={cn(

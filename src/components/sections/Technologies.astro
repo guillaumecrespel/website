@@ -6,7 +6,7 @@ import { getTechnologies } from "@/data/technologies";
 import type { Locale } from "@/lib/i18n";
 
 const locale: Locale = Astro.url.pathname.startsWith('/en') ? 'en' : 'fr';
-const _technologies = await getTechnologies(locale);
+const technologies = await getTechnologies(locale);
 
 // Diviser les technologies en 3 lignes de manière aléatoire
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -18,10 +18,10 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
-const shuffledTechnologies = shuffleArray(_technologies.technologies);
+const shuffledTechnologies = shuffleArray(technologies.technologies);
 const technologiesPerRow = Math.ceil(shuffledTechnologies.length / 3);
 
-const _technologyRows = [
+const technologyRows = [
   shuffledTechnologies.slice(0, technologiesPerRow),
   shuffledTechnologies.slice(technologiesPerRow, technologiesPerRow * 2),
   shuffledTechnologies.slice(technologiesPerRow * 2),
@@ -32,13 +32,13 @@ const _technologyRows = [
   <p
     class="md:px-6 px-4 md:max-w-screen-lg mx-auto text-left font-bold text-sm"
   >
-    {_technologies.title}
+    {technologies.title}
   </p>
   <div class="flex flex-col gap-6 mt-4">
     {
-      _technologyRows.map(
+      technologyRows.map(
         (
-          rowTechnologies: typeof _technologies.technologies,
+          rowTechnologies: typeof technologies.technologies,
           rowIndex: number
         ) => (
           <div class="relative group w-full overflow-hidden">
@@ -49,7 +49,7 @@ const _technologyRows = [
             >
               {rowTechnologies
                 .concat(rowTechnologies)
-                .map((technology: (typeof _technologies.technologies)[0]) => (
+                .map((technology: (typeof technologies.technologies)[0]) => (
                   <Card className="flex flex-row gap-2 p-2 relative overflow-hidden items-center w-fit font-black text-sm min-w-fit flex-shrink-0 transition-transform duration-200">
                     {(technology.iconColor || technology.iconBlack) && (
                       <Icon
