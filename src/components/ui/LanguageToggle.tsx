@@ -1,6 +1,8 @@
 import { Icon } from "@iconify/react";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import type { Lang } from "@/i18n/ui";
+import { changeLang, getCurrentLang } from "@/i18n/utils";
 
 export function LanguageToggle({
   size = "icon",
@@ -9,23 +11,18 @@ export function LanguageToggle({
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
 }) {
-  const [lang, setLang] = useState<'fr' | 'en'>(
-    typeof window !== 'undefined' && window.location.pathname.startsWith('/en') ? 'en' : 'fr'
-  );
+  const [lang, setLang] = useState<Lang>('fr');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setLang(window.location.pathname.startsWith('/en') ? 'en' : 'fr');
+      setLang(getCurrentLang());
     }
   }, []);
 
   const toggleLang = useCallback(() => {
     if (typeof window !== 'undefined') {
-      if (lang === 'fr') {
-        window.location.pathname = '/en';
-      } else {
-        window.location.pathname = '/';
-      }
+      const newLang = lang === 'fr' ? 'en' : 'fr';
+      changeLang(newLang);
     }
   }, [lang]);
 

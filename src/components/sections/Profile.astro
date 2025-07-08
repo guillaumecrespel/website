@@ -1,0 +1,40 @@
+---
+import { Icon } from "astro-icon/components";
+import avatar from "@/assets/images/avatar.png";
+import Avatar from "@/components/Avatar.astro";
+import LanguageSelector from "@/components/LanguageSelector.astro";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import type { Profile } from "@/i18n/data/profile";
+
+interface Props {
+  profile: Profile;
+}
+
+const { profile } = Astro.props;
+---
+
+<section class="flex flex-col gap-6 w-full">
+  <div class="flex justify-between items-start">
+    <Avatar src={avatar} alt={profile.name} />
+    <div class="flex gap-2 items-center">
+      <LanguageSelector />
+      <ThemeToggle client:load variant="ghost" size="icon" />
+    </div>
+  </div>
+  <Icon name="me" class="text-3xl" />
+  <p class="w-fit font-bold text-3xl md:text-4xl">{profile.title}</p>
+  <p class="w-fit md:text-lg text-sm">{profile.description}</p>
+</section>
+
+<section class="flex gap-4 justify-center mt-4">
+  {
+    profile.socialLinks.map((link) => (
+      <a href={link.url} target="_blank" rel="noopener noreferrer" class="cursor-pointer">
+        <Button className="rounded-full" size="icon">
+          <Icon name={link.icon} class="size-5" />
+        </Button>
+      </a>
+    ))
+  }
+</section> 

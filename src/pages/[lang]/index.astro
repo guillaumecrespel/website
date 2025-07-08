@@ -1,0 +1,65 @@
+---
+import ProductSkills from '@/components/sections/ProductSkills.astro';
+import Profile from '@/components/sections/Profile.astro';
+import SoftSkills from '@/components/sections/SoftSkills.astro';
+import Technologies from '@/components/sections/Technologies.astro';
+import { getProductSkills } from '@/i18n/data/product-skills.js';
+import { getProfile } from '@/i18n/data/profile.js';
+import { getSoftSkills } from '@/i18n/data/soft-skills.js';
+import { getTechnologies } from '@/i18n/data/technologies.js';
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'fr' } },
+    { params: { lang: 'en' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const profile = await getProfile(lang as 'fr' | 'en');
+const softSkills = await getSoftSkills(lang as 'fr' | 'en');
+const productSkills = await getProductSkills(lang as 'fr' | 'en');
+const technologies = await getTechnologies(lang as 'fr' | 'en');
+
+// SEO metadata
+const title = `${profile.name} - ${profile.title}`;
+const description = profile.description;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://guillaumecrespel.fr');
+const alternateURLs = {
+  fr: new URL('/fr', Astro.site || 'https://guillaumecrespel.fr'),
+  en: new URL('/en', Astro.site || 'https://guillaumecrespel.fr'),
+};
+---
+
+<DefaultLayout>
+  <head>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Language alternates for SEO -->
+    <link rel="alternate" hreflang="fr" href={alternateURLs.fr} />
+    <link rel="alternate" hreflang="en" href={alternateURLs.en} />
+    <link rel="alternate" hreflang="x-default" href={alternateURLs.fr} />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content={lang} />
+    <meta property="og:locale:alternate" content={lang === 'fr' ? 'en' : 'fr'} />
+    
+    <!-- Twitter -->
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+  </head>
+
+  <section class="flex flex-col gap-10 items-start md:p-6 p-4 w-full md:max-w-screen-lg mx-auto">
+    <Profile profile={profile} />
+    <SoftSkills softSkills={softSkills} />
+    <ProductSkills productSkills={productSkills} />
+  </section>
+  
+  <Technologies technologies={technologies} />
+</DefaultLayout>

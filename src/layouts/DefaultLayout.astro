@@ -1,12 +1,13 @@
 ---
+import { getCurrentLang } from '@/i18n/utils';
 import BackgroundHalos from '../components/BackgroundHalos.astro';
 import Head from '../components/Head.astro';
 import '../styles/global.css';
-import { getProfile } from '@/data/profile';
-import type { Locale } from '@/lib/i18n';
+import { getProfile } from '@/i18n/data/profile';
+
 
 // Déduction automatique de la locale à partir de l'URL
-const locale: Locale = Astro.url.pathname.startsWith('/en') ? 'en' : 'fr';
+const locale = getCurrentLang();
 
 // Get the profile data for the title
 const profile = await getProfile(locale);

@@ -143,7 +143,7 @@ fly deploy
 ```bash
 # Production
 NODE_ENV=production
-SITE_URL=https://guillaumecrespel.com
+SITE_URL=https://guillaumecrespel.fr
 ```
 
 ## 📊 Performance Metrics

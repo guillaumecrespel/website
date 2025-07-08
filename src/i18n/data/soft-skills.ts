@@ -1,5 +1,4 @@
-import type { Locale } from '@/lib/i18n';
-import { getUIDictionary } from '@/lib/i18n';
+import type { Lang } from '../ui.js';
 
 export interface SoftSkill {
   name: string;
@@ -12,11 +11,10 @@ export interface SoftSkills {
   skills: SoftSkill[];
 }
 
-/**
- * Get soft skills data for the current locale
- */
-export async function getSoftSkills(locale: Locale): Promise<SoftSkills> {
-  const ui = await getUIDictionary(locale);
+const skillIcons = ['shape1', 'shape2', 'shape3'] as const;
+
+export async function getSoftSkills(lang: Lang): Promise<SoftSkills> {
+  const ui = await import(`../locales/${lang}/ui.json`).then(m => m.default);
   
   return {
     title: ui.softSkills.title,
@@ -24,18 +22,18 @@ export async function getSoftSkills(locale: Locale): Promise<SoftSkills> {
       {
         name: ui.softSkills.pragmatism.name,
         description: ui.softSkills.pragmatism.description,
-        icon: 'shape1',
+        icon: skillIcons[0],
       },
       {
         name: ui.softSkills.prioritization.name,
         description: ui.softSkills.prioritization.description,
-        icon: 'shape2',
+        icon: skillIcons[1],
       },
       {
         name: ui.softSkills.leadership.name,
         description: ui.softSkills.leadership.description,
-        icon: 'shape3',
+        icon: skillIcons[2],
       },
     ],
   };
-}
+} 

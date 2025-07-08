@@ -1,5 +1,4 @@
-import type { Locale } from '@/lib/i18n';
-import { getTechnologyDictionary } from '@/lib/i18n';
+import type { Lang } from '../ui.js';
 
 export interface Technology {
   name: string;
@@ -19,9 +18,9 @@ export interface Technologies {
 /**
  * Get technologies data for the current locale
  */
-export async function getTechnologies(locale: Locale): Promise<Technologies> {
-  const ui = await import(`../locales/${locale}/ui.json`);
-  const techDict = await getTechnologyDictionary(locale);
+export async function getTechnologies(lang: Lang): Promise<Technologies> {
+  const ui = await import(`../locales/${lang}/ui.json`).then(m => m.default);
+  const techDict = await import(`../locales/${lang}/technologies.json`).then(m => m.default);
   
   const technologies: Technology[] = [
     // Frontend Frameworks
@@ -541,7 +540,7 @@ export async function getTechnologies(locale: Locale): Promise<Technologies> {
   ];
 
   return {
-    title: ui.default.technologies.title,
+    title: ui.technologies.title,
     technologies,
   };
-}
+} 

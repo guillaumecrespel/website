@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon/components";
+import { Card } from "@/components/ui/card";
+import type { SoftSkills } from "@/i18n/data/soft-skills";
+
+interface Props {
+  softSkills: SoftSkills;
+}
+
+const { softSkills } = Astro.props;
+---
+
+<section class="mt-4 w-full">
+  <p class="w-fit font-bold text-sm">{softSkills.title}</p>
+  <section class="flex flex-col gap-4 mt-4">
+    {
+      softSkills.skills.map((skill) => (
+        <Card className="flex flex-col gap-2 p-4 relative overflow-hidden bg-gradient-to-r from-accent-foreground to-transparent backdrop-blur-lg">
+          <Icon
+            name={skill.icon}
+            class="h-[50px] w-[100px] absolute -top-2 -right-2"
+          />
+          <p class="w-fit font-bold text-2xl">{skill.name}</p>
+          <p class="w-fit md:text-lg text-sm">{skill.description}</p>
+        </Card>
+      ))
+    }
+  </section>
+</section> 

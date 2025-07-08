@@ -2,11 +2,13 @@
 import { Icon } from "astro-icon/components";
 import { AutoScroller } from "@/components/ui/AutoScroller";
 import { Card } from "@/components/ui/card";
-import { getTechnologies } from "@/data/technologies";
-import type { Locale } from "@/lib/i18n";
+import type { Technologies } from "@/i18n/data/technologies";
 
-const locale: Locale = Astro.url.pathname.startsWith('/en') ? 'en' : 'fr';
-const technologies = await getTechnologies(locale);
+interface Props {
+  technologies: Technologies;
+}
+
+const { technologies } = Astro.props;
 
 // Diviser les technologies en 3 lignes de manière aléatoire
 const shuffleArray = <T,>(array: T[]): T[] => {
