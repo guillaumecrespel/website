@@ -20,7 +20,10 @@
       "react": "recommended"
     },
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "noUnusedVariables": "warn"
+      }
     }
   },
   "javascript": {

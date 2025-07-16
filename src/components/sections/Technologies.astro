@@ -52,7 +52,7 @@ const technologyRows = [
               {rowTechnologies
                 .concat(rowTechnologies)
                 .map((technology: (typeof technologies.technologies)[0]) => (
-                  <Card className="flex flex-row gap-2 p-2 relative overflow-hidden items-center w-fit font-black text-sm min-w-fit flex-shrink-0 transition-transform duration-200">
+                  <Card className="flex flex-row gap-2 p-2 relative overflow-hidden items-center w-fit font-black text-sm min-w-fit flex-shrink-0 transition-transform duration-200  bg-gradient-to-r from-accent-foreground to-transparent backdrop-blur-lg">
                     {(technology.iconColor || technology.iconBlack) && (
                       <Icon
                         name={technology.iconColor || technology.iconBlack}

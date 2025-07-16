@@ -1,5 +1,6 @@
 // UI Components exports
 export { AutoScroller } from './AutoScroller';
+export { BackgroundHalos } from './BackgroundHalos/BackgroundHalos';
 export { Button, buttonVariants } from './button';
 export {
   Card,
