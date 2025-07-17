@@ -25,7 +25,6 @@ Modern and high-performance professional portfolio built with the latest web tec
 - **Responsive Design** : Mobile-first with optimized breakpoints
 
 ### Internationalization
-- **astro-i18next** : Complete French/English support
 - **Localized URLs** : `/fr/` and `/en/` with automatic fallback
 
 ### Content & CMS
@@ -176,8 +175,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## 📞 Contact
 
-Guillaume CRESPEL - [guillaume.crespel@gmail.com](mailto:guillaume.crespel@gmail.com)
-
-Project Link: [https://github.com/guillaumecrespel/portfolio](https://github.com/guillaumecrespel/portfolio)
+Project Link: [https://guillaumecrespel.fr](https://guillaumecrespel.fr)
 
 

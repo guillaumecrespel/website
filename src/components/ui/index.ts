@@ -1,6 +1,7 @@
 // UI Components exports
-export { AutoScroller } from './AutoScroller';
-export { BackgroundHalos } from './BackgroundHalos/BackgroundHalos';
+export { AutoScroller } from '../AutoScroller';
+export { BackgroundHalos } from '../BackgroundHalos/BackgroundHalos';
+export { ThemeToggle } from '../ThemeToggle';
 export { Button, buttonVariants } from './button';
 export {
   Card,
@@ -10,4 +11,3 @@ export {
   CardHeader,
   CardTitle,
 } from './card';
-export { ThemeToggle } from './theme-toggle';

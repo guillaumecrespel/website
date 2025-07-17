@@ -41,6 +41,9 @@
     }
   },
   "technologies": {
-    "title": "I handle the technical part"
+    "title": "I handle the technical part",
+    "viewAll": "View all technologies",
+    "close": "Close",
+    "learnMore": "Learn more"
   }
 } 

@@ -41,6 +41,9 @@
     }
   },
   "technologies": {
-    "title": "J'assure la partie technique"
+    "title": "J'assure la partie technique",
+    "viewAll": "Voir toutes les technologies",
+    "close": "Fermer",
+    "learnMore": "En savoir plus"
   }
 } 

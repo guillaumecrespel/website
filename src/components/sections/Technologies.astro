@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
-import { AutoScroller } from "@/components/ui/AutoScroller";
+import { AutoScroller } from "@/components/AutoScroller";
+import TechnologyCard from "@/components/TechnologyCard";
 import { Card } from "@/components/ui/card";
 import type { Technologies } from "@/i18n/data/technologies";
 
@@ -31,11 +32,11 @@ const technologyRows = [
 ---
 
 <section class="mt-4 w-full">
-  <p
-    class="md:px-6 px-4 md:max-w-screen-lg mx-auto text-left font-bold text-sm"
-  >
-    {technologies.title}
-  </p>
+  <div class="md:px-6 px-4 md:max-w-screen-lg mx-auto">
+    <p class="text-left font-bold text-sm">
+      {technologies.title}
+    </p>
+  </div>
   <div class="flex flex-col gap-6 mt-4">
     {
       technologyRows.map(
@@ -52,15 +53,10 @@ const technologyRows = [
               {rowTechnologies
                 .concat(rowTechnologies)
                 .map((technology: (typeof technologies.technologies)[0]) => (
-                  <Card className="flex flex-row gap-2 p-2 relative overflow-hidden items-center w-fit font-black text-sm min-w-fit flex-shrink-0 transition-transform duration-200  bg-gradient-to-r from-accent-foreground to-transparent backdrop-blur-lg">
-                    {(technology.iconColor || technology.iconBlack) && (
-                      <Icon
-                        name={technology.iconColor || technology.iconBlack}
-                        class="size-5"
-                      />
-                    )}
-                    <p class="w-fit font-bold">{technology.name}</p>
-                  </Card>
+                  <TechnologyCard 
+                    technology={technology}
+                    client:load
+                  />
                 ))}
             </div>
             <AutoScroller
