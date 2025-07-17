@@ -1,5 +1,13 @@
-import type { HaloConfig } from './types';
-
+export interface HaloConfig {
+  colors: string[];
+  blur: string;
+  opacity: number;
+  durationMin: number;
+  durationMax: number;
+  sizeMinPercent: number;
+  sizeMaxPercent: number;
+  zIndex: number;
+}
 /**
  * Gets a CSS variable with fallback
  */

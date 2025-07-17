@@ -3,8 +3,13 @@
 import { useMemo } from 'react';
 import { HALO_POSITIONS } from './constants';
 import { Halo } from './Halo';
-import type { BackgroundHalosProps } from './types';
 import { useBackgroundHalos } from './useBackgroundHalos';
+
+interface BackgroundHalosProps {
+  className?: string;
+  breathingEnabled?: boolean;
+  gradientEnabled?: boolean;
+}
 
 export function BackgroundHalos({
   className = '',
@@ -25,10 +30,10 @@ export function BackgroundHalos({
       aria-hidden="true"
       style={containerStyle}
     >
-      {HALO_POSITIONS.map((halo, i) => (
+      {Object.entries(HALO_POSITIONS).map(([key, style], i) => (
         <Halo
-          key={halo.key}
-          halo={halo}
+          key={key}
+          style={style}
           gradient={gradients[i]}
           config={config}
           disableAnimation={!isAnimationEnabled}

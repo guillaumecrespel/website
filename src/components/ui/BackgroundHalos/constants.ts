@@ -1,16 +1,26 @@
-import type { HaloCssPosition } from './types';
+const HALO_SIZE_RELATIVE_TO_SCREEN = 20;
+const HALO_SIZE_EM = 15;
 
-export const HALO_POSITIONS: HaloCssPosition[] = [
-  {
-    style: { top: '50%', left: 0, transform: 'translate(-50%, -50%)' },
-    key: 'middle-left',
+export const HALO_POSITIONS: Record<string, React.CSSProperties> = {
+  middleLeft: {
+    transformOrigin: 'center',
+    top: `calc(30% - min(-${HALO_SIZE_EM / 2}em, -${HALO_SIZE_RELATIVE_TO_SCREEN / 2}vh))`,
+    left: `min(-${HALO_SIZE_EM / 2}em, -${HALO_SIZE_RELATIVE_TO_SCREEN / 2}vw)`,
+    width: `max(${HALO_SIZE_EM}em, ${HALO_SIZE_RELATIVE_TO_SCREEN}vw)`,
+    height: `max(${HALO_SIZE_EM}em, ${HALO_SIZE_RELATIVE_TO_SCREEN}vh)`,
   },
-  {
-    style: { top: 0, right: 0, transform: 'translate(50%, -50%)' },
-    key: 'top-right',
+  topRight: {
+    transformOrigin: 'center',
+    top: `min(-${HALO_SIZE_EM / 2}em, -${HALO_SIZE_RELATIVE_TO_SCREEN / 2}vh)`,
+    right: `min(-${HALO_SIZE_EM / 2}em, -${HALO_SIZE_RELATIVE_TO_SCREEN / 2}vw)`,
+    width: `max(${HALO_SIZE_EM}em, ${HALO_SIZE_RELATIVE_TO_SCREEN}vw)`,
+    height: `max(${HALO_SIZE_EM}em, ${HALO_SIZE_RELATIVE_TO_SCREEN}vh)`,
   },
-  {
-    style: { bottom: 0, right: 0, transform: 'translate(50%, 50%)' },
-    key: 'bottom-right',
+  bottomRight: {
+    transformOrigin: 'center',
+    bottom: `min(-${HALO_SIZE_EM / 2}em, -${HALO_SIZE_RELATIVE_TO_SCREEN / 2}vh)`,
+    right: `min(-${HALO_SIZE_EM / 2}em, -${HALO_SIZE_RELATIVE_TO_SCREEN / 2}vw)`,
+    width: `max(${HALO_SIZE_EM}em, ${HALO_SIZE_RELATIVE_TO_SCREEN}vw)`,
+    height: `max(${HALO_SIZE_EM}em, ${HALO_SIZE_RELATIVE_TO_SCREEN}vh)`,
   },
-];
+};
