@@ -7,6 +7,7 @@ import { getProductSkills } from '@/i18n/data/product-skills.js';
 import { getProfile } from '@/i18n/data/profile.js';
 import { getSoftSkills } from '@/i18n/data/soft-skills.js';
 import { getTechnologies } from '@/i18n/data/technologies.js';
+import { getOppositeLang } from '@/i18n/utils.js';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 
 export async function getStaticPaths() {
@@ -48,7 +49,7 @@ const alternateURLs = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content={lang} />
-    <meta property="og:locale:alternate" content={lang === 'fr' ? 'en' : 'fr'} />
+    <meta property="og:locale:alternate" content={getOppositeLang(lang as 'fr' | 'en')} />
     
     <!-- Twitter -->
     <meta name="twitter:title" content={title} />

@@ -44,6 +44,24 @@
     "title": "I handle the technical part",
     "viewAll": "View all technologies",
     "close": "Close",
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "description": "Description"
+  },
+  "language": {
+    "switchTo": "Switch to French",
+    "currentLanguage": "Current language",
+    "languageToggle": "Language toggle"
+  },
+  "theme": {
+    "light": "Light mode",
+    "dark": "Dark mode",
+    "system": "System mode",
+    "toggleTheme": "Toggle theme"
+  },
+  "accessibility": {
+    "close": "Close",
+    "open": "Open",
+    "menu": "Menu",
+    "navigation": "Navigation"
   }
 } 

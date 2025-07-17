@@ -1,6 +1,6 @@
 import { useCallback, useSyncExternalStore } from "react"
-import type { Theme } from "@/lib/theme"
-import { themeStore } from "@/lib/theme-store"
+import type { Theme } from "@/components/theme/theme"
+import { themeStore } from "@/components/theme/theme-store"
 
 /**
  * Ultra-simplified theme hook using useSyncExternalStore

@@ -10,20 +10,27 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import type { Technology } from '@/i18n/data/technologies';
+import type { Lang } from '@/i18n/ui';
+import { useI18n } from '@/i18n/utils';
 import { Badge } from './ui/badge';
 
 interface TechnologyCardProps {
   technology: Technology;
+  lang?: Lang;
   ui?: {
     close: string;
     learnMore: string;
+    description: string;
   };
 }
 
 export default function TechnologyCard({
   technology,
+  lang,
   ui,
 }: TechnologyCardProps) {
+  const { t } = useI18n(lang);
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -66,7 +73,9 @@ export default function TechnologyCard({
         <div className="flex-1 overflow-y-auto px-4 py-6">
           <div className="space-y-4">
             <div>
-              <h3 className="font-bold text-lg mb-2">Description</h3>
+              <h3 className="font-bold text-lg mb-2">
+                {ui?.description || String(t('technologies.description'))}
+              </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {technology.description}
               </p>
@@ -79,7 +88,7 @@ export default function TechnologyCard({
                 rel="noopener noreferrer"
               >
                 <Badge variant="neutral">
-                  {ui?.learnMore || 'En savoir plus'}
+                  {ui?.learnMore || String(t('technologies.learnMore'))}
                   <Icon
                     icon="heroicons:arrow-top-right-on-square"
                     className="size-4"
@@ -93,7 +102,7 @@ export default function TechnologyCard({
         <DrawerFooter className="border-t border-border">
           <DrawerClose asChild>
             <Button variant="neutral" className="w-full">
-              {ui?.close || 'Fermer'}
+              {ui?.close || String(t('technologies.close'))}
             </Button>
           </DrawerClose>
         </DrawerFooter>

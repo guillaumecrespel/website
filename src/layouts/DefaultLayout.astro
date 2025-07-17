@@ -2,8 +2,8 @@
 import { getCurrentLang } from "@/i18n/utils";
 import Head from "../components/Head.astro";
 import "../styles/global.css";
+import { themeInitScript } from "@/components/theme/theme-init";
 import { getProfile } from "@/i18n/data/profile";
-import { themeInitScript } from "@/lib/theme-init";
 import { BackgroundHalos } from "../components/ui";
 
 // Déduction automatique de la locale à partir de l'URL

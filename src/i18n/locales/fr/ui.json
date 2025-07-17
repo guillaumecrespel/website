@@ -44,6 +44,24 @@
     "title": "J'assure la partie technique",
     "viewAll": "Voir toutes les technologies",
     "close": "Fermer",
-    "learnMore": "En savoir plus"
+    "learnMore": "En savoir plus",
+    "description": "Description"
+  },
+  "language": {
+    "switchTo": "Passer en anglais",
+    "currentLanguage": "Langue actuelle",
+    "languageToggle": "Basculement de langue"
+  },
+  "theme": {
+    "light": "Mode clair",
+    "dark": "Mode sombre",
+    "system": "Mode système",
+    "toggleTheme": "Basculer le thème"
+  },
+  "accessibility": {
+    "close": "Fermer",
+    "open": "Ouvrir",
+    "menu": "Menu",
+    "navigation": "Navigation"
   }
 } 

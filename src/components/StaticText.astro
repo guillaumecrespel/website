@@ -1,0 +1,15 @@
+---
+import type { Lang } from '@/i18n/ui';
+import { getTranslation } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  translationKey: string;
+  className?: string;
+}
+
+const { lang, translationKey, className = "" } = Astro.props;
+const text = getTranslation(lang, translationKey);
+---
+
+<span class={className}>{text}</span> 

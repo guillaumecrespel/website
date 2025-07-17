@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
+import type { Theme } from '@/components/theme/theme';
 import { Button } from '@/components/ui/button';
 import { useThemeSync } from '@/hooks/use-theme-sync';
-import type { Theme } from '@/lib/theme';
 import { cn } from '@/lib/utils';
 
 interface ThemeToggleProps {
