@@ -74,6 +74,52 @@
   --spacing-reverseBoxShadowY: -4px;
   --radius-base: 10px;
   --shadow-shadow: var(--shadow);
+  --animate-marquee-duration: 60s;
+  --animate-marquee: marquee var(--animate-marquee-duration) linear infinite;
+  --animate-marquee2: marquee2 var(--animate-marquee-duration) linear infinite;
+  --animate-marquee-reverse: marquee-reverse var(--animate-marquee-duration) linear infinite;
+  --animate-marquee2-reverse: marquee2-reverse var(--animate-marquee-duration) linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee2 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes marquee2-reverse {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Pause animation on hover */
+.group:hover .group-hover\:pause {
+  animation-play-state: paused;
 }
 
 :root {

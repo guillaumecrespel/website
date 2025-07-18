@@ -1,3 +1,5 @@
+'use client';
+
 import { Icon } from '@iconify/react';
 import { Button } from '@/components/ui/button';
 import {
@@ -34,11 +36,11 @@ export default function TechnologyCard({
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button className="flex flex-row gap-2 p-2 relative overflow-hidden items-center w-fit font-black text-sm min-w-fit flex-shrink-0 bg-gradient-to-r from-accent-foreground to-transparent backdrop-blur-lg cursor-pointer">
+        <Button className="flex flex-row gap-2 relative overflow-hidden items-center w-fit font-black text-sm min-w-fit flex-shrink-0 bg-gradient-to-r from-accent-foreground to-transparent backdrop-blur-lg cursor-pointer">
           {(technology.iconColor || technology.iconBlack) && (
             <Icon
               icon={technology.iconColor || technology.iconBlack}
-              className="size-5"
+              className="size-10"
               style={{ color: technology.color }}
             />
           )}
@@ -51,12 +53,12 @@ export default function TechnologyCard({
           <div className="flex items-center gap-3">
             {(technology.iconColor || technology.iconBlack) && (
               <div
-                className="size-12 rounded-lg border-2 border-border flex items-center justify-center"
+                className="size-14 rounded-lg border-2 border-border flex items-center justify-center"
                 style={{ borderColor: technology.color }}
               >
                 <Icon
                   icon={technology.iconColor || technology.iconBlack}
-                  className="w-6 h-6"
+                  className="size-10"
                   style={{ color: technology.color }}
                 />
               </div>

@@ -1,5 +1,4 @@
 // UI Components exports
-export { AutoScroller } from '../AutoScroller';
 export { BackgroundHalos } from '../BackgroundHalos/BackgroundHalos';
 export { ThemeToggle } from '../theme/ThemeToggle';
 export { Button, buttonVariants } from './button';
