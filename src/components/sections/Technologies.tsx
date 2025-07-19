@@ -2,17 +2,19 @@
 
 import TechnologyCard from '@/components/TechnologyCard';
 import Marquee from '@/components/ui/marquee';
+import type { Experience } from '@/i18n/data/experiences/types';
 import type { Technologies as TechnologiesData } from '@/i18n/data/technologies';
 
 interface TechnologiesProps {
   technologies: TechnologiesData;
+  experiences?: Experience[];
 }
 
 /**
  * Technologies component displays technology cards in animated marquee rows
  * Client Component - needed for TechnologyCard interactivity
  */
-export default function Technologies({ technologies }: TechnologiesProps) {
+export default function Technologies({ technologies, experiences = [] }: TechnologiesProps) {
   // Shuffle technologies randomly (client-side)
   const shuffleArray = <T,>(array: T[]): T[] => {
     const shuffled = [...array];
@@ -55,6 +57,7 @@ export default function Technologies({ technologies }: TechnologiesProps) {
                     <TechnologyCard
                       key={technology.name}
                       technology={technology}
+                      experiences={experiences}
                     />
                   ))}
                 </div>

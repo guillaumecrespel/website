@@ -1,8 +1,10 @@
 ---
+import AllExperiencesButton from "@/components/AllExperiencesButton";
 import ProductSkills from "@/components/sections/ProductSkills.astro";
 import Profile from "@/components/sections/Profile.astro";
 import SoftSkills from "@/components/sections/SoftSkills.astro";
 import Technologies from "@/components/sections/Technologies";
+import { experiences } from "@/i18n/data/experiences/fr/index.js";
 import { getProductSkills } from "@/i18n/data/product-skills.js";
 import { getProfile } from "@/i18n/data/profile.js";
 import { getSoftSkills } from "@/i18n/data/soft-skills.js";
@@ -61,9 +63,14 @@ const alternateURLs = {
     class="flex flex-col gap-10 items-start md:p-6 p-4 w-full md:max-w-screen-lg mx-auto"
   >
     <Profile profile={profile} />
-    <SoftSkills softSkills={softSkills} />
-    <ProductSkills productSkills={productSkills} />
+    <SoftSkills softSkills={softSkills} experiences={experiences} />
+    <ProductSkills productSkills={productSkills} experiences={experiences} />
+    
+    <!-- Bouton pour voir toutes les expériences -->
+    <div class="flex justify-center w-full">
+      <AllExperiencesButton experiences={experiences} lang={lang} client:load />
+    </div>
   </section>
 
-  <Technologies technologies={technologies} client:load />
+  <Technologies technologies={technologies} experiences={experiences} client:load />
 </DefaultLayout>

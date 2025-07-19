@@ -1,3 +1,7 @@
+// Import SVG icons with Vite as URLs
+import shape1Svg from '@/icons/shape1.svg?url';
+import shape2Svg from '@/icons/shape2.svg?url';
+import shape3Svg from '@/icons/shape3.svg?url';
 import type { Lang } from '../ui.js';
 
 export interface SoftSkill {
@@ -11,8 +15,6 @@ export interface SoftSkills {
   skills: SoftSkill[];
 }
 
-const skillIcons = ['shape1', 'shape2', 'shape3'] as const;
-
 export async function getSoftSkills(lang: Lang): Promise<SoftSkills> {
   const ui = await import(`../locales/${lang}/ui.json`).then(m => m.default);
   
@@ -22,17 +24,17 @@ export async function getSoftSkills(lang: Lang): Promise<SoftSkills> {
       {
         name: ui.softSkills.pragmatism.name,
         description: ui.softSkills.pragmatism.description,
-        icon: skillIcons[0],
+        icon: shape1Svg,
       },
       {
         name: ui.softSkills.prioritization.name,
         description: ui.softSkills.prioritization.description,
-        icon: skillIcons[1],
+        icon: shape2Svg,
       },
       {
         name: ui.softSkills.leadership.name,
         description: ui.softSkills.leadership.description,
-        icon: skillIcons[2],
+        icon: shape3Svg,
       },
     ],
   };

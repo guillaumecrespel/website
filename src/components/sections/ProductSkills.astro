@@ -1,13 +1,15 @@
 ---
 import { Icon } from "astro-icon/components";
+import ProductSkillCard from "@/components/ProductSkillCard";
 import { Card } from "@/components/ui/card";
 import type { ProductSkills } from "@/i18n/data/product-skills";
 
 interface Props {
   productSkills: ProductSkills;
+  experiences: any[];
 }
 
-const { productSkills } = Astro.props;
+const { productSkills, experiences } = Astro.props;
 ---
 
 <section class="mt-4 w-full">
@@ -15,13 +17,11 @@ const { productSkills } = Astro.props;
   <section class="flex flex-col gap-4 mt-4">
     {
       productSkills.skills.map((skill) => (
-        <Card className="flex flex-row gap-2 p-4 relative overflow-hidden items-center bg-gradient-to-r from-accent-foreground to-transparent backdrop-blur-lg">
-          <Icon name={skill.icon} class="h-[72px] min-w-[72px]" />
-          <div class="flex flex-col gap-2">
-            <p class="w-fit font-bold text-2xl">{skill.name}</p>
-            <p class="w-fit md:text-lg text-sm">{skill.description}</p>
-          </div>
-        </Card>
+        <ProductSkillCard 
+          skill={skill} 
+          experiences={experiences}
+          client:load
+        />
       ))
     }
   </section>

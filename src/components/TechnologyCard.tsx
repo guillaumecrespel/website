@@ -11,6 +11,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import { getTechnologyExperiences, getTechnologySeniority, getTechnologyTotalDuration } from '@/i18n/data/experiences/technology-mapping';
+import type { Experience } from '@/i18n/data/experiences/types';
 import type { Technology } from '@/i18n/data/technologies';
 import type { Lang } from '@/i18n/ui';
 import { useI18n } from '@/i18n/utils';
@@ -18,6 +20,7 @@ import { Badge } from './ui/badge';
 
 interface TechnologyCardProps {
   technology: Technology;
+  experiences?: Experience[];
   lang?: Lang;
   ui?: {
     close: string;
@@ -28,10 +31,15 @@ interface TechnologyCardProps {
 
 export default function TechnologyCard({
   technology,
+  experiences = [],
   lang,
   ui,
 }: TechnologyCardProps) {
   const { t } = useI18n(lang);
+  
+  const technologyExperiences = getTechnologyExperiences(technology.id, experiences);
+  const totalDuration = getTechnologyTotalDuration(technology.id);
+  const seniority = getTechnologySeniority(totalDuration);
 
   return (
     <Drawer>
@@ -81,6 +89,73 @@ export default function TechnologyCard({
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {technology.description}
               </p>
+            </div>
+
+            {/* Seniority and Experience */}
+            <div className="space-y-3">
+              {totalDuration > 0 ? (
+                <>
+                  <div className="flex items-center gap-2">
+                    <Icon icon="heroicons:clock" className="size-4" />
+                    <span className="font-semibold text-sm">Mon expérience :</span>
+                    <Badge variant="default" className="text-xs">
+                      {seniority} ({totalDuration} mois)
+                    </Badge>
+                  </div>
+                  
+                  {technologyExperiences.length > 0 && (
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-sm">Expériences d'utilisation :</h4>
+                      <div className="space-y-2">
+                        {technologyExperiences.map(({ experience, techExp }) => (
+                          <div key={experience.id} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg">
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium truncate">
+                                {experience.position} chez {experience.company.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground truncate">
+                                {techExp.context}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2 ml-2">
+                              <Badge variant="neutral" className="text-xs">
+                                {techExp.duration} mois
+                              </Badge>
+                              <Badge variant="default" className="text-xs">
+                                {techExp.level}
+                              </Badge>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Icon icon="heroicons:academic-cap" className="size-4" />
+                    <span className="font-semibold text-sm">Mon expérience :</span>
+                    <Badge variant="neutral" className="text-xs">
+                      En apprentissage
+                    </Badge>
+                  </div>
+                  
+                  <div className="p-3 bg-muted/30 rounded-lg border border-dashed border-muted-foreground/30">
+                    <div className="flex items-start gap-3">
+                      <Icon icon="heroicons:light-bulb" className="size-5 text-muted-foreground mt-0.5" />
+                      <div className="space-y-1">
+                        <p className="text-sm font-medium">Projets personnels & formation continue</p>
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          J'explore cette technologie dans le cadre de projets personnels, 
+                          de formations et d'expérimentations. Toujours en veille technologique 
+                          pour rester à jour avec les dernières innovations.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {technology.link && (
