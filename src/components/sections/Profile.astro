@@ -2,32 +2,49 @@
 import { Icon } from "astro-icon/components";
 import avatar from "@/assets/images/avatar.png";
 import Avatar from "@/components/Avatar.astro";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Button } from "@/components/ui/button";
+import { LANGUAGE_ICONS } from "@/i18n/constants";
 import type { Profile } from "@/i18n/data/profile";
+import type { Lang } from "@/i18n/ui";
 import { LanguageToggle } from "../LanguageToggle";
+import { ThemeToggle } from "../ui";
 
 interface Props {
   profile: Profile;
+  lang: Lang;
 }
 
-const { profile } = Astro.props;
+const { profile, lang } = Astro.props;
 ---
 
-<section class="flex flex-col gap-6 w-full">
+<section
+  class="flex flex-col gap-6 w-full"
+  role="banner"
+  aria-label="Profil principal"
+>
   <div class="flex justify-between items-start">
     <Avatar src={avatar} alt={profile.name} />
-    <div class="flex gap-2 items-center">
-      <LanguageToggle client:load />
-      <ThemeToggle client:load variant="ghost" size="icon" />
+    <div
+      class="flex gap-2 items-center"
+      role="toolbar"
+      aria-label="Contrôles de navigation"
+    >
+      <LanguageToggle currentLang={lang} client:load>
+        <Icon name={LANGUAGE_ICONS[lang]} />
+      </LanguageToggle>
+      <ThemeToggle client:load />
     </div>
   </div>
-  <Icon name="me" class="text-3xl" />
-  <p class="w-fit font-bold text-3xl md:text-4xl">{profile.title}</p>
+  <Icon name="me" class="text-3xl" aria-hidden="true" />
+  <h1 class="w-fit font-bold text-3xl md:text-4xl">{profile.title}</h1>
   <p class="w-fit md:text-lg text-sm">{profile.description}</p>
 </section>
 
-<section class="flex gap-4 justify-center mt-4">
+<section
+  class="flex gap-4 justify-center mt-4"
+  role="navigation"
+  aria-label="Liens sociaux"
+>
   {
     profile.socialLinks.map((link) => (
       <a
@@ -35,12 +52,12 @@ const { profile } = Astro.props;
         target="_blank"
         rel="noopener noreferrer"
         class="cursor-pointer"
+        aria-label={`Visiter mon profil ${link.icon} sur ${link.url}`}
       >
         <Button className="rounded-full" size="icon">
-          <Icon name={link.icon} class="size-5" />
+          <Icon name={link.icon} class="size-5" aria-hidden="true" />
         </Button>
       </a>
     ))
   }
 </section>
-

@@ -22,18 +22,12 @@ interface TechnologyCardProps {
   technology: Technology;
   experiences?: Experience[];
   lang?: Lang;
-  ui?: {
-    close: string;
-    learnMore: string;
-    description: string;
-  };
 }
 
 export default function TechnologyCard({
   technology,
   experiences = [],
   lang,
-  ui,
 }: TechnologyCardProps) {
   const { t } = useI18n(lang);
   
@@ -50,6 +44,7 @@ export default function TechnologyCard({
               icon={technology.iconColor || technology.iconBlack}
               className="size-10"
               style={{ color: technology.color }}
+              aria-hidden="true"
             />
           )}
           <p className="w-fit font-bold">{technology.name}</p>
@@ -68,6 +63,7 @@ export default function TechnologyCard({
                   icon={technology.iconColor || technology.iconBlack}
                   className="size-10"
                   style={{ color: technology.color }}
+                  aria-hidden="true"
                 />
               </div>
             )}
@@ -84,7 +80,7 @@ export default function TechnologyCard({
           <div className="space-y-4">
             <div>
               <h3 className="font-bold text-lg mb-2">
-                {ui?.description || String(t('technologies.description'))}
+                {t('technologies.description')}
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {technology.description}
@@ -96,22 +92,22 @@ export default function TechnologyCard({
               {totalDuration > 0 ? (
                 <>
                   <div className="flex items-center gap-2">
-                    <Icon icon="heroicons:clock" className="size-4" />
-                    <span className="font-semibold text-sm">Mon expérience :</span>
+                    <Icon icon="heroicons:clock" className="size-4" aria-hidden="true" />
+                    <span className="font-semibold text-sm">{t('experiences.seniority.title')} :</span>
                     <Badge variant="default" className="text-xs">
-                      {seniority} ({totalDuration} mois)
+                      {seniority} ({totalDuration} {t('experiences.seniority.months')})
                     </Badge>
                   </div>
                   
                   {technologyExperiences.length > 0 && (
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-sm">Expériences d'utilisation :</h4>
+                      <h4 className="font-semibold text-sm">{t('experiences.skills.technologies')} :</h4>
                       <div className="space-y-2">
                         {technologyExperiences.map(({ experience, techExp }) => (
                           <div key={experience.id} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg">
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium truncate">
-                                {experience.position} chez {experience.company.name}
+                                {experience.position} {t('experiences.at')} {experience.company.name}
                               </p>
                               <p className="text-xs text-muted-foreground truncate">
                                 {techExp.context}
@@ -119,7 +115,7 @@ export default function TechnologyCard({
                             </div>
                             <div className="flex items-center gap-2 ml-2">
                               <Badge variant="neutral" className="text-xs">
-                                {techExp.duration} mois
+                                {techExp.duration} {t('experiences.seniority.months')}
                               </Badge>
                               <Badge variant="default" className="text-xs">
                                 {techExp.level}
@@ -134,22 +130,22 @@ export default function TechnologyCard({
               ) : (
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                    <Icon icon="heroicons:academic-cap" className="size-4" />
-                    <span className="font-semibold text-sm">Mon expérience :</span>
+                    <Icon icon="heroicons:academic-cap" className="size-4" aria-hidden="true" />
+                    <span className="font-semibold text-sm">{t('experiences.seniority.title')} :</span>
                     <Badge variant="neutral" className="text-xs">
-                      En apprentissage
+                      {t('experiences.seniority.ongoing')}
                     </Badge>
                   </div>
                   
                   <div className="p-3 bg-muted/30 rounded-lg border border-dashed border-muted-foreground/30">
                     <div className="flex items-start gap-3">
-                      <Icon icon="heroicons:light-bulb" className="size-5 text-muted-foreground mt-0.5" />
+                      <Icon icon="heroicons:light-bulb" className="size-5 text-muted-foreground mt-0.5" aria-hidden="true" />
                       <div className="space-y-1">
-                        <p className="text-sm font-medium">Projets personnels & formation continue</p>
+                        <p className="text-sm font-medium">
+                          {t('experiences.personalProjects')}
+                        </p>
                         <p className="text-xs text-muted-foreground leading-relaxed">
-                          J'explore cette technologie dans le cadre de projets personnels, 
-                          de formations et d'expérimentations. Toujours en veille technologique 
-                          pour rester à jour avec les dernières innovations.
+                          {t('experiences.learningDescription')}
                         </p>
                       </div>
                     </div>
@@ -163,12 +159,14 @@ export default function TechnologyCard({
                 href={technology.link}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`En savoir plus sur ${technology.name}`}
               >
                 <Badge variant="neutral">
-                  {ui?.learnMore || String(t('technologies.learnMore'))}
+                  {t('technologies.learnMore')}
                   <Icon
                     icon="heroicons:arrow-top-right-on-square"
                     className="size-4"
+                    aria-hidden="true"
                   />
                 </Badge>
               </a>
@@ -179,7 +177,7 @@ export default function TechnologyCard({
         <DrawerFooter className="border-t border-border">
           <DrawerClose asChild>
             <Button variant="neutral" className="w-full">
-              {ui?.close || String(t('technologies.close'))}
+              {t('technologies.close')}
             </Button>
           </DrawerClose>
         </DrawerFooter>

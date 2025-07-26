@@ -15,23 +15,12 @@ interface TechnologiesProps {
  * Client Component - needed for TechnologyCard interactivity
  */
 export default function Technologies({ technologies, experiences = [] }: TechnologiesProps) {
-  // Shuffle technologies randomly (client-side)
-  const shuffleArray = <T,>(array: T[]): T[] => {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  };
-
-  const shuffledTechnologies = shuffleArray(technologies.technologies);
-  const technologiesPerRow = Math.ceil(shuffledTechnologies.length / 3);
+  const technologiesPerRow = Math.ceil(technologies.technologies.length / 3);
 
   const technologyRows = [
-    shuffledTechnologies.slice(0, technologiesPerRow),
-    shuffledTechnologies.slice(technologiesPerRow, technologiesPerRow * 2),
-    shuffledTechnologies.slice(technologiesPerRow * 2),
+    technologies.technologies.slice(0, technologiesPerRow),
+    technologies.technologies.slice(technologiesPerRow, technologiesPerRow * 2),
+    technologies.technologies.slice(technologiesPerRow * 2),
   ];
 
   return (

@@ -47,6 +47,29 @@
     "learnMore": "Learn more",
     "description": "Description"
   },
+  "experiences": {
+    "title": "Experiences",
+    "allExperiences": "View all experiences",
+    "close": "Close",
+    "noExperiences": "No experiences found",
+    "experienceCount": {
+      "one": "related experience",
+      "other": "related experiences"
+    },
+    "seniority": {
+      "title": "Seniority",
+      "months": "months",
+      "years": "years",
+      "ongoing": "Currently learning"
+    },
+    "skills": {
+      "title": "Skills learned",
+      "technologies": "Technologies used"
+    },
+    "personalProjects": "Personal projects & continuous learning",
+    "learningDescription": "I explore this technology through personal projects, training and experimentation. Always keeping up with the latest innovations through continuous learning.",
+    "at": "at"
+  },
   "language": {
     "switchTo": "Switch to French",
     "currentLanguage": "Current language",

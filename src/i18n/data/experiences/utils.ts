@@ -1,37 +1,42 @@
-import type { Experience, ExperienceCollection } from "./types";
+import type { Experience, ExperienceCollection } from './types';
 
 /**
  * Filter experiences by tags
- * @param experiences - Array of experiences to filter
- * @param tags - Array of tags to filter by
- * @returns Filtered experiences
  */
-export function filterByTags(experiences: ExperienceCollection, tags: string[]): ExperienceCollection {
+export function filterByTags(experiences: Experience[], tags: string[]): Experience[] {
+  if (!tags.length) return experiences;
+  
   return experiences.filter(experience => 
-    tags.some(tag => experience.tags.includes(tag))
-  );
-}
-
-/**
- * Filter experiences by technology
- * @param experiences - Array of experiences to filter
- * @param technology - Technology to filter by
- * @returns Filtered experiences
- */
-export function filterByTechnology(experiences: ExperienceCollection, technology: string): ExperienceCollection {
-  return experiences.filter(experience => 
-    experience.technologies.some(tech => 
-      tech.toLowerCase().includes(technology.toLowerCase())
+    experience.tags.some(tag => 
+      tags.some(searchTag => 
+        tag.toLowerCase().includes(searchTag.toLowerCase())
+      )
     )
   );
 }
 
 /**
- * Get experiences sorted by date (newest first)
- * @param experiences - Array of experiences to sort
- * @returns Sorted experiences
+ * Search experiences by text
  */
-export function sortByDate(experiences: ExperienceCollection): ExperienceCollection {
+export function searchExperiences(experiences: Experience[], query: string): Experience[] {
+  if (!query.trim()) return experiences;
+  
+  const searchTerm = query.toLowerCase();
+  
+  return experiences.filter(experience => 
+    experience.position.toLowerCase().includes(searchTerm) ||
+    experience.company.name.toLowerCase().includes(searchTerm) ||
+    experience.description.toLowerCase().includes(searchTerm) ||
+    experience.skills.some(skill => skill.toLowerCase().includes(searchTerm)) ||
+    experience.technologies.some(tech => tech.toLowerCase().includes(searchTerm)) ||
+    experience.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+  );
+}
+
+/**
+ * Sort experiences by date (newest first)
+ */
+export function sortExperiencesByDate(experiences: Experience[]): Experience[] {
   return [...experiences].sort((a, b) => {
     const dateA = new Date(a.startDate);
     const dateB = new Date(b.startDate);
@@ -40,91 +45,66 @@ export function sortByDate(experiences: ExperienceCollection): ExperienceCollect
 }
 
 /**
- * Get ongoing experiences (where endDate is null)
- * @param experiences - Array of experiences to filter
- * @returns Ongoing experiences
+ * Calculate seniority in months for a technology
  */
-export function getOngoingExperiences(experiences: ExperienceCollection): ExperienceCollection {
-  return experiences.filter(experience => experience.endDate === null);
+export function calculateTechnologySeniority(experiences: Experience[], technology: string): number {
+  return experiences
+    .filter(exp => exp.technologies.some(tech => 
+      tech.toLowerCase().includes(technology.toLowerCase())
+    ))
+    .reduce((total, exp) => {
+      const startDate = new Date(exp.startDate);
+      const endDate = exp.endDate ? new Date(exp.endDate) : new Date();
+      const months = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44);
+      return total + Math.round(months);
+    }, 0);
 }
 
 /**
- * Get all unique tags from experiences
- * @param experiences - Array of experiences
- * @returns Array of unique tags
+ * Load experiences based on language
  */
-export function getAllTags(experiences: ExperienceCollection): string[] {
-  const allTags = experiences.flatMap(experience => experience.tags);
-  return [...new Set(allTags)].sort();
+export async function loadExperiences(lang: string): Promise<ExperienceCollection> {
+  try {
+    if (lang === 'en') {
+      const { experiences } = await import('./en');
+      return experiences;
+    } else {
+      const { experiences } = await import('./fr');
+      return experiences;
+    }
+  } catch (error) {
+    console.error(`Error loading experiences for language ${lang}:`, error);
+    // Fallback to French experiences
+    const { experiences } = await import('./fr');
+    return experiences;
+  }
 }
 
 /**
- * Get all unique technologies from experiences
- * @param experiences - Array of experiences
- * @returns Array of unique technologies
+ * Get experiences for a specific technology
  */
-export function getAllTechnologies(experiences: ExperienceCollection): string[] {
-  const allTechnologies = experiences.flatMap(experience => experience.technologies);
-  return [...new Set(allTechnologies)].sort();
+export function getExperiencesForTechnology(experiences: Experience[], technology: string): Experience[] {
+  return experiences.filter(exp => 
+    exp.technologies.some(tech => 
+      tech.toLowerCase().includes(technology.toLowerCase())
+    )
+  );
 }
 
 /**
- * Search experiences by text (searches in position, company name, description, achievements, skills)
- * @param experiences - Array of experiences to search
- * @param searchText - Text to search for
- * @returns Filtered experiences
+ * Format seniority display
  */
-export function searchExperiences(experiences: ExperienceCollection, searchText: string): ExperienceCollection {
-  const searchLower = searchText.toLowerCase();
-  
-  return experiences.filter(experience => {
-    const searchableText = [
-      experience.position,
-      experience.company.name,
-      experience.description,
-      ...experience.achievements,
-      ...experience.skills,
-      ...experience.technologies,
-      ...experience.tags
-    ].join(" ").toLowerCase();
-    
-    return searchableText.includes(searchLower);
-  });
-}
-
-/**
- * Get experience duration in months
- * @param experience - Experience to calculate duration for
- * @returns Duration in months
- */
-export function getDurationInMonths(experience: Experience): number {
-  const startDate = new Date(experience.startDate);
-  const endDate = experience.endDate ? new Date(experience.endDate) : new Date();
-  
-  const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-  const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30.44)); // Average days per month
-  
-  return diffMonths;
-}
-
-/**
- * Format experience duration for display
- * @param experience - Experience to format duration for
- * @returns Formatted duration string
- */
-export function formatDuration(experience: Experience): string {
-  const months = getDurationInMonths(experience);
-  
+export function formatSeniority(months: number): string {
   if (months < 12) {
-    return `${months} mois`;
+    return `${months} month${months > 1 ? 's' : ''}`;
   }
   
   const years = Math.floor(months / 12);
   const remainingMonths = months % 12;
   
   if (remainingMonths === 0) {
-    return `${years} an${years > 1 ? 's' : ''}`;
+    return `${years} year${years > 1 ? 's' : ''}`;
   }
   
-  return `${years} an${years > 1 ? 's' : ''} ${remainingMonths} mois`;
+  return `${years} year${years > 1 ? 's' : ''} ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
 } 

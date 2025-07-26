@@ -47,6 +47,29 @@
     "learnMore": "En savoir plus",
     "description": "Description"
   },
+  "experiences": {
+    "title": "Expériences",
+    "allExperiences": "Voir toutes les expériences",
+    "close": "Fermer",
+    "noExperiences": "Aucune expérience trouvée",
+    "experienceCount": {
+      "one": "expérience liée",
+      "other": "expériences liées"
+    },
+    "seniority": {
+      "title": "Séniorité",
+      "months": "mois",
+      "years": "années",
+      "ongoing": "En cours d'apprentissage"
+    },
+    "skills": {
+      "title": "Compétences acquises",
+      "technologies": "Technologies utilisées"
+    },
+    "personalProjects": "Projets personnels & formation continue",
+    "learningDescription": "J'explore cette technologie dans le cadre de projets personnels, de formations et d'expérimentations. Toujours en veille technologique pour rester à jour avec les dernières innovations.",
+    "at": "chez"
+  },
   "language": {
     "switchTo": "Passer en anglais",
     "currentLanguage": "Langue actuelle",

@@ -1,31 +1,40 @@
 'use client';
 
 import { Icon } from '@iconify/react';
-import { Button } from '@/components/ui/button';
 import type { Experience } from '@/i18n/data/experiences/types';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/ui';
 import ExperienceDrawer from './ExperienceDrawer';
+import { Button } from './ui/button';
 
 interface AllExperiencesButtonProps {
   experiences: Experience[];
-  lang?: string;
+  lang?: Lang;
 }
 
 export default function AllExperiencesButton({
   experiences,
   lang = 'fr',
 }: AllExperiencesButtonProps) {
+  const t = useTranslations(lang);
+
   return (
     <ExperienceDrawer
       experiences={experiences}
-      title="Toutes mes expériences"
+      title={t('experiences.allExperiences')}
       lang={lang}
       trigger={
-        <Button className="flex items-center gap-2 bg-gradient-to-r from-accent-foreground to-transparent backdrop-blur-lg">
+        <Button
+          aria-label={t('experiences.allExperiences')}
+          title={t('experiences.allExperiences')}
+        >
           <Icon icon="heroicons:briefcase" className="size-4" />
-          <span className="hidden sm:inline">Voir toutes mes expériences</span>
-          <span className="sm:hidden">Expériences</span>
+          <span className="hidden sm:inline">
+            {t('experiences.allExperiences')}
+          </span>
+          <span className="sm:hidden">{t('experiences.title')}</span>
         </Button>
       }
     />
   );
-} 
+}

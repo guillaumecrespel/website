@@ -1,12 +1,7 @@
-// Import SVG icons with Vite as URLs
-
-
-import shape4Svg from '@/icons/shape4.svg?url';
-import shape5Svg from '@/icons/shape5.svg?url';
-import shape6Svg from '@/icons/shape6.svg?url';
-import type { Lang } from '../ui.js';
+import type { Lang } from '../ui';
 
 export interface ProductSkill {
+  id: string;
   name: string;
   description: string;
   icon: string;
@@ -18,26 +13,29 @@ export interface ProductSkills {
 }
 
 export async function getProductSkills(lang: Lang): Promise<ProductSkills> {
-  const ui = await import(`../locales/${lang}/ui.json`).then(m => m.default);
-  
+  const ui = await import(`../locales/${lang}/ui.json`).then((m) => m.default);
+
   return {
     title: ui.productSkills.title,
     skills: [
       {
+        id: 'scalability',
         name: ui.productSkills.scalability.name,
         description: ui.productSkills.scalability.description,
-        icon: shape4Svg,
+        icon: 'shape4',
       },
       {
+        id: 'business',
         name: ui.productSkills.business.name,
         description: ui.productSkills.business.description,
-        icon: shape5Svg,
+        icon: 'shape5',
       },
       {
+        id: 'vision',
         name: ui.productSkills.vision.name,
         description: ui.productSkills.vision.description,
-        icon: shape6Svg,
+        icon: 'shape6',
       },
     ],
   };
-} 
+}

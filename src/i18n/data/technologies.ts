@@ -17,6 +17,21 @@ export interface Technologies {
 }
 
 /**
+ * Shuffle array using a deterministic algorithm (server-side)
+ * This ensures consistent ordering across server and client
+ */
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  // Use a simple but effective shuffle algorithm
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    // Use modulo to create a pseudo-random but deterministic index
+    const j = (i * 7 + 13) % (i + 1);
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+/**
  * Get technologies data for the current locale
  */
 export async function getTechnologies(lang: Lang): Promise<Technologies> {
@@ -595,8 +610,11 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
     },
   ];
 
+  // Shuffle technologies server-side for consistent but varied ordering
+  const shuffledTechnologies = shuffleArray(technologies);
+
   return {
     title: ui.technologies.title,
-    technologies,
+    technologies: shuffledTechnologies,
   };
 }

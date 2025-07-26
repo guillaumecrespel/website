@@ -1,15 +1,17 @@
 ---
 import { Icon } from "astro-icon/components";
 import SoftSkillCard from "@/components/SoftSkillCard";
-import { Card } from "@/components/ui/card";
+import type { Experience } from "@/i18n/data/experiences/types";
 import type { SoftSkills } from "@/i18n/data/soft-skills";
+import type { Lang } from "@/i18n/ui";
 
 interface Props {
   softSkills: SoftSkills;
-  experiences: any[];
+  experiences: Experience[];
+  lang: Lang;
 }
 
-const { softSkills, experiences } = Astro.props;
+const { softSkills, experiences, lang } = Astro.props;
 ---
 
 <section class="mt-4 w-full">
@@ -17,12 +19,18 @@ const { softSkills, experiences } = Astro.props;
   <section class="flex flex-col gap-4 mt-4">
     {
       softSkills.skills.map((skill) => (
-        <SoftSkillCard 
-          skill={skill} 
+        <SoftSkillCard
+          skill={skill}
           experiences={experiences}
-          client:load
-        />
+          lang={lang}
+          client:visible
+        >
+          <Icon
+            name={skill.icon}
+            class="h-[50px] w-[100px] absolute -top-2 -right-2"
+          />
+        </SoftSkillCard>
       ))
     }
   </section>
-</section> 
+</section>

@@ -6,5 +6,13 @@ const { src, alt, width = 120, height = 135 } = Astro.props;
 ---
 
 <Card className="w-[120px] h-[135px] p-0 rounded-t-full bg-[#5EF1A5] relative">
-    <Image src={src} alt={alt} width={width} height={height} class="absolute bottom-0 left-0 w-full h-[150px] object-cover" />
+    <Image 
+      src={src} 
+      alt={alt} 
+      width={width} 
+      height={height} 
+      class="absolute bottom-0 left-0 w-full h-[150px] object-cover" 
+      loading="eager"
+      decoding="async"
+    />
 </Card>

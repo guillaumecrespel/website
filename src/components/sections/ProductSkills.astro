@@ -1,15 +1,17 @@
 ---
 import { Icon } from "astro-icon/components";
 import ProductSkillCard from "@/components/ProductSkillCard";
-import { Card } from "@/components/ui/card";
+import type { Experience } from "@/i18n/data/experiences/types";
 import type { ProductSkills } from "@/i18n/data/product-skills";
+import type { Lang } from "@/i18n/ui";
 
 interface Props {
   productSkills: ProductSkills;
-  experiences: any[];
+  experiences: Experience[];
+  lang: Lang;
 }
 
-const { productSkills, experiences } = Astro.props;
+const { productSkills, experiences, lang } = Astro.props;
 ---
 
 <section class="mt-4 w-full">
@@ -17,12 +19,13 @@ const { productSkills, experiences } = Astro.props;
   <section class="flex flex-col gap-4 mt-4">
     {
       productSkills.skills.map((skill) => (
-        <ProductSkillCard 
-          skill={skill} 
-          experiences={experiences}
-          client:load
-        />
+        <ProductSkillCard skill={skill} experiences={experiences} lang={lang} client:visible>
+          <Icon
+            name={skill.icon}
+            class="h-[72px] min-w-[72px]"
+          />
+        </ProductSkillCard>
       ))
     }
   </section>
-</section> 
+</section>

@@ -1,10 +1,10 @@
-const HALO_SIZE_RELATIVE_TO_SCREEN = 20;
-const HALO_SIZE_EM = 15;
+const HALO_SIZE_RELATIVE_TO_SCREEN = 25;
+const HALO_SIZE_EM = 20;
 
 export const HALO_POSITIONS: Record<string, React.CSSProperties> = {
   middleLeft: {
     transformOrigin: 'center',
-    top: `calc(30% - min(-${HALO_SIZE_EM / 2}em, -${HALO_SIZE_RELATIVE_TO_SCREEN / 2}vh))`,
+    top: `calc(17% - min(-${HALO_SIZE_EM / 2}em, -${HALO_SIZE_RELATIVE_TO_SCREEN / 2}vh))`,
     left: `min(-${HALO_SIZE_EM / 2}em, -${HALO_SIZE_RELATIVE_TO_SCREEN / 2}vw)`,
     width: `max(${HALO_SIZE_EM}em, ${HALO_SIZE_RELATIVE_TO_SCREEN}vw)`,
     height: `max(${HALO_SIZE_EM}em, ${HALO_SIZE_RELATIVE_TO_SCREEN}vh)`,

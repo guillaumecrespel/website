@@ -4,7 +4,7 @@ import ProductSkills from "@/components/sections/ProductSkills.astro";
 import Profile from "@/components/sections/Profile.astro";
 import SoftSkills from "@/components/sections/SoftSkills.astro";
 import Technologies from "@/components/sections/Technologies";
-import { experiences } from "@/i18n/data/experiences/fr/index.js";
+import { loadExperiences } from "@/i18n/data/experiences/utils.js";
 import { getProductSkills } from "@/i18n/data/product-skills.js";
 import { getProfile } from "@/i18n/data/profile.js";
 import { getSoftSkills } from "@/i18n/data/soft-skills.js";
@@ -22,6 +22,7 @@ const profile = await getProfile(lang);
 const softSkills = await getSoftSkills(lang);
 const productSkills = await getProductSkills(lang);
 const technologies = await getTechnologies(lang);
+const experiences = await loadExperiences(lang);
 
 // SEO metadata
 const title = `${profile.name} - ${profile.title}`;
@@ -62,9 +63,9 @@ const alternateURLs = {
   <section
     class="flex flex-col gap-10 items-start md:p-6 p-4 w-full md:max-w-screen-lg mx-auto"
   >
-    <Profile profile={profile} />
-    <SoftSkills softSkills={softSkills} experiences={experiences} />
-    <ProductSkills productSkills={productSkills} experiences={experiences} />
+    <Profile profile={profile} lang={lang} />
+    <SoftSkills softSkills={softSkills} experiences={experiences} lang={lang} />
+    <ProductSkills productSkills={productSkills} experiences={experiences} lang={lang} />
     
     <!-- Bouton pour voir toutes les expériences -->
     <div class="flex justify-center w-full">
