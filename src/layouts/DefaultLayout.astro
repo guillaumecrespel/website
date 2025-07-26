@@ -19,32 +19,6 @@ const description =
   `${profile.name}, ${profile.title} - Développeur full-stack expérimenté`;
 const url = Astro.url.href;
 const imageUrl = new URL("/avatar.png", Astro.url).href;
-
-// Script pour l'Intersection Observer des animations chroma-text
-const chromaAnimationScript = `
-(function() {
-  if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate');
-          // Une fois animé, on arrête d'observer
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
-    // Observer tous les éléments avec la classe chroma-text-viewport
-    document.addEventListener('DOMContentLoaded', () => {
-      const elements = document.querySelectorAll('.chroma-text-viewport');
-      elements.forEach(el => observer.observe(el));
-    });
-  }
-})();
-`;
 ---
 
 <html lang={locale}>
@@ -128,18 +102,18 @@ const chromaAnimationScript = `
       <slot />
     </main>
     <script is:inline set:html={themeInitScript} />
-    <script is:inline set:html={chromaAnimationScript} />
 
     <!-- Service Worker Registration -->
     <!-- <script is:inline>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
             .then((registration) => {
-              console.log('SW registered: ', registration);
+              console.log("SW registered: ", registration);
             })
             .catch((registrationError) => {
-              console.log('SW registration failed: ', registrationError);
+              console.log("SW registration failed: ", registrationError);
             });
         });
       }

@@ -7,6 +7,7 @@ import { filterByTags } from '@/i18n/data/experiences/utils';
 import type { SoftSkill } from '@/i18n/data/soft-skills';
 import type { Lang } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/ui';
+import ChromaText from './ChromaText';
 import ExperienceDrawer from './ExperienceDrawer';
 
 interface SoftSkillCardProps {
@@ -36,7 +37,7 @@ export default function SoftSkillCard({
         <Card className="flex flex-row gap-2 p-4 relative overflow-hidden items-center bg-gradient-to-r from-accent-foreground to-transparent backdrop-blur-lg cursor-pointer">
           {children}
           <div className="flex flex-col gap-2">
-            <p className="w-fit text-2xl chroma-text chroma-text-viewport">{skill.name}</p>
+            <ChromaText>{skill.name}</ChromaText>
             <p className="w-fit md:text-lg text-sm">{skill.description}</p>
           </div>
         </Card>

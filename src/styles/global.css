@@ -3,94 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Optimize animations for performance */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Custom scrollbar for better UX */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
-}
-
-/* Optimize focus styles for accessibility */
-*:focus-visible {
-  outline: 2px solid hsl(var(--primary));
-  outline-offset: 2px;
-}
-
-/* Improve text rendering */
-* {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.chroma-text {
-  background-image: linear-gradient(
-    90deg,
-    #000000 0%,
-    #000000 33.33%,
-    #c679c4 40%,
-    #fa3d1d 45%,
-    #ffb005 50%,
-    #e1e1fe 55%,
-    #0358f7 60%,
-    transparent 66.67%,
-    transparent
-  );
-  background-size: 300% 100%;
-  background-position: 100% 0;
-  will-change: background-position;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-.chroma-text-viewport.animate {
-  animation: chroma-sweep 0.9s ease-in-out 0.1s forwards;
-  filter: blur(1px);
-}
-
-/* Animation déclenchée automatiquement (ancienne version) */
-.chroma-text-animate {
-  animation: chroma-sweep 0.9s ease-in-out 0.1s forwards;
-  filter: blur(1px);
-}
-
-/* 3. Animation keyframes */
-@keyframes chroma-sweep {
-  0% {
-    background-position: 100% 0;
-    filter: blur(1px);
-  }
-  100% {
-    background-position: 0 0;
-    filter: blur(0);
-  }
-}
-
-
 
 @theme inline {
   --font-sans: var(--font-space-grotesk);
@@ -383,4 +295,87 @@
   html.theme-loaded {
     visibility: visible;
   }
+
+  
+/* Optimize animations for performance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Optimize focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Improve text rendering */
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.chroma-text {
+  background-image: linear-gradient(
+    90deg,
+    var(--foreground) 0%,
+    var(--foreground) 33.33%,
+    #c679c4 40%,
+    #fa3d1d 45%,
+    #ffb005 50%,
+    #e1e1fe 55%,
+    #0358f7 60%,
+    transparent 66.67%,
+    transparent
+  );
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  will-change: background-position;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--foreground);
+}
+
+.chroma-text-viewport.animate {
+  animation: chroma-sweep 0.9s ease-in-out 0.1s forwards;
+  filter: blur(1px);
+}
+
+/* 3. Animation keyframes */
+@keyframes chroma-sweep {
+  0% {
+    background-position: 100% 0;
+    filter: blur(1px);
+  }
+  100% {
+    background-position: 0 0;
+    filter: blur(0);
+  }
+}
+
 }
