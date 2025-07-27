@@ -81,6 +81,19 @@ export async function loadExperiences(lang: string): Promise<ExperienceCollectio
 }
 
 /**
+ * Load experiences for a specific language
+ */
+export async function getExperiences(lang: string): Promise<ExperienceCollection> {
+  if (lang === 'en') {
+    const { experiences } = await import('./en/index.js');
+    return experiences;
+  } else {
+    const { experiences } = await import('./fr/index.js');
+    return experiences;
+  }
+}
+
+/**
  * Get experiences for a specific technology
  */
 export function getExperiencesForTechnology(experiences: Experience[], technology: string): Experience[] {

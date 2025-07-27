@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { LANGUAGE_ICONS } from "@/i18n/constants";
 import type { Profile } from "@/i18n/data/profile";
 import type { Lang } from "@/i18n/ui";
+import { CVDownloadButton } from "../CVDownloadButton";
 import { LanguageToggle } from "../LanguageToggle";
 import { ThemeToggle } from "../ui";
 
@@ -25,10 +26,11 @@ const { profile, lang } = Astro.props;
   <div class="flex justify-between items-start">
     <Avatar src={avatar} alt={profile.name} />
     <div
-      class="flex gap-2 items-center"
+      class="flex gap-3 items-center"
       role="toolbar"
       aria-label="Contrôles de navigation"
     >
+      <CVDownloadButton lang={lang} client:visible />
       <LanguageToggle currentLang={lang} client:load>
         <Icon name={LANGUAGE_ICONS[lang]} />
       </LanguageToggle>
