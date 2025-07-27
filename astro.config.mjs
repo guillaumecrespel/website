@@ -1,6 +1,7 @@
 // @ts-check
 
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, fontProviders } from 'astro/config';
@@ -15,7 +16,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [react(), icon()],
+  integrations: [react(), icon(), sitemap()],
 
   i18n: {
     locales: ["fr", "en"],

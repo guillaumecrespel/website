@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
+    "@astrojs/sitemap": "^3.4.1",
     "@iconify-json/circle-flags": "^1.2.5",
     "@iconify-json/devicon": "^1.2.5",
     "@iconify-json/devicon-plain": "^1.2.5",

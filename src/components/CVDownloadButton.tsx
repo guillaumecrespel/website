@@ -30,12 +30,17 @@ export function CVDownloadButton({ lang }: CVDownloadButtonProps) {
     document.body.removeChild(link);
   };
 
+  const label = lang === 'fr' ? 'Télécharger le CV' : 'Download CV';
+
   return (
-    <Button onClick={handleDownload} size="icon" className="[&_svg]:size-6">
-      <Icon icon="line-md:file-download"/>
-      <span className="hidden md:block">
-        {lang === 'fr' ? 'Télécharger CV' : 'Download CV'}
-      </span>
+    <Button
+      onClick={handleDownload}
+      size="icon"
+      className="[&_svg]:size-6"
+      aria-label={label}
+      title={label}
+    >
+      <Icon icon="line-md:file-download" />
     </Button>
   );
 }
