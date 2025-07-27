@@ -2,6 +2,37 @@
 
 This project is configured to automatically deploy to Fly.io on every push to the `main` branch, following [Fly.io's official recommendations](https://fly.io/docs/launch/continuous-deployment-with-github-actions/).
 
+## CV PDF Generation
+
+CV PDFs are generated locally and committed to the repository:
+
+### Generation Process
+
+1. **Local Generation**: Run `pnpm generate-cv` to generate CVs locally
+2. **Static Files**: CVs are saved to `public/cv/` directory
+3. **Build Inclusion**: Files in `public/` are automatically included in the build
+4. **Deployment**: CVs are deployed as static files with the application
+
+### CV Files
+
+- **French CV**: `public/cv/cv-fr.pdf`
+- **English CV**: `public/cv/cv-en.pdf`
+- **Access**: Available at `https://your-domain.com/cv/guillaume_crespel-fr.pdf` and `https://your-domain.com/cv/guillaume_crespel-en.pdf`
+
+### Usage
+
+```bash
+# Generate CVs locally
+pnpm generate-cv
+
+# Commit the generated files
+git add public/cv/
+git commit -m "Update CV PDFs"
+
+# Deploy normally
+flyctl deploy
+```
+
 ## Required Configuration
 
 ### 1. Fly.io API Token
