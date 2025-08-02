@@ -24,7 +24,7 @@ export default function Technologies({ technologies, experiences = [] }: Technol
   ];
 
   return (
-    <section className="mt-4 w-full">
+    <section className="mt-4 w-full pb-12">
       <div className="md:px-6 px-4 md:max-w-screen-lg mx-auto">
         <p className="text-left font-bold text-sm">{technologies.title}</p>
       </div>

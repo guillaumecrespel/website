@@ -34,11 +34,11 @@ export default function ProductSkillCard({
       experiences={relevantExperiences}
       title={`${t('experiences.title')} - ${skill.name}`}
       trigger={
-        <Card className="flex flex-row gap-2 p-4 relative overflow-hidden items-center bg-gradient-to-r from-accent-foreground to-transparent backdrop-blur-lg cursor-pointer">
+        <Card className="flex flex-row gap-2 p-4 relative overflow-hidden items-center bg-background cursor-pointer rounded-2xl">
           {children}
           <div className="flex flex-col gap-2">
             <ChromaText>{skill.name}</ChromaText>
-            <p className="w-fit md:text-lg text-sm">{skill.description}</p>
+            <p className="w-fit md:text-lg text-sm font-normal">{skill.description}</p>
           </div>
         </Card>
       }

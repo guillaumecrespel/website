@@ -29,10 +29,7 @@ export default function AllExperiencesButton({
           title={t('experiences.allExperiences')}
         >
           <Icon icon="heroicons:briefcase" className="size-4" />
-          <span className="hidden sm:inline">
-            {t('experiences.allExperiences')}
-          </span>
-          <span className="sm:hidden">{t('experiences.title')}</span>
+          <span className="inline-block">{t('experiences.allExperiences')}</span>
         </Button>
       }
     />

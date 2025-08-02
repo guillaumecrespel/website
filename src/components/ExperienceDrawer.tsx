@@ -11,8 +11,7 @@ import {
 } from '@/components/ui/drawer';
 import type { Experience } from '@/i18n/data/experiences/types';
 import type { Lang } from '@/i18n/ui';
-import { useTranslations } from '@/i18n/ui';
-import { Card } from './ui/card';
+import { Card } from './ui';
 import { Skeleton } from './ui/skeleton';
 
 // Lazy load the drawer content for better performance
@@ -31,7 +30,6 @@ export default function ExperienceDrawer({
   trigger,
   lang = 'fr',
 }: ExperienceDrawerProps) {
-  const t = useTranslations(lang);
   const [isOpen, setIsOpen] = useState(false);
 
   const sortedExperiences = [...experiences].sort((a, b) => {
@@ -43,18 +41,12 @@ export default function ExperienceDrawer({
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent className="max-h-[90vh] bg-gradient-to-br from-accent-foreground from-60% to-transparent backdrop-blur-lg">
-        <DrawerHeader className="border-b border-border">
-          <DrawerTitle className="text-xl font-bold flex items-center gap-2">
+      <DrawerContent className="max-h-[95vh]">
+        <DrawerHeader className="border-b border-border relative">
+          <DrawerTitle className="text-xl font-bold flex items-center gap-2 pr-12">
             <Icon icon="heroicons:briefcase" className="size-6" />
             {title}
           </DrawerTitle>
-          <p className="text-sm text-muted-foreground">
-            {experiences.length}{' '}
-            {t(
-              `experiences.experienceCount.${experiences.length === 1 ? 'one' : 'other'}`,
-            )}
-          </p>
         </DrawerHeader>
         <Suspense
           fallback={
