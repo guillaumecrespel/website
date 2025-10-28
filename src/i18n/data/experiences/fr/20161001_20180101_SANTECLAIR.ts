@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import santeclairLogo from "@/assets/images/company/santeclair.png";
 
 export const experience: Experience = {
   id: "santeclair-lead-frontend-developer",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "Lead Développeur - front-end",
   company: {
     name: "SANTECLAIR",
-    logo: "https://media.licdn.com/dms/image/v2/C4E0BAQHYSXChBGAAQw/company-logo_100_100/company-logo_100_100/0/1672736118064/santeclair_logo?e=1755734400&v=beta&t=6-HEroaj6q3qCKShD93L4VRF4ptUjXh7SNEmgHPjdAM",
+    logo: santeclairLogo.src,
     website: "https://www.linkedin.com/company/1919614/"
   },
   location: "Région de Nantes, France",

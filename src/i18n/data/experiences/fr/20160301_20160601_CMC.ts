@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import cmcLogo from "@/assets/images/company/cmc-contentflow.png";
 
 export const experience: Experience = {
   id: "cmc-contentflow-lead-full-stack",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "Lead Développeur Full Stack",
   company: {
     name: "CMC (Creative Media Consulting) - ContentFlow",
-    logo: "https://media.licdn.com/dms/image/v2/C4D0BAQFKTZGstl0TkA/company-logo_100_100/company-logo_100_100/0/1631328270475?e=1755734400&v=beta&t=uWPzF1_Wf7mXU853lwf6f07Wh8bkvckJaEomBB8LtcQ",
+    logo: cmcLogo.src,
     website: "https://www.linkedin.com/company/15238136/"
   },
   location: "Région de Paris, France",

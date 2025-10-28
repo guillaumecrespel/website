@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import cockpitAgricultureLogo from "@/assets/images/company/cockpit-agriculture.png";
 
 export const experience: Experience = {
   id: "cockpit-agriculture-interim-cto",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "Interim CTO",
   company: {
     name: "Cockpit Agriculture",
-    logo: "https://media.licdn.com/dms/image/v2/D4E0BAQGVY9pFQiGVsA/company-logo_100_100/B4EZXYaFrsH0AQ-/0/1743092473054?e=1755734400&v=beta&t=1RbIfG3NhRNzI_V-mR7oRM6GrGwB_08QgJ1hpmlk3T8",
+    logo: cockpitAgricultureLogo.src,
     website: "https://www.linkedin.com/company/106799350/"
   },
   location: "Nantes, Pays de la Loire, France",

@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import societeGeneraleLogo from "@/assets/images/company/societe-generale.png";
 
 export const experience: Experience = {
   id: "societe-generale-full-stack-developer",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "Développeur Full Stack",
   company: {
     name: "Societe Generale Corporate and Investment Banking - SGCIB",
-    logo: "https://media.licdn.com/dms/image/v2/C560BAQFY0AGazHvXWw/company-logo_100_100/company-logo_100_100/0/1643103465869/societegenerale_corporate_and_investment_banking_logo?e=1755734400&v=beta&t=bDjfqzsreSu_IXOCgR-sxhYNE0orVjiwCOyb4q4yrkc",
+    logo: societeGeneraleLogo.src,
     website: "https://www.linkedin.com/company/3496831/"
   },
   location: "Nantes, Pays de la Loire, France",

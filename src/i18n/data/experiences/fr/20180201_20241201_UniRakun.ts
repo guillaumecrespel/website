@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import unirakunLogo from "@/assets/images/company/unirakun.png";
 
 export const experience: Experience = {
   id: "uni-rakun-co-founder-developer",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "Co-fondateur & Développeur",
   company: {
     name: "uni rakun",
-    logo: "https://media.licdn.com/dms/image/v2/C4D0BAQGuVbNzquJDLQ/company-logo_100_100/company-logo_100_100/0/1630544664384/unirakun_logo?e=1755734400&v=beta&t=49jYBkDBDwUOihpJkXH6jZkCBc8Uw1oM_SoNP-XWIfw",
+    logo: unirakunLogo.src,
     website: "https://www.linkedin.com/company/18379892/"
   },
   location: "Région de Nantes, France",

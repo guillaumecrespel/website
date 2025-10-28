@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import metroscopeLogo from "@/assets/images/company/metroscope.png";
 
 export const experience: Experience = {
   id: "metroscope-frontend-developer",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "Développeur Frontend",
   company: {
     name: "Metroscope",
-    logo: "https://media.licdn.com/dms/image/v2/C4D0BAQHwC7TlrfFsnQ/company-logo_100_100/company-logo_100_100/0/1630574431064/metroscope_edf_logo?e=1755734400&v=beta&t=gvuw9j-4YcCdJxtJgqvRKt6T6EC_T2KYPeeBfStpaD4",
+    logo: metroscopeLogo.src,
     website: "https://www.linkedin.com/company/11456139/"
   },
   location: "Région de Paris, France",

@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import ministereSanteLogo from "@/assets/images/company/ministere-sante.png";
 
 export const experience: Experience = {
   id: "ministere-sante-lead-full-stack",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "Lead Développeur full stack",
   company: {
     name: "Ministère des solidarités et de la santé",
-    logo: "https://media.licdn.com/dms/image/v2/D4E0BAQFMDiJR3HjFTw/company-logo_100_100/company-logo_100_100/0/1735027121851/ministre_des_solidarites_de_la_sant_logo?e=1755734400&v=beta&t=IKIdiRQDaDQ7pjQORa6_Lw2FEGIkDDS9H5c0Y9Ycah4",
+    logo: ministereSanteLogo.src,
     website: "https://www.linkedin.com/company/10348835/"
   },
   location: "Région de Nantes, France",

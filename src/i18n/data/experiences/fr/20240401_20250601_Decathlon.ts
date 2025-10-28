@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import decathlonLogo from "@/assets/images/company/decathlon.png";
 
 export const experience: Experience = {
   id: "decathlon-senior-frontend-developer",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "Senior Frontend Developer",
   company: {
     name: "Decathlon France",
-    logo: "https://media.licdn.com/dms/image/v2/D4E0BAQECVBtJl7JLzg/company-logo_100_100/company-logo_100_100/0/1710241982590/decathlon_logo?e=1755734400&v=beta&t=bsXvCUMKyH0i7vLtwxAftpv_qF5iT2SrbzeJjgMviZs",
+    logo: decathlonLogo.src,
     website: "https://www.linkedin.com/company/6150/"
   },
   location: "Nantes, Pays de la Loire, France",

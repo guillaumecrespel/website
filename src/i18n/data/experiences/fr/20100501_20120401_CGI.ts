@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import cgiLogo from "@/assets/images/company/cgi.png";
 
 export const experience: Experience = {
   id: "cgi-developer-ops",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "Développeur / Ops",
   company: {
     name: "CGI",
-    logo: "https://media.licdn.com/dms/image/v2/C4E0BAQErzXWSFkn9tQ/company-logo_100_100/company-logo_100_100/0/1663664110809/cgi_logo?e=1755734400&v=beta&t=TlDnQaoU80zasK_21ClIQHfrW4ukwLwNToagQE77iGQ",
+    logo: cgiLogo.src,
     website: "https://www.linkedin.com/company/1415/"
   },
   location: "France",

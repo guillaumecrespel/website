@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import darvaLogo from "@/assets/images/company/darva.png";
 
 export const experience: Experience = {
   id: "darva-nodejs-trainer",
@@ -7,7 +8,7 @@ export const experience: Experience = {
   position: "NodeJS Trainer",
   company: {
     name: "DARVA",
-    logo: "https://media.licdn.com/dms/image/v2/C4D0BAQFx8sS94R2GGw/company-logo_100_100/company-logo_100_100/0/1630536771808/darva_logo?e=1755734400&v=beta&t=PruFl1wfu3gJH6YWyaz7CHB0dm3I9Kyzg27mKxBPHKQ",
+    logo: darvaLogo.src,
     website: "https://www.linkedin.com/company/368950/"
   },
   location: "Niort region, France",
