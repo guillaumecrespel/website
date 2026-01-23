@@ -40,6 +40,17 @@
       "description": "Pragmatic solutions that avoid over-engineering and deliver value quickly"
     }
   },
+  "saas": {
+    "title": "Developed by me",
+    "kojimo": {
+      "name": "Kojimo",
+      "description": "The Business Accelerator for Real Estate Agents."
+    },
+    "qrakun": {
+      "name": "QRakun",
+      "description": "Analyze your links and personalized QR Codes in real time."
+    }
+  },
   "technologies": {
     "title": "I handle the technical part",
     "viewAll": "View all technologies",

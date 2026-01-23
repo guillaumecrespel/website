@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon/components";
+import SaaSCard from "@/components/SaaSCard";
+import type { SaaSList } from "@/i18n/data/saas";
+import type { Lang } from "@/i18n/ui";
+
+interface Props {
+  saas: SaaSList;
+  lang: Lang;
+}
+
+const { saas, lang } = Astro.props;
+---
+
+<section class="mt-4 w-full">
+  <p class="w-fit font-black text-sm">{saas.title}</p>
+  <section class="flex flex-col gap-4 mt-4">
+    {
+      saas.saas.map((saasItem) => (
+        <SaaSCard saas={saasItem} client:visible>
+          <Icon
+            name={saasItem.icon}
+            class="h-[72px] min-w-[72px]"
+          />
+        </SaaSCard>
+      ))
+    }
+  </section>
+</section>

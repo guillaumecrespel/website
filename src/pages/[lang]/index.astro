@@ -2,11 +2,13 @@
 import AllExperiencesButton from "@/components/AllExperiencesButton";
 import ProductSkills from "@/components/sections/ProductSkills.astro";
 import Profile from "@/components/sections/Profile.astro";
+import SaaS from "@/components/sections/SaaS.astro";
 import SoftSkills from "@/components/sections/SoftSkills.astro";
 import Technologies from "@/components/sections/Technologies";
 import { loadExperiences } from "@/i18n/data/experiences/utils.js";
 import { getProductSkills } from "@/i18n/data/product-skills.js";
 import { getProfile } from "@/i18n/data/profile.js";
+import { getSaaS } from "@/i18n/data/saas.js";
 import { getSoftSkills } from "@/i18n/data/soft-skills.js";
 import { getTechnologies } from "@/i18n/data/technologies.js";
 import type { Lang } from "@/i18n/ui";
@@ -21,6 +23,7 @@ const { lang } = Astro.params as { lang: Lang };
 const profile = await getProfile(lang);
 const softSkills = await getSoftSkills(lang);
 const productSkills = await getProductSkills(lang);
+const saas = await getSaaS(lang);
 const technologies = await getTechnologies(lang);
 const experiences = await loadExperiences(lang);
 
@@ -66,6 +69,7 @@ const alternateURLs = {
     <Profile profile={profile} lang={lang} />
     <SoftSkills softSkills={softSkills} experiences={experiences} lang={lang} />
     <ProductSkills productSkills={productSkills} experiences={experiences} lang={lang} />
+    <SaaS saas={saas} lang={lang} />
     
     <!-- Bouton pour voir toutes les expériences -->
     <div class="flex justify-center w-full">
