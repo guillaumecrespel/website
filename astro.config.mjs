@@ -25,14 +25,11 @@ export default defineConfig({
       prefixDefaultLocale: false
     }
   },
-
-  experimental: {
-    fonts: [
-      {
-        provider: fontProviders.google(),
-        name: 'Space Grotesk',
-        cssVariable: '--font-space-grotesk',
-      },
-    ],
-  },
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: 'Space Grotesk',
+      cssVariable: '--font-space-grotesk',
+    },
+  ],
 });
