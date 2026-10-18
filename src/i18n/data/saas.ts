@@ -31,6 +31,15 @@ export async function getSaaS(lang: Lang): Promise<SaaSList> {
         fgColor: '#ffffff',
       },
       {
+        id: 'brikia',
+        name: ui.saas.brikia.name,
+        description: ui.saas.brikia.description,
+        url: 'https://brikia.app',
+        icon: 'brikia',
+        bgColor: '#C8553D',
+        fgColor: '#ffffff',
+      },
+      {
         id: 'qrakun',
         name: ui.saas.qrakun.name,
         description: ui.saas.qrakun.description,
