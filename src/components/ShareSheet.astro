@@ -1,0 +1,228 @@
+---
+/**
+ * "Share my profile" sheet: editable message, deep links (WhatsApp, LinkedIn,
+ * Telegram, e-mail, SMS), the system share sheet when available, copy link,
+ * a QR code for in-person sharing and a vCard. Links are prefilled at build
+ * time so they work without JS; `initShare` in site.ts keeps them in sync.
+ */
+import { Icon } from 'astro-icon/components';
+import Sheet from '@/components/Sheet.astro';
+import { type Lang, useTranslations } from '@/i18n/ui';
+import { qrSvg } from '@/lib/qr';
+import {
+  SHARE_CHANNELS,
+  SHARE_SHEET_ID,
+  type ShareChannel,
+  type ShareContent,
+  type ShareKind,
+  shareHref,
+} from '@/lib/share';
+import { absoluteUrl, cvPath, cvPdfPath, homePath, vcardPath } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  /** What the sheet shares first: the site, or the resume on the CV page. */
+  initial?: ShareKind;
+}
+
+const { lang, initial = 'site' } = Astro.props;
+const t = useTranslations(lang);
+
+const contents: Record<ShareKind, ShareContent> = {
+  site: {
+    url: absoluteUrl(homePath(lang)),
+    message: t('share.messageSite'),
+    subject: t('share.subjectSite'),
+  },
+  cv: {
+    url: absoluteUrl(cvPath(lang)),
+    message: t('share.messageCv'),
+    subject: t('share.subjectCv'),
+  },
+};
+const current = contents[initial];
+
+const CHANNEL_ICONS: Record<ShareChannel, { icon: string; className: string }> = {
+  whatsapp: { icon: 'fa6-brands:whatsapp', className: 'bg-[#25d366] text-[#0b0b0c]' },
+  linkedin: { icon: 'fa6-brands:linkedin-in', className: 'bg-[#0a66c2] text-white' },
+  telegram: { icon: 'fa6-brands:telegram', className: 'bg-[#26a5e4] text-white' },
+  email: { icon: 'lucide:mail', className: 'bg-yellow text-[#0b0b0c]' },
+  sms: { icon: 'lucide:message-circle', className: 'bg-pink text-[#0b0b0c]' },
+};
+
+const kinds: ShareKind[] = ['site', 'cv'];
+const qrCodes = kinds.map((kind) => ({
+  kind,
+  svg: qrSvg(
+    contents[kind].url,
+    t('share.qrAlt', { url: contents[kind].url.replace(/^https:\/\//, '') }),
+  ),
+}));
+
+const tile =
+  'brutal brutal-interactive flex h-full flex-col items-center gap-2 rounded-2xl bg-surface px-2 py-3 text-center text-sm font-semibold';
+const tileIcon = 'grid size-11 place-items-center rounded-full border-2 border-line';
+---
+
+<Sheet id={SHARE_SHEET_ID} lang={lang} title={t('share.title')} subtitle={t('share.subtitle')}>
+  <div
+    class="share flex flex-col gap-6"
+    data-share
+    data-initial={initial}
+    data-pdf={cvPdfPath(lang)}
+    data-copied={t('share.copied')}
+    data-copied-status={t('share.copiedStatus')}
+    data-site={JSON.stringify(contents.site)}
+    data-cv={JSON.stringify(contents.cv)}
+  >
+    <fieldset class="flex flex-col gap-2">
+      <legend class="mb-2 text-sm font-semibold">{t('share.what')}</legend>
+      <div class="share__kinds inline-flex w-fit rounded-full border-2 border-line bg-surface-2 p-1">
+        {
+          kinds.map((kind) => (
+            <label class="share__kind">
+              <input type="radio" name="share-kind" value={kind} checked={kind === initial} class="sr-only" />
+              <span>{t(`share.${kind}`)}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <div class="flex flex-col gap-2">
+      <label for="share-message" class="text-sm font-semibold">{t('share.messageLabel')}</label>
+      <textarea
+        id="share-message"
+        rows="3"
+        data-share-message
+        aria-describedby="share-message-hint"
+        class="w-full resize-y rounded-2xl border-2 border-line bg-surface px-4 py-3 text-base leading-snug"
+      >{current.message}</textarea>
+      <p id="share-message-hint" class="text-sm text-fg-muted">{t('share.messageHint')}</p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <p class="text-sm font-semibold">{t('share.sendWith')}</p>
+      <ul class="grid grid-cols-[repeat(auto-fit,minmax(5.25rem,1fr))] gap-3">
+        <li data-share-native-item hidden>
+          <button type="button" data-share-native class:list={[tile, 'w-full']}>
+            <span class:list={[tileIcon, 'bg-main text-main-fg']}>
+              <Icon name="lucide:share" class="size-5" aria-hidden="true" />
+            </span>
+            {t('share.native')}
+          </button>
+        </li>
+        {
+          SHARE_CHANNELS.map((channel) => (
+            <li>
+              <a
+                href={shareHref(channel, current)}
+                data-share-channel={channel}
+                target={channel === 'email' || channel === 'sms' ? undefined : '_blank'}
+                rel="noopener"
+                class={tile}
+              >
+                <span class:list={[tileIcon, CHANNEL_ICONS[channel].className]}>
+                  <Icon name={CHANNEL_ICONS[channel].icon} class="size-5" aria-hidden="true" />
+                </span>
+                {t(`share.channels.${channel}`)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="share-url" class="text-sm font-semibold">{t('share.link')}</label>
+      <div class="flex flex-col gap-2 sm:flex-row">
+        <input
+          id="share-url"
+          type="url"
+          readonly
+          value={current.url}
+          data-share-url
+          class="h-12 min-w-0 flex-1 rounded-full border-2 border-line bg-surface-2 px-4 text-sm"
+        />
+        <button
+          type="button"
+          data-share-copy="link"
+          class="brutal brutal-interactive inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-main px-5 font-semibold text-main-fg"
+        >
+          <Icon name="lucide:copy" class="size-4" aria-hidden="true" data-icon-idle />
+          <Icon name="lucide:check" class="hidden size-4" aria-hidden="true" data-icon-done />
+          <span data-label>{t('share.copyLink')}</span>
+        </button>
+      </div>
+      <button
+        type="button"
+        data-share-copy="message"
+        class="inline-flex w-fit items-center gap-2 rounded-full py-1 text-sm font-semibold underline decoration-2 underline-offset-4 hover:decoration-main"
+      >
+        <Icon name="lucide:copy" class="size-4" aria-hidden="true" data-icon-idle />
+        <Icon name="lucide:check" class="hidden size-4" aria-hidden="true" data-icon-done />
+        <span data-label>{t('share.copyMessage')}</span>
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-4 rounded-3xl border-2 border-line bg-surface-2 p-4 sm:flex-row sm:items-center sm:p-5">
+      {
+        qrCodes.map(({ kind, svg }) => (
+          <div
+            class="share__qr size-36 shrink-0 self-center overflow-hidden rounded-2xl border-2 border-line bg-white sm:self-auto"
+            data-share-qr={kind}
+            set:html={svg}
+          />
+        ))
+      }
+      <div class="flex flex-col gap-3">
+        <div>
+          <p class="font-bold">{t('share.qrTitle')}</p>
+          <p class="text-sm text-fg-muted">{t('share.qrText')}</p>
+        </div>
+        <a
+          href={vcardPath(lang)}
+          class="brutal brutal-interactive inline-flex h-11 w-fit items-center gap-2 rounded-full bg-surface px-4 text-sm font-semibold"
+        >
+          <Icon name="lucide:user-plus" class="size-4" aria-hidden="true" />
+          {t('share.saveContact')}
+        </a>
+        <p class="text-xs text-fg-muted">{t('share.saveContactHint')}</p>
+      </div>
+    </div>
+
+    <p class="sr-only" aria-live="polite" data-share-status></p>
+  </div>
+</Sheet>
+
+<style>
+  .share__kind span {
+    display: inline-flex;
+    align-items: center;
+    height: 2.25rem;
+    padding: 0 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+  }
+  .share__kind input:checked + span {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .share__kind input:focus-visible + span {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+  }
+
+  /* The QR code follows the selected kind, with or without JS. */
+  .share__qr :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+  .share:has(input[value='site']:checked) [data-share-qr='cv'],
+  .share:has(input[value='cv']:checked) [data-share-qr='site'] {
+    display: none;
+  }
+</style>

@@ -3,6 +3,7 @@ import SocialLinks from '@/components/SocialLinks.astro';
 import type { Profile } from '@/i18n/data/profile';
 import { UNIRAKUN_URL } from '@/i18n/data/saas';
 import { type Lang, useTranslations } from '@/i18n/ui';
+import { SHARE_SHEET_ID } from '@/lib/share';
 import { cvPath, cvPdfPath } from '@/lib/site';
 
 interface Props {
@@ -24,6 +25,16 @@ const year = new Date().getFullYear();
     </div>
     <div class="flex flex-col gap-2 text-sm md:items-end">
       <ul class="flex flex-wrap gap-x-4 gap-y-1 font-medium">
+        <li>
+          <button
+            type="button"
+            commandfor={SHARE_SHEET_ID}
+            command="show-modal"
+            class="cursor-pointer underline-offset-4 hover:underline"
+          >
+            {t('footer.share')}
+          </button>
+        </li>
         <li><a class="underline-offset-4 hover:underline" href={cvPath(lang)}>{t('actions.viewCv')}</a></li>
         <li><a class="underline-offset-4 hover:underline" href={cvPdfPath(lang)} download>{t('actions.downloadCv')}</a></li>
         <li><a class="underline-offset-4 hover:underline" href="/llms.txt">{t('footer.forAi')}</a></li>

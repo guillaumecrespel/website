@@ -2,16 +2,20 @@
 import { Font } from 'astro:assets';
 import '@/styles/global.css';
 import Background from '@/components/Background.astro';
+import ShareSheet from '@/components/ShareSheet.astro';
 import { type Lang, useTranslations } from '@/i18n/ui';
+import type { ShareKind } from '@/lib/share';
 
 interface Props {
   lang: Lang;
   /** Show the decorative shapes background. */
   backdrop?: boolean;
   bodyClass?: string;
+  /** Render the share sheet, and what it shares first. `false` to omit it. */
+  share?: ShareKind | false;
 }
 
-const { lang, backdrop = true, bodyClass = '' } = Astro.props;
+const { lang, backdrop = true, bodyClass = '', share = 'site' } = Astro.props;
 const t = useTranslations(lang);
 
 // Runs before first paint: no flash of the wrong theme, no hidden page.
@@ -60,6 +64,8 @@ const themeScript = `(function(){var r=document.documentElement;r.classList.add(
     </main>
 
     <slot name="footer" />
+
+    {share && <ShareSheet lang={lang} initial={share} />}
 
     <script src="@/scripts/site.ts"></script>
   </body>

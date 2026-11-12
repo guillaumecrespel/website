@@ -265,13 +265,50 @@
     "lead": "A few lines about your context are enough. I'll get back to you with a first take on your need and concrete next steps.",
     "linkedin": "Message me on LinkedIn",
     "malt": "Contact me on Malt",
-    "email": "Send me an email"
+    "email": "Send me an email",
+    "share": "Not for you, but someone comes to mind?"
+  },
+  "share": {
+    "button": "Share",
+    "buttonLong": "Share my profile",
+    "title": "Share my profile",
+    "subtitle": "Know someone who needs a C(P)TO or a custom app? Send them the link in one tap.",
+    "what": "What to share?",
+    "site": "The website",
+    "cv": "The resume",
+    "messageLabel": "Your message",
+    "messageHint": "The link is added at the end.",
+    "messageSite": "I recommend Guillaume Crespel, freelance C(P)TO in Nantes, France: custom business apps for small companies, and product and engineering leadership for startups.",
+    "messageCv": "Here is Guillaume Crespel's resume, freelance C(P)TO in Nantes, France, working across product and engineering.",
+    "subjectSite": "I recommend Guillaume Crespel",
+    "subjectCv": "Guillaume Crespel's resume",
+    "sendWith": "Send with",
+    "native": "More apps",
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "linkedin": "LinkedIn",
+      "telegram": "Telegram",
+      "email": "Email",
+      "sms": "Text"
+    },
+    "link": "Link to share",
+    "copyLink": "Copy link",
+    "copyMessage": "Copy message and link",
+    "copied": "Copied",
+    "copiedStatus": "Copied to clipboard",
+    "qrTitle": "In person",
+    "qrText": "Let someone scan this code with their phone to open the page.",
+    "qrAlt": "QR code to {url}",
+    "saveContact": "Save contact",
+    "saveContactHint": "Contact card with my website, LinkedIn and Malt, ready for an address book.",
+    "vcardNote": "Custom business apps for small companies, and freelance C(P)TO for startups. Based in Nantes, France."
   },
   "footer": {
     "rights": "All rights reserved.",
     "builtWith": "Static site built with Astro, no trackers.",
     "forAi": "Summary for AI assistants (llms.txt)",
-    "unirakun": "Unirakun, our app company"
+    "unirakun": "Unirakun, our app company",
+    "share": "Share this profile"
   },
   "cv": {
     "profile": "Profile",

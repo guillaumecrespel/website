@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 import avatar from '@/assets/images/avatar.png';
 import ThemeToggle from '@/components/ThemeToggle.astro';
 import { type Lang, useTranslations } from '@/i18n/ui';
+import { SHARE_SHEET_ID } from '@/lib/share';
 import { cvPdfPath, homePath, otherLang } from '@/lib/site';
 
 interface Props {
@@ -58,6 +59,16 @@ const sectionHref = (id: string) => (isHome ? `#${id}` : `${home}#${id}`);
     }
 
     <div class="flex shrink-0 items-center gap-2">
+      <button
+        type="button"
+        commandfor={SHARE_SHEET_ID}
+        command="show-modal"
+        class="brutal brutal-interactive grid size-10 place-items-center rounded-full bg-surface"
+        aria-label={t('share.buttonLong')}
+        title={t('share.buttonLong')}
+      >
+        <Icon name="lucide:share-2" class="size-[1.15rem]" aria-hidden="true" />
+      </button>
       <a
         href={cvPdfPath(lang)}
         download

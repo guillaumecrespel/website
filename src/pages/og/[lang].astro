@@ -18,7 +18,7 @@ const lang = Astro.params.lang as Lang;
 const { profile, ui, stats } = getSiteContent(lang);
 ---
 
-<BaseLayout lang={lang} backdrop={false} bodyClass="og-body">
+<BaseLayout lang={lang} backdrop={false} share={false} bodyClass="og-body">
   <Fragment slot="head">
     <title>OG · {profile.name}</title>
     <meta name="robots" content="noindex, nofollow" />

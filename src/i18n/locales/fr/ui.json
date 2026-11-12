@@ -265,13 +265,50 @@
     "lead": "Quelques lignes sur votre contexte suffisent. Je vous réponds avec un premier regard sur votre besoin et des pistes concrètes pour avancer.",
     "linkedin": "M'écrire sur LinkedIn",
     "malt": "Me contacter sur Malt",
-    "email": "M'envoyer un e-mail"
+    "email": "M'envoyer un e-mail",
+    "share": "Pas pour vous, mais vous pensez à quelqu'un ?"
+  },
+  "share": {
+    "button": "Partager",
+    "buttonLong": "Partager mon profil",
+    "title": "Partager mon profil",
+    "subtitle": "Quelqu'un autour de vous cherche un C(P)TO ou une application sur mesure ? Envoyez-lui le lien en un geste.",
+    "what": "Que partager ?",
+    "site": "Le site",
+    "cv": "Le CV",
+    "messageLabel": "Votre message",
+    "messageHint": "Le lien est ajouté automatiquement à la fin.",
+    "messageSite": "Je te recommande Guillaume Crespel, C(P)TO freelance à Nantes : applications métier sur mesure pour les TPE et PME, et accompagnement produit et tech des startups.",
+    "messageCv": "Voici le CV de Guillaume Crespel, C(P)TO freelance à Nantes, à la croisée du produit et de la tech.",
+    "subjectSite": "Je te recommande Guillaume Crespel",
+    "subjectCv": "CV de Guillaume Crespel",
+    "sendWith": "Envoyer avec",
+    "native": "Autres apps",
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "linkedin": "LinkedIn",
+      "telegram": "Telegram",
+      "email": "E-mail",
+      "sms": "SMS"
+    },
+    "link": "Lien à partager",
+    "copyLink": "Copier le lien",
+    "copyMessage": "Copier le message et le lien",
+    "copied": "Copié",
+    "copiedStatus": "Copié dans le presse-papiers",
+    "qrTitle": "En face à face",
+    "qrText": "Faites scanner ce code avec un téléphone pour ouvrir la page.",
+    "qrAlt": "QR code vers {url}",
+    "saveContact": "Enregistrer le contact",
+    "saveContactHint": "Fiche contact avec mon site, LinkedIn et Malt, prête pour le carnet d'adresses.",
+    "vcardNote": "Applications métier sur mesure pour les TPE et PME, et C(P)TO freelance pour les startups. Basé à Nantes."
   },
   "footer": {
     "rights": "Tous droits réservés.",
     "builtWith": "Site statique construit avec Astro, sans tracker.",
     "forAi": "Résumé pour les IA (llms.txt)",
-    "unirakun": "Unirakun, notre société d'applications"
+    "unirakun": "Unirakun, notre société d'applications",
+    "share": "Partager ce profil"
   },
   "cv": {
     "profile": "Profil",

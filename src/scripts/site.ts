@@ -1,7 +1,15 @@
 /**
- * The only client-side script of the site (~1 KB). Everything works without it
- * except the theme toggle; it adds polish and fallbacks for older browsers.
+ * The only client-side script of the site (a few KB). Everything works without
+ * it except the theme toggle; it adds polish and fallbacks for older browsers.
  */
+
+import {
+  type ShareChannel,
+  type ShareContent,
+  type ShareKind,
+  shareHref,
+  shareText,
+} from '@/lib/share';
 
 type ThemeChoice = 'light' | 'dark' | 'system';
 const THEME_KEY = 'theme';
@@ -173,8 +181,137 @@ function initOnView() {
   playOnView('.timeline-item[data-play]', 'is-played', { rootMargin: '0px 0px -30% 0px' });
 }
 
+/**
+ * Share sheet: keeps the deep links in sync with the edited message, offers
+ * the system share sheet (with the PDF itself for the resume when the device
+ * can share files) and copies the link or the whole message.
+ */
+function initShare() {
+  const root = document.querySelector<HTMLElement>('[data-share]');
+  const message = root?.querySelector<HTMLTextAreaElement>('[data-share-message]');
+  const urlInput = root?.querySelector<HTMLInputElement>('[data-share-url]');
+  if (!root || !message || !urlInput) return;
+  const panel = root;
+  const sheet = panel.closest('dialog');
+  const status = panel.querySelector<HTMLElement>('[data-share-status]');
+
+  const defaults: Record<ShareKind, ShareContent> = {
+    site: JSON.parse(panel.dataset.site ?? '{}'),
+    cv: JSON.parse(panel.dataset.cv ?? '{}'),
+  };
+  let kind: ShareKind = panel.dataset.initial === 'cv' ? 'cv' : 'site';
+  let pdf: File | undefined;
+
+  const content = (): ShareContent => ({ ...defaults[kind], message: message.value });
+
+  function render() {
+    const current = content();
+    if (urlInput) urlInput.value = current.url;
+    for (const link of panel.querySelectorAll<HTMLAnchorElement>('[data-share-channel]')) {
+      link.href = shareHref(link.dataset.shareChannel as ShareChannel, current);
+    }
+  }
+
+  const canShareFiles = typeof navigator.canShare === 'function';
+
+  /** Fetches the resume PDF ahead of the tap: sharing must start within the click. */
+  function preparePdf() {
+    if (pdf || kind !== 'cv' || !canShareFiles || !panel.dataset.pdf) return;
+    const path = panel.dataset.pdf;
+    fetch(path)
+      .then((response) => (response.ok ? response.blob() : Promise.reject()))
+      .then((blob) => {
+        const file = new File([blob], path.split('/').pop() ?? 'cv.pdf', {
+          type: 'application/pdf',
+        });
+        if (navigator.canShare({ files: [file] })) pdf = file;
+      })
+      .catch(() => {
+        /* the link is shared instead */
+      });
+  }
+
+  panel.addEventListener('change', (event) => {
+    const input = event.target as HTMLInputElement;
+    if (input.name !== 'share-kind') return;
+    const previous = defaults[kind].message;
+    kind = input.value === 'cv' ? 'cv' : 'site';
+    // Swap the suggested message unless the visitor wrote their own.
+    if (message.value.trim() === previous.trim() || !message.value.trim())
+      message.value = defaults[kind].message;
+    render();
+    preparePdf();
+  });
+  message.addEventListener('input', render);
+  sheet?.addEventListener('toggle', () => {
+    if (sheet.open) preparePdf();
+  });
+
+  const nativeItem = panel.querySelector<HTMLElement>('[data-share-native-item]');
+  const nativeButton = panel.querySelector<HTMLButtonElement>('[data-share-native]');
+  if (nativeItem && nativeButton && typeof navigator.share === 'function') {
+    nativeItem.hidden = false;
+    nativeButton.addEventListener('click', async () => {
+      const current = content();
+      const withFile = kind === 'cv' && pdf;
+      const data: ShareData = withFile
+        ? { title: current.subject, text: shareText(current), files: [pdf as File] }
+        : { title: current.subject, text: current.message.trim(), url: current.url };
+      try {
+        await navigator.share(data);
+      } catch (error) {
+        // Some targets refuse files: retry with the link, unless the visitor cancelled.
+        if (withFile && (error as DOMException).name !== 'AbortError') {
+          await navigator
+            .share({ title: current.subject, text: current.message.trim(), url: current.url })
+            .catch(() => {});
+        }
+      }
+    });
+  }
+
+  /** Clipboard API; when refused, select the link so it can be copied by hand. */
+  async function writeClipboard(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      urlInput?.focus();
+      urlInput?.select();
+      return false;
+    }
+  }
+
+  for (const button of panel.querySelectorAll<HTMLButtonElement>('[data-share-copy]')) {
+    const label = button.querySelector<HTMLElement>('[data-label]');
+    const idle = label?.textContent ?? '';
+    let timer: number | undefined;
+    button.addEventListener('click', async () => {
+      const current = content();
+      const copied = await writeClipboard(
+        button.dataset.shareCopy === 'link' ? current.url : shareText(current),
+      );
+      if (!copied) return;
+      if (label) label.textContent = panel.dataset.copied ?? idle;
+      button.querySelector('[data-icon-idle]')?.classList.add('hidden');
+      button.querySelector('[data-icon-done]')?.classList.remove('hidden');
+      if (status) status.textContent = panel.dataset.copiedStatus ?? '';
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        if (label) label.textContent = idle;
+        button.querySelector('[data-icon-idle]')?.classList.remove('hidden');
+        button.querySelector('[data-icon-done]')?.classList.add('hidden');
+        if (status) status.textContent = '';
+      }, 2000);
+    });
+  }
+
+  render();
+}
+
 initTheme();
 initOnView();
 initDialogs();
 initMenu();
 initScrollSpy();
+initShare();

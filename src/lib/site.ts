@@ -24,6 +24,11 @@ export function cvPdfPath(lang: Lang): string {
   return `/cv/guillaume_crespel_cv_${lang}.pdf`;
 }
 
+/** Contact card (vCard) for address books. */
+export function vcardPath(lang: Lang): string {
+  return `/${lang}/guillaume-crespel.vcf`;
+}
+
 export function ogImagePath(lang: Lang): string {
   return `/og/guillaume-crespel-${lang}.png`;
 }

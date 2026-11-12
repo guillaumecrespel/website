@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { getSocialLink, type Profile } from '@/i18n/data/profile';
 import { type Lang, useTranslations } from '@/i18n/ui';
+import { SHARE_SHEET_ID } from '@/lib/share';
 import { cvPdfPath } from '@/lib/site';
 
 interface Props {
@@ -78,6 +79,18 @@ const malt = getSocialLink(profile, 'malt');
           {t('actions.downloadCv')}
         </a>
       </div>
+      <p class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-2 font-medium">
+        {t('contact.share')}
+        <button
+          type="button"
+          commandfor={SHARE_SHEET_ID}
+          command="show-modal"
+          class="inline-flex items-center gap-1.5 font-semibold underline decoration-2 underline-offset-4 hover:decoration-[#0b0b0c]/40"
+        >
+          <Icon name="lucide:share-2" class="size-4" aria-hidden="true" />
+          {t('share.buttonLong')}
+        </button>
+      </p>
     </div>
   </div>
 </section>

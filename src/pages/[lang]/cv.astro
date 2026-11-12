@@ -22,6 +22,7 @@ import { EXPERIENCE_SECTORS, getSectorLabel } from '@/i18n/data/sectors';
 import { LANGS, type Lang, useTranslations } from '@/i18n/ui';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { BUILD_DATE, getSiteContent } from '@/lib/content';
+import { SHARE_SHEET_ID } from '@/lib/share';
 import { absoluteUrl, cvPath, cvPdfPath, homePath, otherLang } from '@/lib/site';
 import { graph, PERSON_ID, profilePageNode } from '@/lib/structured-data';
 
@@ -118,7 +119,7 @@ const jsonLd = graph([
 ]);
 ---
 
-<BaseLayout lang={lang} backdrop={false} bodyClass="cv-body">
+<BaseLayout lang={lang} backdrop={false} share="cv" bodyClass="cv-body">
   <SEO
     slot="head"
     lang={lang}
@@ -133,12 +134,16 @@ const jsonLd = graph([
   <nav class="cv-toolbar no-print" aria-label={ui.cv.online}>
     <a href={homePath(lang)} class="brutal brutal-interactive cv-btn">
       <Icon name="lucide:arrow-left" aria-hidden="true" />
-      {t('actions.backToSite')}
+      <span class="cv-btn__label">{t('actions.backToSite')}</span>
     </a>
     <div class="cv-toolbar__group">
       <a href={cvPath(otherLang(lang))} hreflang={otherLang(lang)} lang={otherLang(lang)} class="brutal brutal-interactive cv-btn">
         {t('actions.switchLangShort')}
       </a>
+      <button type="button" commandfor={SHARE_SHEET_ID} command="show-modal" class="brutal brutal-interactive cv-btn">
+        <Icon name="lucide:share-2" aria-hidden="true" />
+        <span class="cv-btn__label">{t('share.button')}</span>
+      </button>
       <a href={cvPdfPath(lang)} download class="brutal brutal-interactive cv-btn cv-btn--main">
         <Icon name="lucide:file-down" aria-hidden="true" />
         {t('actions.downloadCv')}
@@ -392,6 +397,26 @@ const jsonLd = graph([
   .cv-btn--main {
     background: var(--main);
     color: var(--main-fg);
+  }
+  @media (max-width: 520px) {
+    .cv-toolbar,
+    .cv-toolbar__group {
+      gap: 8px;
+    }
+    .cv-btn:has(.cv-btn__label),
+    .cv-btn[hreflang] {
+      justify-content: center;
+      width: 44px;
+      padding: 0;
+    }
+    .cv-btn__label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
   }
 
   /*
