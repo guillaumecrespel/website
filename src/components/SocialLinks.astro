@@ -1,0 +1,33 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { SocialLink } from '@/i18n/data/profile';
+import { type Lang, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  links: SocialLink[];
+  class?: string;
+}
+
+const { lang, links, class: className = '' } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<ul class:list={['flex flex-wrap items-center gap-3', className]}>
+  {
+    links.map((link) => (
+      <li>
+        <a
+          href={link.url}
+          target="_blank"
+          rel={link.professional ? 'me noopener' : 'noopener'}
+          class="brutal brutal-interactive grid size-11 place-items-center rounded-full bg-surface"
+          aria-label={t('social.follow', { network: link.label })}
+          title={link.label}
+        >
+          <Icon name={link.icon} class="size-5" aria-hidden="true" />
+        </a>
+      </li>
+    ))
+  }
+</ul>

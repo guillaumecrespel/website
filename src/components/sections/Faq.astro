@@ -1,0 +1,34 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { getDictionary, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Section number shown before the title. */
+  index: string;
+}
+
+const { lang, index } = Astro.props;
+const { faq } = getDictionary(lang);
+---
+
+<section id="faq" aria-labelledby="faq-title" class="scroll-mt-24">
+  <SectionHeader headingId="faq-title" index={index} title={faq.title} />
+
+  <div class="flex flex-col gap-3">
+    {
+      faq.items.map((item, i) => (
+        <details class="brutal reveal group rounded-card bg-surface" name="faq" open={i === 0}>
+          <summary class="flex items-center justify-between gap-4 p-5 text-lg font-semibold">
+            <h3>{item.q}</h3>
+            <span class="brutal grid size-8 shrink-0 place-items-center rounded-full bg-main text-main-fg transition-transform group-open:rotate-45">
+              <Icon name="lucide:plus" class="size-4" aria-hidden="true" />
+            </span>
+          </summary>
+          <p class="px-5 pb-5 text-pretty text-fg-muted">{item.a}</p>
+        </details>
+      ))
+    }
+  </div>
+</section>

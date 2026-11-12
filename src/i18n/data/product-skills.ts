@@ -1,7 +1,7 @@
-import type { Lang } from '../ui';
+import { getDictionary, type Lang } from '../ui';
 
 export interface ProductSkill {
-  id: string;
+  id: 'scalability' | 'business' | 'vision';
   name: string;
   description: string;
   icon: string;
@@ -12,30 +12,22 @@ export interface ProductSkills {
   skills: ProductSkill[];
 }
 
-export async function getProductSkills(lang: Lang): Promise<ProductSkills> {
-  const ui = await import(`../locales/${lang}/ui.json`).then((m) => m.default);
+const SKILLS = [
+  { id: 'scalability', icon: 'shape4' },
+  { id: 'business', icon: 'shape5' },
+  { id: 'vision', icon: 'shape6' },
+] as const;
+
+export function getProductSkills(lang: Lang): ProductSkills {
+  const ui = getDictionary(lang).productSkills;
 
   return {
-    title: ui.productSkills.title,
-    skills: [
-      {
-        id: 'scalability',
-        name: ui.productSkills.scalability.name,
-        description: ui.productSkills.scalability.description,
-        icon: 'shape4',
-      },
-      {
-        id: 'business',
-        name: ui.productSkills.business.name,
-        description: ui.productSkills.business.description,
-        icon: 'shape5',
-      },
-      {
-        id: 'vision',
-        name: ui.productSkills.vision.name,
-        description: ui.productSkills.vision.description,
-        icon: 'shape6',
-      },
-    ],
+    title: ui.title,
+    skills: SKILLS.map(({ id, icon }) => ({
+      id,
+      icon,
+      name: ui[id].name,
+      description: ui[id].description,
+    })),
   };
 }

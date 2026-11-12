@@ -1,4 +1,8 @@
-import type { Lang } from '../ui.js';
+import enTech from '../locales/en/technologies.json';
+import frTech from '../locales/fr/technologies.json';
+import { getDictionary, type Lang } from '../ui';
+
+const TECH_DICTIONARIES = { fr: frTech, en: enTech };
 
 export interface Technology {
   name: string;
@@ -34,11 +38,9 @@ function shuffleArray<T>(array: T[]): T[] {
 /**
  * Get technologies data for the current locale
  */
-export async function getTechnologies(lang: Lang): Promise<Technologies> {
-  const ui = await import(`../locales/${lang}/ui.json`).then((m) => m.default);
-  const techDict = await import(`../locales/${lang}/technologies.json`).then(
-    (m) => m.default,
-  );
+export function getTechnologies(lang: Lang): Technologies {
+  const ui = getDictionary(lang);
+  const techDict = TECH_DICTIONARIES[lang];
 
   const technologies: Technology[] = [
     // Frontend Frameworks
@@ -87,8 +89,9 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
     {
       id: 'zustand',
       name: techDict.zustand.name,
-      iconBlack: 'devicon-plain:zustand',
-      iconColor: 'devicon:zustand',
+      // The official bear illustration weighs 126 kB of SVG: use a light glyph.
+      iconBlack: 'lucide:box',
+      iconColor: '',
       description: techDict.zustand.description,
       link: 'https://zustand-demo.pmnd.rs/',
       color: '#000000',
@@ -198,8 +201,30 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
       iconBlack: 'simple-icons:javascript',
       iconColor: 'logos:javascript',
       description: techDict.javascript.description,
-      link: 'https://developer.mozilla.org/fr/docs/Web/JavaScript',
+      link: 'https://developer.mozilla.org/docs/Web/JavaScript',
       color: '#F7DF1E',
+      category: 'language',
+    },
+
+    {
+      id: 'java',
+      name: techDict.java.name,
+      iconBlack: 'devicon-plain:java',
+      iconColor: 'logos:java',
+      description: techDict.java.description,
+      link: 'https://dev.java/',
+      color: '#E76F00',
+      category: 'language',
+    },
+
+    {
+      id: 'dotnet',
+      name: techDict.dotnet.name,
+      iconBlack: 'simple-icons:dotnet',
+      iconColor: 'logos:dotnet',
+      description: techDict.dotnet.description,
+      link: 'https://dotnet.microsoft.com/',
+      color: '#512BD4',
       category: 'language',
     },
 
@@ -446,7 +471,7 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
       id: 'datadog',
       name: techDict.datadog.name,
       iconBlack: 'simple-icons:datadog',
-      iconColor: '',
+      iconColor: 'logos:datadog',
       description: techDict.datadog.description,
       link: 'https://www.datadoghq.com/',
       color: '#632CA6',
@@ -476,7 +501,7 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
       id: 'sentry',
       name: techDict.sentry.name,
       iconBlack: 'simple-icons:sentry',
-      iconColor: '',
+      iconColor: 'logos:sentry-icon',
       description: techDict.sentry.description,
       link: 'https://sentry.io/',
       color: '#FB4226',
@@ -487,8 +512,8 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
     {
       id: 'oauth2',
       name: techDict.oauth2.name,
-      iconBlack: 'devicon-plain:oauth',
-      iconColor: 'devicon:oauth',
+      iconBlack: 'lucide:key-round',
+      iconColor: '',
       description: techDict.oauth2.description,
       link: 'https://oauth.net/2/',
       color: '#2C5282',
@@ -498,7 +523,7 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
       id: 'jwt',
       name: techDict.jwt.name,
       iconBlack: 'simple-icons:jsonwebtokens',
-      iconColor: '',
+      iconColor: 'logos:jwt-icon',
       description: techDict.jwt.description,
       link: 'https://jwt.io/',
       color: '#000000',
@@ -509,8 +534,8 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
     {
       id: 'openai',
       name: techDict.openai.name,
-      iconBlack: 'logos:openai-icon',
-      iconColor: 'simple-icons:openai',
+      iconBlack: 'simple-icons:openai',
+      iconColor: 'logos:openai-icon',
       description: techDict.openai.description,
       link: 'https://platform.openai.com/',
       color: '#412991',
@@ -519,8 +544,8 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
     {
       id: 'langchain',
       name: techDict.langchain.name,
-      iconBlack: '',
-      iconColor: 'simple-icons:langchain',
+      iconBlack: 'simple-icons:langchain',
+      iconColor: '',
       description: techDict.langchain.description,
       link: 'https://www.langchain.com/',
       color: '#000000',
@@ -529,7 +554,7 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
     {
       id: 'rag',
       name: techDict.rag.name,
-      iconBlack: '',
+      iconBlack: 'lucide:file-search',
       iconColor: '',
       description: techDict.rag.description,
       link: 'https://en.wikipedia.org/wiki/Retrieval-augmented_generation',
@@ -539,7 +564,7 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
     {
       id: 'nlp',
       name: techDict.nlp.name,
-      iconBlack: '',
+      iconBlack: 'lucide:languages',
       iconColor: '',
       description: techDict.nlp.description,
       link: 'https://en.wikipedia.org/wiki/Natural_language_processing',
@@ -559,20 +584,20 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
     {
       id: 'mcp',
       name: techDict.mcp.name,
-      iconBlack: 'simple-icons:imessage',
+      iconBlack: 'simple-icons:modelcontextprotocol',
       iconColor: '',
       description: techDict.mcp.description,
-      link: 'https://github.com/modelcontext/protocol',
+      link: 'https://modelcontextprotocol.io/',
       color: '#000000',
       category: 'ai',
     },
     {
       id: 'vibeCoding',
       name: techDict.vibeCoding.name,
-      iconBlack: '',
+      iconBlack: 'lucide:wand-sparkles',
       iconColor: '',
       description: techDict.vibeCoding.description,
-      link: 'https://vibecoding.com/',
+      link: 'https://en.wikipedia.org/wiki/Vibe_coding',
       color: '#000000',
       category: 'ai',
     },
@@ -582,7 +607,7 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
       iconBlack: 'simple-icons:claude',
       iconColor: 'logos:claude-icon',
       description: techDict.claude.description,
-      link: 'https://www.anthropic.com/',
+      link: 'https://www.anthropic.com/claude',
       color: '#000000',
       category: 'ai',
     },
@@ -601,8 +626,8 @@ export async function getTechnologies(lang: Lang): Promise<Technologies> {
     {
       id: 'pinecone',
       name: techDict.pinecone.name,
-      iconBlack: 'logos:pinecone-icon',
-      iconColor: '',
+      iconBlack: '',
+      iconColor: 'logos:pinecone-icon',
       description: techDict.pinecone.description,
       link: 'https://www.pinecone.io/',
       color: '#45A1FF',

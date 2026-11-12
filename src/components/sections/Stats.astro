@@ -1,0 +1,37 @@
+---
+import { type Lang, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  years: number;
+  companies: number;
+  products: number;
+  sectors: number;
+}
+
+const { lang, years, companies, products, sectors } = Astro.props;
+const t = useTranslations(lang);
+
+const items = [
+  { value: `${years}`, label: t('stats.years'), color: 'bg-yellow' },
+  { value: `${companies}`, label: t('stats.companies'), color: 'bg-pink' },
+  { value: `${products}`, label: t('stats.products'), color: 'bg-sky' },
+  { value: `${sectors}`, label: t('stats.sectors'), color: 'bg-main' },
+];
+---
+
+<section aria-label={t('stats.label')}>
+  <dl class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+    {
+      items.map((item) => (
+        <div class="brutal reveal flex flex-col gap-1 rounded-card bg-surface p-4 md:p-5">
+          <dt class="order-2 text-sm leading-snug font-medium text-fg-muted">{item.label}</dt>
+          <dd class="order-1 flex items-center gap-2 text-4xl font-bold tracking-tight md:text-5xl">
+            <span class:list={['size-3 rounded-full ring-2 ring-line', item.color]} aria-hidden="true" />
+            {item.value}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>

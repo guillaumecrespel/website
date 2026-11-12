@@ -4,20 +4,23 @@ export interface Company {
   website: string;
 }
 
+export type WorkType = 'Freelance' | 'CDI' | 'CDD' | 'Stage' | 'Indépendant';
+
 export interface Experience {
   id: string;
+  /** ISO date (YYYY-MM-DD). Only the month is meaningful. */
   startDate: string;
-  endDate: string | null; // null pour "aujourd'hui"
+  /** ISO date of the last month worked, or null when ongoing. */
+  endDate: string | null;
   position: string;
   company: Company;
   location: string;
-  workType: "Freelance" | "CDI" | "CDD" | "Stage" | "Indépendant";
+  workType: WorkType;
   description: string;
   achievements: string[];
   skills: string[];
   technologies: string[];
   tags: string[];
-  duration: string; // ex: "7 ans 6 mois"
 }
 
-export type ExperienceCollection = Experience[]; 
+export type ExperienceCollection = Experience[];

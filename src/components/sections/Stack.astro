@@ -1,0 +1,154 @@
+---
+import { Icon } from 'astro-icon/components';
+import ExperienceMini from '@/components/ExperienceMini.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import Sheet from '@/components/Sheet.astro';
+import TechIcon from '@/components/TechIcon.astro';
+import {
+  getTechnologyExperiences,
+  getTechnologyLevel,
+  getTechnologyTotalDuration,
+} from '@/i18n/data/experiences/technology-mapping';
+import type { Experience } from '@/i18n/data/experiences/types';
+import { formatDuration } from '@/i18n/data/experiences/utils';
+import type { Technologies } from '@/i18n/data/technologies';
+import { type Lang, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Section number shown before the title. */
+  index: string;
+  technologies: Technologies;
+  experiences: Experience[];
+}
+
+const { lang, index, technologies, experiences } = Astro.props;
+const t = useTranslations(lang);
+
+const items = technologies.technologies.map((technology) => {
+  const usages = getTechnologyExperiences(technology.id, experiences);
+  const months = getTechnologyTotalDuration(technology.id, experiences);
+  return {
+    technology,
+    usages,
+    months,
+    level: getTechnologyLevel(months),
+    sheetId: `tech-${technology.id}`,
+  };
+});
+
+const perRow = Math.ceil(items.length / 3);
+const rows = [0, 1, 2].map((row) => items.slice(row * perRow, (row + 1) * perRow));
+---
+
+<section id="stack" aria-labelledby="stack-title" class="scroll-mt-24">
+  <div class="mx-auto max-w-6xl px-4 md:px-6">
+    <SectionHeader headingId="stack-title" index={index} title={technologies.title} lead={t('technologies.lead')} />
+  </div>
+
+  <div class="flex flex-col gap-3">
+    {
+      rows.map((row, rowIndex) => (
+        <div class:list={['marquee', { 'marquee--reverse': rowIndex === 1 }]} style={`--marquee-duration: ${60 + rowIndex * 12}s`}>
+          {[0, 1].map((copy) => (
+            <ul class="marquee__track" aria-hidden={copy === 1 ? 'true' : undefined} inert={copy === 1}>
+              {row.map(({ technology, sheetId }) => (
+                <li>
+                  <button
+                    type="button"
+                    commandfor={sheetId}
+                    command="show-modal"
+                    aria-haspopup="dialog"
+                    class="brutal brutal-interactive tech-chip"
+                  >
+                    <TechIcon technology={technology} class="size-8" />
+                    {technology.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    items.map(({ technology, usages, months, level, sheetId }) => (
+      <Sheet id={sheetId} lang={lang} title={technology.name} subtitle={t(`technologies.categories.${technology.category}`)}>
+        <span slot="media" class="brutal grid size-14 shrink-0 place-items-center rounded-2xl bg-surface-2">
+          <TechIcon technology={technology} class="size-9" />
+        </span>
+
+        <div class="flex flex-col gap-5">
+          <p class="text-pretty">{technology.description}</p>
+
+          <div class="flex flex-wrap items-center gap-2 text-sm">
+            <span class="inline-flex items-center gap-1.5 rounded-full border-2 border-line bg-main px-3 py-1 font-bold text-main-fg">
+              <Icon name="lucide:gauge" class="size-4" aria-hidden="true" />
+              {t(`technologies.levels.${level}`)}
+            </span>
+            {months > 0 && (
+              <span class="inline-flex items-center gap-1.5 rounded-full border-2 border-line px-3 py-1 font-medium">
+                <Icon name="lucide:clock" class="size-4" aria-hidden="true" />
+                {t('technologies.seniority')}{t('punct.colon')} {formatDuration(lang, months)}
+              </span>
+            )}
+          </div>
+
+          {usages.length > 0 ? (
+            <div>
+              <h3 class="mb-3 text-sm font-bold tracking-wide uppercase">{t('technologies.usedIn')}</h3>
+              <ul class="flex flex-col gap-3">
+                {usages.map(({ experience, techExp }) => (
+                  <li>
+                    <ExperienceMini
+                      lang={lang}
+                      experience={experience}
+                      note={lang === 'en' ? techExp.contextEn : techExp.context}
+                      href={`#xp-${experience.id}`}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <div class="flex gap-3 rounded-2xl border-2 border-dashed border-line p-4">
+              <Icon name="lucide:lightbulb" class="mt-0.5 size-5 shrink-0" aria-hidden="true" />
+              <div>
+                <p class="font-semibold">{t('technologies.personalProjects')}</p>
+                <p class="mt-1 text-sm text-pretty text-fg-muted">{t('technologies.learningDescription')}</p>
+              </div>
+            </div>
+          )}
+
+          {technology.link && (
+            <a
+              href={technology.link}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex w-fit items-center gap-1.5 text-sm font-semibold underline decoration-2 underline-offset-4 hover:decoration-main"
+            >
+              {t('actions.learnMore')}
+              <Icon name="lucide:arrow-up-right" class="size-4" aria-hidden="true" />
+            </a>
+          )}
+        </div>
+      </Sheet>
+    ))
+  }
+</section>
+
+<style>
+  .tech-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    height: 3.5rem;
+    padding: 0 1.25rem 0 0.75rem;
+    border-radius: 999px;
+    background: var(--surface);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,39 @@
+---
+import SocialLinks from '@/components/SocialLinks.astro';
+import type { Profile } from '@/i18n/data/profile';
+import { UNIRAKUN_URL } from '@/i18n/data/saas';
+import { type Lang, useTranslations } from '@/i18n/ui';
+import { cvPath, cvPdfPath } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  profile: Profile;
+}
+
+const { lang, profile } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="no-print mt-16 border-t-2 border-line bg-surface/70 backdrop-blur-sm">
+  <div class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 md:flex-row md:items-end md:justify-between md:px-6">
+    <div class="flex flex-col gap-3">
+      <p class="text-lg font-bold">{profile.name}</p>
+      <p class="text-sm text-fg-muted">{profile.role} · {profile.location.label}</p>
+      <SocialLinks lang={lang} links={profile.socialLinks} />
+    </div>
+    <div class="flex flex-col gap-2 text-sm md:items-end">
+      <ul class="flex flex-wrap gap-x-4 gap-y-1 font-medium">
+        <li><a class="underline-offset-4 hover:underline" href={cvPath(lang)}>{t('actions.viewCv')}</a></li>
+        <li><a class="underline-offset-4 hover:underline" href={cvPdfPath(lang)} download>{t('actions.downloadCv')}</a></li>
+        <li><a class="underline-offset-4 hover:underline" href="/llms.txt">{t('footer.forAi')}</a></li>
+        <li>
+          <a class="underline-offset-4 hover:underline" href={UNIRAKUN_URL} target="_blank" rel="noopener">
+            {t('footer.unirakun')}
+          </a>
+        </li>
+      </ul>
+      <p class="text-fg-muted">© {year} {profile.name}. {t('footer.rights')} {t('footer.builtWith')}</p>
+    </div>
+  </div>
+</footer>

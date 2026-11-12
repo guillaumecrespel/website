@@ -1,123 +1,128 @@
+import type { Lang } from '../../ui';
+import { experiences as en } from './en';
+import { experiences as fr } from './fr';
 import type { Experience, ExperienceCollection } from './types';
 
-/**
- * Filter experiences by tags
- */
-export function filterByTags(experiences: Experience[], tags: string[]): Experience[] {
-  if (!tags.length) return experiences;
-  
-  return experiences.filter(experience => 
-    experience.tags.some(tag => 
-      tags.some(searchTag => 
-        tag.toLowerCase().includes(searchTag.toLowerCase())
-      )
-    )
-  );
+const COLLECTIONS: Record<Lang, ExperienceCollection> = { fr, en };
+
+/** Build-time reference date: durations of ongoing missions grow with each build. */
+const NOW = new Date();
+
+/** Months since year 0, so ranges can be compared and merged. */
+function monthIndex(date: Date): number {
+  return date.getUTCFullYear() * 12 + date.getUTCMonth();
 }
 
-/**
- * Search experiences by text
- */
-export function searchExperiences(experiences: Experience[], query: string): Experience[] {
-  if (!query.trim()) return experiences;
-  
-  const searchTerm = query.toLowerCase();
-  
-  return experiences.filter(experience => 
-    experience.position.toLowerCase().includes(searchTerm) ||
-    experience.company.name.toLowerCase().includes(searchTerm) ||
-    experience.description.toLowerCase().includes(searchTerm) ||
-    experience.skills.some(skill => skill.toLowerCase().includes(searchTerm)) ||
-    experience.technologies.some(tech => tech.toLowerCase().includes(searchTerm)) ||
-    experience.tags.some(tag => tag.toLowerCase().includes(searchTerm))
-  );
+function parseDate(iso: string): Date {
+  return new Date(`${iso.slice(0, 10)}T00:00:00Z`);
 }
 
-/**
- * Sort experiences by date (newest first)
- */
-export function sortExperiencesByDate(experiences: Experience[]): Experience[] {
+export function isOngoing(experience: Experience): boolean {
+  return experience.endDate === null;
+}
+
+/** Inclusive month range covered by a mission (LinkedIn convention). */
+export function monthRange(experience: Experience): [number, number] {
+  const start = monthIndex(parseDate(experience.startDate));
+  const end = experience.endDate ? monthIndex(parseDate(experience.endDate)) : monthIndex(NOW);
+  return [start, Math.max(start, end)];
+}
+
+export function durationInMonths(experience: Experience): number {
+  const [start, end] = monthRange(experience);
+  return end - start + 1;
+}
+
+/** Number of distinct months covered by several missions (overlaps counted once). */
+export function coveredMonths(experiences: Experience[]): number {
+  const months = new Set<number>();
+  for (const experience of experiences) {
+    const [start, end] = monthRange(experience);
+    for (let m = start; m <= end; m++) months.add(m);
+  }
+  return months.size;
+}
+
+/** Ongoing missions first, then most recent start date first. */
+export function sortExperiences(experiences: Experience[]): Experience[] {
   return [...experiences].sort((a, b) => {
-    const dateA = new Date(a.startDate);
-    const dateB = new Date(b.startDate);
-    return dateB.getTime() - dateA.getTime();
+    if (isOngoing(a) !== isOngoing(b)) return isOngoing(a) ? -1 : 1;
+    return parseDate(b.startDate).getTime() - parseDate(a.startDate).getTime();
   });
 }
 
-/**
- * Calculate seniority in months for a technology
- */
-export function calculateTechnologySeniority(experiences: Experience[], technology: string): number {
-  return experiences
-    .filter(exp => exp.technologies.some(tech => 
-      tech.toLowerCase().includes(technology.toLowerCase())
-    ))
-    .reduce((total, exp) => {
-      const startDate = new Date(exp.startDate);
-      const endDate = exp.endDate ? new Date(exp.endDate) : new Date();
-      const months = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44);
-      return total + Math.round(months);
-    }, 0);
+export function getExperiences(lang: Lang): ExperienceCollection {
+  return sortExperiences(COLLECTIONS[lang] ?? COLLECTIONS.fr);
 }
 
-/**
- * Load experiences based on language
- */
-export async function loadExperiences(lang: string): Promise<ExperienceCollection> {
-  try {
-    if (lang === 'en') {
-      const { experiences } = await import('./en');
-      return experiences;
-    } else {
-      const { experiences } = await import('./fr');
-      return experiences;
-    }
-  } catch (error) {
-    console.error(`Error loading experiences for language ${lang}:`, error);
-    // Fallback to French experiences
-    const { experiences } = await import('./fr');
-    return experiences;
-  }
+/** Kept for backwards compatibility with older call sites. */
+export async function loadExperiences(lang: Lang): Promise<ExperienceCollection> {
+  return getExperiences(lang);
 }
 
-/**
- * Load experiences for a specific language
- */
-export async function getExperiences(lang: string): Promise<ExperienceCollection> {
-  if (lang === 'en') {
-    const { experiences } = await import('./en/index.js');
-    return experiences;
-  } else {
-    const { experiences } = await import('./fr/index.js');
-    return experiences;
-  }
-}
-
-/**
- * Get experiences for a specific technology
- */
-export function getExperiencesForTechnology(experiences: Experience[], technology: string): Experience[] {
-  return experiences.filter(exp => 
-    exp.technologies.some(tech => 
-      tech.toLowerCase().includes(technology.toLowerCase())
-    )
+export function filterByTags(experiences: Experience[], tags: string[]): Experience[] {
+  if (!tags.length) return experiences;
+  const needles = tags.map((tag) => tag.toLowerCase());
+  return experiences.filter((experience) =>
+    experience.tags.some((tag) => {
+      const value = tag.toLowerCase();
+      return needles.some((needle) => value.includes(needle));
+    }),
   );
 }
 
-/**
- * Format seniority display
- */
-export function formatSeniority(months: number): string {
-  if (months < 12) {
-    return `${months} month${months > 1 ? 's' : ''}`;
-  }
-  
+export function formatMonth(lang: Lang, iso: string): string {
+  return new Intl.DateTimeFormat(lang, {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(parseDate(iso));
+}
+
+export function formatDuration(lang: Lang, months: number): string {
   const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-  
-  if (remainingMonths === 0) {
-    return `${years} year${years > 1 ? 's' : ''}`;
-  }
-  
-  return `${years} year${years > 1 ? 's' : ''} ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
-} 
+  const rest = months % 12;
+  const unit = (value: number, kind: 'year' | 'month') =>
+    new Intl.NumberFormat(lang, {
+      style: 'unit',
+      unit: kind,
+      unitDisplay: 'long',
+    }).format(value);
+  if (years === 0) return unit(rest, 'month');
+  if (rest === 0) return unit(years, 'year');
+  return `${unit(years, 'year')} ${unit(rest, 'month')}`;
+}
+
+export function formatPeriod(lang: Lang, experience: Experience, presentLabel: string): string {
+  const start = formatMonth(lang, experience.startDate);
+  const end = experience.endDate ? formatMonth(lang, experience.endDate) : presentLabel;
+  return start === end ? start : `${start} – ${end}`;
+}
+
+/** Whole years since the first mission started. */
+export function yearsOfExperience(experiences: Experience[]): number {
+  const first = Math.min(...experiences.map((exp) => monthRange(exp)[0]));
+  return Math.floor((monthIndex(NOW) - first) / 12);
+}
+
+/** Distinct client companies (own ventures such as uni rakun or Kojimo are not clients). */
+export function countCompanies(experiences: Experience[]): number {
+  return new Set(
+    experiences
+      .filter((exp) => exp.workType !== 'Indépendant')
+      .map((exp) => exp.company.name.toLowerCase()),
+  ).size;
+}
+
+export function getCurrentMissions(experiences: Experience[]): Experience[] {
+  return experiences.filter(isOngoing);
+}
+
+/** City part of a location label, e.g. "Nantes" from "Nantes region, France". */
+export function cityOf(location: string): string {
+  return location
+    .split(',')[0]
+    .replace(/^(Région de|Region de)\s+/i, '')
+    .replace(/\s+(region|area)$/i, '')
+    .trim();
+}

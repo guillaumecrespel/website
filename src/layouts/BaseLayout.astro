@@ -1,0 +1,66 @@
+---
+import { Font } from 'astro:assets';
+import '@/styles/global.css';
+import Background from '@/components/Background.astro';
+import { type Lang, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Show the decorative shapes background. */
+  backdrop?: boolean;
+  bodyClass?: string;
+}
+
+const { lang, backdrop = true, bodyClass = '' } = Astro.props;
+const t = useTranslations(lang);
+
+// Runs before first paint: no flash of the wrong theme, no hidden page.
+// Also flags `html.js` so progressive animations may hide content up front.
+const themeScript = `(function(){var r=document.documentElement;r.classList.add('js');try{var s=localStorage.getItem('theme');var d=s==='dark'||(s!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light'}catch(e){}})();`;
+---
+
+<!doctype html>
+<html lang={lang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script is:inline set:html={themeScript} />
+    <meta name="theme-color" content="#faf3ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111113" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="author" content="Guillaume Crespel" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="format-detection" content="telephone=no" />
+
+    <Font cssVariable="--font-space-grotesk" preload />
+
+    <slot name="head" />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
+  </head>
+  <body class={bodyClass}>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-main focus:px-4 focus:py-2 focus:font-semibold focus:text-main-fg brutal"
+    >
+      {t('nav.skip')}
+    </a>
+
+    {backdrop && <Background />}
+
+    <slot name="header" />
+
+    <main id="main-content" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+
+    <slot name="footer" />
+
+    <script src="@/scripts/site.ts"></script>
+  </body>
+</html>

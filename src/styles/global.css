@@ -1,381 +1,613 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* Theme is driven by a class on <html> set before first paint (see ThemeScript). */
+@custom-variant dark (&:where(.dark, .dark *));
 
-
-@theme inline {
-  --font-sans: var(--font-space-grotesk);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --font-mono: var(--font-space-grotesk);
-  --font-serif: var(--font-space-grotesk);
-  --radius: 10px;
-  --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
-  --tracking-tight: calc(var(--tracking-normal) - 0.025em);
-  --tracking-wide: calc(var(--tracking-normal) + 0.025em);
-  --tracking-wider: calc(var(--tracking-normal) + 0.05em);
-  --tracking-widest: calc(var(--tracking-normal) + 0.1em);
-  --tracking-normal: 0em;
-  --shadow-2xl: var(--shadow-2xl);
-  --shadow-xl: var(--shadow-xl);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-md: var(--shadow-md);
-  --shadow: var(--shadow);
-  --shadow-sm: var(--shadow-sm);
-  --shadow-xs: var(--shadow-xs);
-  --shadow-2xs: var(--shadow-2xs);
-  --spacing: 0.25rem;
-  --letter-spacing: 0em;
-  --shadow-offset-y: 4px;
-  --shadow-offset-x: 4px;
-  --shadow-spread: 0px;
-  --shadow-blur: 0px;
-  --shadow-opacity: 1;
-  --color-shadow-color: var(--shadow-color);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --font-weight-base: 600;
-  --font-weight-heading: 900;
-  --spacing-boxShadowX: 4px;
-  --spacing-boxShadowY: 4px;
-  --spacing-reverseBoxShadowX: -4px;
-  --spacing-reverseBoxShadowY: -4px;
-  --radius-base: 10px;
-  --shadow-shadow: var(--shadow);
-  --animate-marquee-duration: 60s;
-  --animate-marquee: marquee var(--animate-marquee-duration) linear infinite;
-  --animate-marquee2: marquee2 var(--animate-marquee-duration) linear infinite;
-  --animate-marquee-reverse: marquee-reverse var(--animate-marquee-duration) linear infinite;
-  --animate-marquee2-reverse: marquee2-reverse var(--animate-marquee-duration) linear infinite;
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes marquee2 {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes marquee-reverse {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes marquee2-reverse {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-/* Pause animation on hover */
-.group:hover .group-hover\:pause {
-  animation-play-state: paused;
-}
+/* -------------------------------------------------------------------------- */
+/* Design tokens                                                              */
+/* -------------------------------------------------------------------------- */
 
 :root {
-  --radius: 10px;
-  --background: oklch(1.0000 0 0);
-  --foreground: oklch(0 0 0);
-  --card: oklch(1.0000 0 0);
-  --card-foreground: oklch(0 0 0);
-  --popover: oklch(1.0000 0 0);
-  --popover-foreground: oklch(0 0 0);
-  --primary: oklch(0.8716 0.2785 142.7157);
-  --primary-foreground: oklch(1.0000 0 0);
-  --secondary: oklch(0.9054 0.1546 194.7689);
-  --secondary-foreground: oklch(0 0 0);
-  --muted: oklch(0.9551 0 0);
-  --muted-foreground: oklch(0.3211 0 0);
-  --accent: oklch(0.6388 0.2554 10.5078);
-  --accent-foreground: oklch(1.0000 0 0);
-  --destructive: oklch(0 0 0);
-  --border: oklch(0 0 0);
-  --input: oklch(0 0 0);
-  --ring: oklch(0.8716 0.2785 142.7157);
-  --chart-1: oklch(0.8716 0.2785 142.7157);
-  --chart-2: oklch(0.9054 0.1546 194.7689);
-  --chart-3: oklch(0.6388 0.2554 10.5078);
-  --chart-4: oklch(0.3821 0.2647 264.0520);
-  --chart-5: oklch(0.8182 0.1783 109.7692);
-  --sidebar: oklch(0.9551 0 0);
-  --sidebar-foreground: oklch(0 0 0);
-  --sidebar-primary: oklch(0.8716 0.2785 142.7157);
-  --sidebar-primary-foreground: oklch(1.0000 0 0);
-  --sidebar-accent: oklch(0.6388 0.2554 10.5078);
-  --sidebar-accent-foreground: oklch(1.0000 0 0);
-  --sidebar-border: oklch(0 0 0);
-  --sidebar-ring: oklch(0.8716 0.2785 142.7157);
-  --destructive-foreground: oklch(1.0000 0 0);
-  --font-sans: var(--font-space-grotesk);
-  --font-serif: var(--font-space-grotesk);
-  --font-mono: var(--font-space-grotesk);
-  --shadow-color: #000;
-  --shadow-opacity: 1;
-  --shadow-blur: 0px;
-  --shadow-spread: 0px;
-  --shadow-offset-x: 4px;
-  --shadow-offset-y: 4px;
-  --letter-spacing: 0em;
-  --spacing: 0.25rem;
-  --shadow-2xs: 4px 4px 0px 0px var(--border);
-  --shadow-xs: 4px 4px 0px 0px var(--border);
-  --shadow-sm: 4px 4px 0px 0px var(--border);
-  --shadow: 4px 4px 0px 0px var(--border);
-  --shadow-md: 4px 4px 0px 0px var(--border);
-  --shadow-lg: 4px 4px 0px 0px var(--border);
-  --shadow-xl: 4px 4px 0px 0px var(--border);
-  --shadow-2xl: 4px 4px 0px 0px var(--border);
-  --tracking-normal: 0em;
-  --halos-bg: #FAF0E8;
-  --halo-color-1: #FFC700;
-  --halo-color-2: #6F61FE;
-  --halo-color-3: #5EF1A5;
-  --halo-color-4: #FCA3FF;
-  --halo-color-5: #68D4FB;
-  --halo-blur: 60px;
-  --halo-opacity-min: 0.7;
-  --halo-opacity-max: 1;
+  color-scheme: light;
+
+  --bg: #faf3ea;
+  --surface: #ffffff;
+  --surface-2: #f3ece2;
+  --fg: #0b0b0c;
+  --fg-muted: #45454b;
+  --line: #0b0b0c;
+  --shadow: #0b0b0c;
+
+  --main: #5ef1a5;
+  --main-fg: #0b0b0c;
+  --yellow: #ffc700;
+  --violet: #6f61fe;
+  --pink: #fca3ff;
+  --sky: #68d4fb;
+  --coral: #ff6b5b;
+
+  --radius-card: 1.25rem;
+  --shadow-offset: 4px;
+  --header-h: 4rem;
 }
 
 .dark {
-  --background: oklch(0.15 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.25 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.25 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.8867 0.2344 143.2809);
-  --primary-foreground: oklch(0.15 0 0);
-  --secondary: oklch(0.9089 0.1478 194.8663);
-  --secondary-foreground: oklch(0.15 0 0);
-  --muted: oklch(0.25 0 0);
-  --muted-foreground: oklch(0.75 0 0);
-  --accent: oklch(0.6702 0.2462 356.4011);
-  --accent-foreground: oklch(0.15 0 0);
-  --destructive: oklch(0.95 0 0);
-  --border: oklch(0.35 0 0);
-  --input: oklch(0.35 0 0);
-  --ring: oklch(0.8867 0.2344 143.2809);
-  --chart-1: oklch(0.8867 0.2344 143.2809);
-  --chart-2: oklch(0.9089 0.1478 194.8663);
-  --chart-3: oklch(0.6702 0.2462 356.4011);
-  --chart-4: oklch(0.4419 0.2256 272.2811);
-  --chart-5: oklch(0.8197 0.1639 109.5288);
-  --sidebar: oklch(0.15 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.8867 0.2344 143.2809);
-  --sidebar-primary-foreground: oklch(0.15 0 0);
-  --sidebar-accent: oklch(0.6702 0.2462 356.4011);
-  --sidebar-accent-foreground: oklch(0.15 0 0);
-  --sidebar-border: oklch(0.35 0 0);
-  --sidebar-ring: oklch(0.8867 0.2344 143.2809);
-  --destructive-foreground: oklch(0.15 0 0);
-  --radius: 10px;
-  --font-sans: var(--font-space-grotesk);
-  --font-serif: var(--font-space-grotesk);
-  --font-mono: var(--font-space-grotesk);
-  --shadow-color: oklch(0.1 0 0);
-  --shadow-opacity: 0.8;
-  --shadow-blur: 0px;
-  --shadow-spread: 0px;
-  --shadow-offset-x: 4px;
-  --shadow-offset-y: 4px;
-  --letter-spacing: 0em;
-  --spacing: 0.25rem;
-  --shadow-2xs: 4px 4px 0px 0px oklch(0.1 0 0 / 0.3);
-  --shadow-xs: 4px 4px 0px 0px oklch(0.1 0 0 / 0.4);
-  --shadow-sm: 4px 4px 0px 0px oklch(0.1 0 0 / 0.5);
-  --shadow: 4px 4px 0px 0px oklch(0.1 0 0 / 0.6);
-  --shadow-md: 4px 4px 0px 0px oklch(0.1 0 0 / 0.7);
-  --shadow-lg: 4px 4px 0px 0px oklch(0.1 0 0 / 0.8);
-  --shadow-xl: 4px 4px 0px 0px oklch(0.1 0 0 / 0.9);
-  --shadow-2xl: 4px 4px 0px 0px oklch(0.1 0 0 / 1);
-  --halos-bg: #1a1a1f;
-  --halo-color-1: #FFD700;
-  --halo-color-2: #A390FE;
-  --halo-color-3: #5EF1A5;
-  --halo-color-4: #FCA3FF;
-  --halo-color-5: #68D4FB;
-  --halo-blur: 80px;
-  --halo-opacity-min: 0.7;
-  --halo-opacity-max: 1;
+  color-scheme: dark;
+
+  --bg: #111113;
+  --surface: #1b1b1f;
+  --surface-2: #232328;
+  --fg: #f2f0ec;
+  --fg-muted: #b9b6b0;
+  --line: #e9e6e0;
+  /* A pure black offset would vanish on the dark background. */
+  --shadow: color-mix(in oklab, #e9e6e0 32%, transparent);
+
+  --main: #5ef1a5;
+  --main-fg: #0b0b0c;
+  --violet: #a390fe;
 }
+
+@theme inline {
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-line: var(--line);
+  --color-main: var(--main);
+  --color-main-fg: var(--main-fg);
+  --color-yellow: var(--yellow);
+  --color-violet: var(--violet);
+  --color-pink: var(--pink);
+  --color-sky: var(--sky);
+  --color-coral: var(--coral);
+
+  --radius-card: var(--radius-card);
+  --shadow-brutal: var(--shadow-offset) var(--shadow-offset) 0 0 var(--shadow);
+  --shadow-brutal-sm: 2px 2px 0 0 var(--shadow);
+  --shadow-brutal-lg: 7px 7px 0 0 var(--shadow);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Base                                                                       */
+/* -------------------------------------------------------------------------- */
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply text-foreground font-base bg-background;
-    letter-spacing: var(--tracking-normal);
-  }
-  
-  h1, h2, h3, h4, h5, h6{
-    @apply font-heading;
-  }
-
-  /* Smooth theme transitions */
   html {
-    transition: color-scheme 0.3s ease-in-out;
-  }
-  
-  html * {
-    transition: 
-      background-color 0.3s ease-in-out,
-      border-color 0.3s ease-in-out,
-      color 0.3s ease-in-out,
-      box-shadow 0.3s ease-in-out;
-  }
-  
-  /* Prevent transitions on specific elements */
-  html *:not([data-no-transition]) {
-    transition: 
-      background-color 0.3s ease-in-out,
-      border-color 0.3s ease-in-out,
-      color 0.3s ease-in-out,
-      box-shadow 0.3s ease-in-out;
-  }
-  
-  /* Hide content until theme is loaded to prevent flash */
-  html:not(.theme-loaded) {
-    visibility: hidden;
-  }
-  
-  html.theme-loaded {
-    visibility: visible;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  
-/* Optimize animations for performance */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01";
+    /* Decorations that peek past the edge (hero sticker, marquee) never add a
+       horizontal scroll; clip keeps sticky positioning working. */
+    overflow-x: clip;
+  }
+
+  /* Lock page scroll while a modal sheet is open. */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--violet);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: var(--main);
+    color: var(--main-fg);
+  }
+
+  /* Native widgets follow the theme. */
+  progress,
+  input,
+  select,
+  textarea {
+    accent-color: var(--main);
   }
 }
 
-/* Custom scrollbar for better UX */
-::-webkit-scrollbar {
-  width: 8px;
+/* -------------------------------------------------------------------------- */
+/* Neo-brutalist primitives                                                   */
+/* -------------------------------------------------------------------------- */
+
+@utility brutal {
+  border: 2px solid var(--line);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 0 var(--shadow);
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* Lifts on hover, presses on click. Pair with `brutal`. */
+@utility brutal-interactive {
+  transition:
+    transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 160ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 160ms ease;
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 0
+        var(--shadow);
+    }
+  }
+
+  &:active {
+    transform: translate(var(--shadow-offset), var(--shadow-offset));
+    box-shadow: 0 0 0 0 var(--shadow);
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 4px;
+/* Makes the whole parent card clickable from a single link or button. */
+@utility stretched {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 1;
+  }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
+/* Outlined display type, used for the name in the hero. */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--fg);
+  paint-order: stroke fill;
+
+  @supports not (-webkit-text-stroke: 1px black) {
+    color: var(--fg);
+  }
 }
 
-/* Optimize focus styles for accessibility */
-*:focus-visible {
-  outline: 2px solid hsl(var(--primary));
-  outline-offset: 2px;
+/* -------------------------------------------------------------------------- */
+/* Highlighter under a title, drawn once when it enters the viewport           */
+/* -------------------------------------------------------------------------- */
+
+.marker {
+  --marker-size: 100%;
+  padding: 0 0.12em;
+  margin: 0 -0.12em;
+  background-image: linear-gradient(var(--marker, var(--main)), var(--marker, var(--main)));
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: var(--marker-size) 0.38em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background-size 650ms cubic-bezier(0.65, 0, 0.35, 1) 150ms;
 }
 
-/* Improve text rendering */
-* {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.chroma-text {
+.dark .marker {
   background-image: linear-gradient(
-    90deg,
-    var(--foreground) 0%,
-    var(--foreground) 33.33%,
-    #c679c4 40%,
-    #fa3d1d 45%,
-    #ffb005 50%,
-    #e1e1fe 55%,
-    #0358f7 60%,
-    transparent 66.67%,
-    transparent
+    color-mix(in oklab, var(--marker, var(--main)) 55%, transparent),
+    color-mix(in oklab, var(--marker, var(--main)) 55%, transparent)
   );
-  background-size: 300% 100%;
-  background-position: 100% 0;
-  will-change: background-position;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: var(--foreground);
 }
 
-.chroma-text-viewport.animate {
-  animation: chroma-sweep 0.9s ease-in-out 0.1s forwards;
-  filter: blur(1px);
-}
-
-/* 3. Animation keyframes */
-@keyframes chroma-sweep {
-  0% {
-    background-position: 100% 0;
-    filter: blur(1px);
-  }
-  100% {
-    background-position: 0 0;
-    filter: blur(0);
+/* Hidden until site.ts marks it, only when JS runs and motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .marker:not(.is-marked) {
+    --marker-size: 0%;
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/* Header: border appears once the page scrolls (scroll-driven)               */
+/* -------------------------------------------------------------------------- */
+
+.site-header {
+  border-bottom: 2px solid transparent;
+}
+
+@supports (animation-timeline: scroll()) {
+  .site-header {
+    animation: header-solid linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 64px;
+  }
+}
+
+@supports not (animation-timeline: scroll()) {
+  .site-header {
+    border-bottom-color: var(--line);
+    background: color-mix(in oklab, var(--bg) 82%, transparent);
+  }
+}
+
+@keyframes header-solid {
+  to {
+    border-bottom-color: var(--line);
+    background: color-mix(in oklab, var(--bg) 82%, transparent);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Marquee                                                                    */
+/* -------------------------------------------------------------------------- */
+
+.marquee {
+  --marquee-duration: 70s;
+  display: flex;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem 0.75rem;
+  animation: marquee var(--marquee-duration) linear infinite;
+}
+
+.marquee--reverse .marquee__track {
+  animation-direction: reverse;
+}
+
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    mask-image: none;
+  }
+  .marquee__track {
+    animation: none;
+    flex-wrap: wrap;
+    flex-shrink: 1;
+  }
+  .marquee__track[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Sheets (native <dialog>): bottom sheet on mobile, centred card on desktop  */
+/* -------------------------------------------------------------------------- */
+
+dialog.sheet {
+  position: fixed;
+  inset: auto 0 0 0;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 88dvh;
+  padding: 0;
+  border: 2px solid var(--line);
+  border-bottom: 0;
+  border-radius: 1.5rem 1.5rem 0 0;
+  background: var(--surface);
+  color: var(--fg);
+  overscroll-behavior: contain;
+  transform: translateY(100%);
+  transition:
+    transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    overlay 280ms allow-discrete,
+    display 280ms allow-discrete;
+}
+
+dialog.sheet[open] {
+  transform: translateY(0);
+}
+
+@starting-style {
+  dialog.sheet[open] {
+    transform: translateY(100%);
+  }
+}
+
+dialog.sheet::backdrop {
+  background: rgb(0 0 0 / 0);
+  backdrop-filter: blur(0);
+  transition:
+    background-color 280ms ease,
+    backdrop-filter 280ms ease,
+    overlay 280ms allow-discrete,
+    display 280ms allow-discrete;
+}
+
+dialog.sheet[open]::backdrop {
+  background: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(3px);
+}
+
+@starting-style {
+  dialog.sheet[open]::backdrop {
+    background: rgb(0 0 0 / 0);
+    backdrop-filter: blur(0);
+  }
+}
+
+@media (min-width: 768px) {
+  dialog.sheet {
+    inset: 0;
+    margin: auto;
+    width: min(42rem, calc(100vw - 3rem));
+    max-height: min(80dvh, 52rem);
+    border-bottom: 2px solid var(--line);
+    border-radius: 1.5rem;
+    box-shadow: 8px 8px 0 0 var(--shadow);
+    transform: translateY(24px) scale(0.98);
+    opacity: 0;
+    transition:
+      transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 220ms ease,
+      overlay 220ms allow-discrete,
+      display 220ms allow-discrete;
+  }
+
+  dialog.sheet[open] {
+    transform: none;
+    opacity: 1;
+  }
+
+  @starting-style {
+    dialog.sheet[open] {
+      transform: translateY(24px) scale(0.98);
+      opacity: 0;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.sheet,
+  dialog.sheet::backdrop {
+    transition: none;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Timeline                                                                   */
+/* -------------------------------------------------------------------------- */
+
+.timeline-dot {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+  .timeline-dot {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+/* In progress: yellow, with a pulsing core. */
+.timeline-dot--ongoing {
+  background: var(--yellow);
+}
+
+/* Done: a green check drawn when the mission scrolls into view. */
+.timeline-dot--done {
+  background: var(--main);
+  transition: background-color 300ms ease;
+}
+
+.timeline-check {
+  width: 70%;
+  height: 70%;
+  fill: none;
+  stroke: #0b0b0c;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.timeline-check path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 450ms cubic-bezier(0.65, 0, 0.35, 1) 220ms;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .timeline-item.is-played .timeline-dot--done {
+    animation: step-pop 480ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+  }
+}
+
+/* Waiting state, only when JS runs and motion is welcome (site.ts plays it). */
+@media (prefers-reduced-motion: no-preference) {
+  .js .timeline-item:not(.is-played) .timeline-dot--done {
+    background: var(--surface);
+  }
+
+  .js .timeline-item:not(.is-played) .timeline-check path {
+    stroke-dashoffset: 1;
+  }
+}
+
+.timeline-item:target > .timeline-card {
+  animation: target-flash 1.6s ease-out;
+}
+
+@keyframes target-flash {
+  0%,
+  40% {
+    background: color-mix(in oklab, var(--main) 35%, var(--surface));
+  }
+}
+
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details .when-open {
+  display: none;
+}
+
+details[open] .when-open {
+  display: inline;
+}
+
+details[open] .when-closed {
+  display: none;
+}
+
+details[open] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Smoothly animate <details> height where supported. */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  details::details-content {
+    block-size: 0;
+    overflow-y: clip;
+    transition:
+      block-size 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      content-visibility 260ms allow-discrete;
+  }
+
+  details[open]::details-content {
+    block-size: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    details::details-content {
+      transition: none;
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Process steps: revealed one card at a time                                  */
+/* -------------------------------------------------------------------------- */
+
+.step {
+  --step-delay: calc(var(--i, 0) * 380ms);
+}
+
+.step-number {
+  color: color-mix(in oklab, var(--fg) 15%, transparent);
+  transition: color 500ms ease;
+}
+
+[data-steps].is-visible .step {
+  animation: step-in 650ms cubic-bezier(0.2, 0.8, 0.2, 1) var(--step-delay) both;
+}
+
+[data-steps].is-visible .step-icon {
+  animation: step-pop 520ms cubic-bezier(0.3, 1.6, 0.5, 1) calc(var(--step-delay) + 180ms) both;
+}
+
+[data-steps].is-visible .step-number {
+  color: var(--fg);
+  transition-delay: calc(var(--step-delay) + 250ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-steps].is-visible .step,
+  [data-steps].is-visible .step-icon {
+    animation: none;
+  }
+}
+
+/* Hidden only once JS is known to run (html.js is set in <head>), so the
+   steps stay readable without JavaScript. site.ts adds .is-visible. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-steps]:not(.is-visible) .step {
+    opacity: 0;
+  }
+}
+
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+}
+
+@keyframes step-pop {
+  from {
+    opacity: 0;
+    scale: 0.4;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reveal on scroll (scroll-driven; content is visible without support)       */
+/* -------------------------------------------------------------------------- */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Print: the home page prints as a readable document                          */
+/* -------------------------------------------------------------------------- */
+
+@media print {
+  .backdrop,
+  .site-header,
+  .no-print,
+  dialog {
+    /* biome-ignore lint/complexity/noImportantStyles: print must beat utility classes */
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  /* Print collapsed <details> expanded. */
+  details::details-content {
+    content-visibility: visible;
+    block-size: auto;
+  }
 }

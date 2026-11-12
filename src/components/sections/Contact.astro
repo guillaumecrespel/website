@@ -1,0 +1,83 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getSocialLink, type Profile } from '@/i18n/data/profile';
+import { type Lang, useTranslations } from '@/i18n/ui';
+import { cvPdfPath } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  profile: Profile;
+}
+
+const { lang, profile } = Astro.props;
+const t = useTranslations(lang);
+const linkedin = getSocialLink(profile, 'linkedin');
+const malt = getSocialLink(profile, 'malt');
+---
+
+<section id="contact" aria-labelledby="contact-title" class="scroll-mt-24">
+  <div class="brutal relative overflow-hidden rounded-[2rem] bg-main p-6 text-main-fg md:p-12">
+    <svg
+      class="pointer-events-none absolute -right-10 -bottom-16 size-72 opacity-90 md:size-96"
+      viewBox="0 0 200 200"
+      aria-hidden="true"
+    >
+      <circle cx="100" cy="100" r="80" fill="#ffc700" stroke="#0b0b0c" stroke-width="3"></circle>
+      <circle cx="140" cy="70" r="40" fill="#fca3ff" stroke="#0b0b0c" stroke-width="3"></circle>
+    </svg>
+
+    <div class="relative flex max-w-2xl flex-col gap-5">
+      <h2 id="contact-title" class="text-4xl leading-[1.05] font-bold tracking-tight text-balance md:text-6xl">
+        {t('contact.title')}
+      </h2>
+      <p class="text-lg text-pretty md:text-xl">{t('contact.lead')}</p>
+      <div class="flex flex-wrap gap-3 pt-2">
+        {
+          profile.email && (
+            <a
+              href={`mailto:${profile.email}`}
+              class="inline-flex h-12 items-center gap-2 rounded-full border-2 border-[#0b0b0c] bg-[#0b0b0c] px-6 font-semibold text-white shadow-[4px_4px_0_0_#fff] transition-transform hover:-translate-y-0.5"
+            >
+              <Icon name="lucide:mail" class="size-5" aria-hidden="true" />
+              {t('contact.email')}
+            </a>
+          )
+        }
+        {
+          linkedin && (
+            <a
+              href={linkedin.url}
+              target="_blank"
+              rel="me noopener"
+              class="inline-flex h-12 items-center gap-2 rounded-full border-2 border-[#0b0b0c] bg-[#0b0b0c] px-6 font-semibold text-white shadow-[4px_4px_0_0_#fff] transition-transform hover:-translate-y-0.5"
+            >
+              <Icon name="fa6-brands:linkedin-in" class="size-5" aria-hidden="true" />
+              {t('contact.linkedin')}
+            </a>
+          )
+        }
+        {
+          malt && (
+            <a
+              href={malt.url}
+              target="_blank"
+              rel="me noopener"
+              class="inline-flex h-12 items-center gap-2 rounded-full border-2 border-[#0b0b0c] bg-white px-6 font-semibold text-[#0b0b0c] shadow-[4px_4px_0_0_#0b0b0c] transition-transform hover:-translate-y-0.5"
+            >
+              <Icon name="malt" class="size-5" aria-hidden="true" />
+              {t('contact.malt')}
+            </a>
+          )
+        }
+        <a
+          href={cvPdfPath(lang)}
+          download
+          class="inline-flex h-12 items-center gap-2 rounded-full border-2 border-[#0b0b0c] bg-white px-6 font-semibold text-[#0b0b0c] shadow-[4px_4px_0_0_#0b0b0c] transition-transform hover:-translate-y-0.5"
+        >
+          <Icon name="lucide:file-down" class="size-5" aria-hidden="true" />
+          {t('actions.downloadCv')}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

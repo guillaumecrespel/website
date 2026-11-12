@@ -1,0 +1,39 @@
+---
+import { Icon } from 'astro-icon/components';
+import { type Lang, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  data-state="system"
+  data-label-template={t('theme.toggle')}
+  data-label-light={t('theme.light')}
+  data-label-dark={t('theme.dark')}
+  data-label-system={t('theme.system')}
+  aria-label={t('theme.toggle', { theme: t('theme.system') })}
+  title={t('theme.toggle', { theme: t('theme.system') })}
+  class="theme-toggle brutal brutal-interactive grid size-10 place-items-center rounded-full bg-surface"
+>
+  <Icon name="lucide:sun" class="icon-light size-[1.15rem]" aria-hidden="true" />
+  <Icon name="lucide:moon" class="icon-dark size-[1.15rem]" aria-hidden="true" />
+  <Icon name="lucide:monitor-smartphone" class="icon-system size-[1.15rem]" aria-hidden="true" />
+</button>
+
+<style>
+  .theme-toggle > :global(svg) {
+    display: none;
+  }
+  .theme-toggle[data-state='light'] > :global(.icon-light),
+  .theme-toggle[data-state='dark'] > :global(.icon-dark),
+  .theme-toggle[data-state='system'] > :global(.icon-system) {
+    display: block;
+  }
+</style>

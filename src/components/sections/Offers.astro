@@ -1,0 +1,68 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionHeader from '@/components/SectionHeader.astro';
+import type { Experience } from '@/i18n/data/experiences/types';
+import type { Offer } from '@/i18n/data/offers';
+import { type Lang, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Section number shown before the title. */
+  index: string;
+  title: string;
+  lead: string;
+  offers: Offer[];
+  experiences: Experience[];
+}
+
+const { lang, index, title, lead, offers, experiences } = Astro.props;
+const t = useTranslations(lang);
+const colors = ['bg-yellow', 'bg-sky', 'bg-pink', 'bg-main'];
+
+const cards = offers.map((offer, index) => ({
+  ...offer,
+  color: colors[index % colors.length],
+  // One chip per company, even when several missions back the offer.
+  references: [
+    ...new Map(
+      offer.references
+        .map((id) => experiences.find((exp) => exp.id === id))
+        .filter((exp): exp is Experience => Boolean(exp))
+        .map((exp) => [exp.company.name, exp]),
+    ).values(),
+  ],
+}));
+---
+
+<section id="services" aria-labelledby="services-title" class="scroll-mt-24">
+  <SectionHeader headingId="services-title" index={index} title={title} lead={lead} />
+
+  <ul class="grid gap-4 sm:grid-cols-2 md:gap-5">
+    {
+      cards.map((offer) => (
+        <li class="reveal">
+          <article class="brutal flex h-full flex-col gap-3 rounded-card bg-surface p-5 md:p-6">
+            <span class:list={['brutal grid size-12 place-items-center rounded-2xl text-[#0b0b0c]', offer.color]} aria-hidden="true">
+              <Icon name={offer.icon} class="size-6" />
+            </span>
+            <h3 class="text-xl font-bold tracking-tight">{offer.name}</h3>
+            <p class="text-pretty text-fg-muted">{offer.description}</p>
+            {offer.references.length > 0 && (
+              <p class="mt-auto flex flex-wrap items-center gap-2 pt-2 text-sm">
+                <span class="font-medium text-fg-muted">{t('offers.examples')}{t('punct.colon')}</span>
+                {offer.references.map((exp) => (
+                  <a
+                    href={`#xp-${exp.id}`}
+                    class="rounded-full border-2 border-line bg-surface-2 px-2.5 py-0.5 font-medium transition-colors hover:bg-main hover:text-main-fg"
+                  >
+                    {exp.company.name}
+                  </a>
+                ))}
+              </p>
+            )}
+          </article>
+        </li>
+      ))
+    }
+  </ul>
+</section>

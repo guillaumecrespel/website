@@ -1,180 +1,78 @@
 ![Deploy](https://github.com/guillaumecrespel/website/actions/workflows/fly-deploy.yml/badge.svg)
 
-# Guillaume CRESPEL Portfolio
+# guillaumecrespel.fr
 
-Modern and high-performance professional portfolio built with the latest web technologies.
+Personal site and resume of Guillaume Crespel: custom business apps for small companies (as a
+subscription) and freelance C(P)TO missions for startups and large companies. French and English.
 
-## 🚀 Requirements Met
+## Stack
 
-- ✅ **Very Fast** : Multiple optimizations for maximum performance
-- ✅ **Best Lighthouse Score** : Architecture optimized for Core Web Vitals metrics
-- ✅ **Best SEO** : Meta tags, sitemap, and optimized semantic structure
-- ✅ **Light Analytics** : Minimal and privacy-respecting tracking
-- ✅ **Single page with scroll interactions** : Smooth navigation and animations
+- **Astro 7**, fully static, **zero framework JavaScript** on the client (one ~2 KB script for the
+  theme toggle, the mobile menu and a few enhancements).
+- **Tailwind CSS 4** with a small neo-brutalist design system in `src/styles/global.css`.
+- Native platform features instead of libraries: `<dialog>` + invoker commands for the sheets,
+  the Popover API for the mobile menu, `<details>` for the timeline and FAQ, View Transitions for
+  the theme switch, scroll-driven CSS for the header.
+- **astro-icon** (Iconify sets inlined at build time, deduplicated as SVG symbols).
+- Self-hosted **Space Grotesk** variable font through Astro's Fonts API.
+- **Biome** for lint and format, `astro check` for types.
 
-## 🛠️ Technical Stack
+## Content
 
-### Core
-- **Astro 5.10** : Modern framework for ultra-performant static sites
-- **React 19.1** : Interactive components with latest features (Actions, useOptimistic, etc.)
-- **TypeScript** : Static typing for robust code
+Everything is data-driven and shared by the home page, the online resume, the PDF and `llms.txt`:
 
-### Styling & UI
-- **Tailwind CSS 4.1** : Utility CSS framework with custom design system
-- **CSS Animations** : Smooth transitions and micro-interactions
-- **Responsive Design** : Mobile-first with optimized breakpoints
+| What                                          | Where                                                           |
+| --------------------------------------------- | --------------------------------------------------------------- |
+| UI copy, FAQ, SMB offer, meta tags            | `src/i18n/locales/{fr,en}/ui.json`                              |
+| Experiences (one file per mission)            | `src/i18n/data/experiences/{fr,en}/`                            |
+| Technology ↔ mission mapping                  | `src/i18n/data/experiences/technology-mapping.ts`               |
+| Technologies list                             | `src/i18n/data/technologies.ts` + `locales/*/technologies.json` |
+| SaaS products, freelance offers, sectors      | `src/i18n/data/{saas,offers,sectors}.ts`                        |
+| Profile, social links, optional public e-mail | `src/i18n/data/profile.ts`                                      |
 
-### Internationalization
-- **Localized URLs** : `/fr/` and `/en/` with automatic fallback
+Durations ("1 year 11 months"), years of experience, seniority per technology and key figures are
+computed at build time from the mission dates: rebuild to refresh them.
 
-### Content & CMS
-- **MDX** : Professional experiences in enriched Markdown
-- **Content Collections** : Typed content management with Zod validation
-- **Optimized Images** : Progressive loading and WebP formats
+## Pages
 
-### Performance & SEO
-- **Automatic Sitemap** : XML generation for search engines
-- **Dynamic Meta Tags** : Open Graph and Twitter Cards
-- **Lazy Loading** : Deferred component loading
-- **Code Splitting** : Automatic bundle division
+| URL                                    | Purpose                                                       |
+| -------------------------------------- | ------------------------------------------------------------- |
+| `/`                                    | Language negotiation (302 by nginx from `Accept-Language`)    |
+| `/fr/`, `/en/`                         | Home page                                                     |
+| `/fr/cv/`, `/en/cv/`                   | Printable resume, source of the PDFs                          |
+| `/cv/guillaume_crespel_cv_{fr,en}.pdf` | Generated PDFs (committed)                                    |
+| `/llms.txt`, `/llms-full.txt`          | Markdown brief for AI assistants (generated)                  |
+| `/og/{fr,en}/`                         | Social card templates (noindex, screenshotted to `/og/*.png`) |
 
-### Deployment
-- **Fly.io** : Modern and performant cloud platform
-- **Docker** : Containerization for reliable deployment
-- **Automatic HTTPS** : SSL certificates managed automatically
+## SEO / GEO
 
-## 📁 Project Structure
+- Per-language `<title>`, description, canonical, `hreflang` (fr-FR, en-US, x-default), Open Graph
+  and Twitter cards with a dedicated 1200×630 image per language.
+- JSON-LD graph: `WebSite`, `ProfilePage`, `Person` (sameAs, address, knowsAbout, occupation),
+  `SoftwareApplication` for each product, `FAQPage`.
+- Sitemap with i18n alternates, `robots.txt` open to search engines and AI crawlers, `llms.txt`.
+- All content (timeline, technologies, FAQ) is server-rendered HTML, readable without JavaScript.
 
-```
-src/
-├── components/          # Reusable components
-│   ├── Header.astro    # Main navigation
-│   ├── Hero.astro      # Home section
-│   ├── About.astro     # About section
-│   ├── Experience.astro # Professional experiences
-│   ├── Projects.astro  # Project portfolio
-│   ├── Contact.astro   # Contact form
-│   ├── Footer.astro    # Footer
-│   ├── ThemeToggle.tsx # Light/dark theme toggle
-│   └── LanguageToggle.tsx # Language toggle
-├── content/            # MDX content
-│   ├── experiences/    # Professional experiences
-│   └── config.ts       # Collection configuration
-├── i18n/              # Internationalization
-│   ├── ui.ts          # French translations
-│   ├── en.ts          # English translations
-│   └── utils.ts       # Types and utilities
-├── layouts/           # Page layouts
-│   └── Layout.astro   # Main layout with SEO
-└── pages/             # Application pages
-    └── index.astro    # Home page
-```
+## Commands
 
-## 🚀 Installation and Development
+Requires Node ≥ 22.23 (24 LTS recommended) and pnpm 10.
 
-### Prerequisites
-- Node.js 22+ 
-- pnpm
-
-### Installation
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd website
-
-# Install dependencies
 pnpm install
-
-# Start development server
-pnpm dev
+pnpm dev               # http://localhost:4321
+pnpm check             # astro check + biome
+pnpm format            # biome check --write
+pnpm build             # static build in dist/
+pnpm generate:assets   # rebuild, then PDFs (public/cv) and social cards (public/og)
+pnpm generate:icons    # favicons from src/assets/images/portrait.jpg
 ```
 
-### Available Scripts
-```bash
-pnpm dev             # Development server
-pnpm build           # Production build
-pnpm preview         # Build preview
-pnpm lint            # Linting with Biome
-pnpm format          # Code formatting
-```
+After changing experiences or copy, run `pnpm generate:assets` and commit `public/cv` and
+`public/og`: the production image never runs Chrome.
 
-## 🎨 Features
+## Deployment
 
-### Design System
-- **Dark/Light Theme** : Automatic toggle with localStorage persistence
-- **Color Palette** : Coherent system with CSS variables
-- **Typography** : Inter font for text, JetBrains Mono for code
-- **Animations** : Smooth transitions and micro-interactions
-
-### Performance
-- **Core Web Vitals** : Optimized for LCP, FID, CLS
-- **Bundle Size** : Automatic code splitting
-- **Images** : WebP formats with fallback
-- **Caching** : Optimized caching strategies
-
-### SEO
-- **Meta Tags** : Dynamic tags for each page
-- **Structured Data** : Structured data for search engines
-- **Sitemap** : Automatic XML generation
-- **Robots.txt** : Configuration for crawlers
-
-### Accessibility
-- **ARIA Labels** : Complete screen reader support
-- **Keyboard Navigation** : Complete keyboard navigation
-- **Contrast** : WCAG compliant contrast ratios
-- **Focus Management** : Focus management for accessibility
-
-## 🌐 Deployment
-
-### Fly.io (Recommended)
-```bash
-# Install Fly CLI
-curl -L https://fly.io/install.sh | sh
-
-# Login
-fly auth login
-
-# Deploy
-fly deploy
-```
-
-### Environment Variables
-```bash
-# Production
-NODE_ENV=production
-SITE_URL=https://guillaumecrespel.fr
-```
-
-## 📊 Performance Metrics
-
-- **Lighthouse Score** : 95+ on all criteria
-- **First Contentful Paint** : < 1.5s
-- **Largest Contentful Paint** : < 2.5s
-- **Cumulative Layout Shift** : < 0.1
-- **First Input Delay** : < 100ms
-
-## 🔧 Configuration
-
-### Astro
-The `astro.config.mjs` file configures:
-- Integrations (React, Tailwind, Sitemap, MDX)
-- Internationalization
-- Build optimizations
-- SEO configuration
-
-### Biome
-The `biome.json` file defines:
-- Linting rules
-- Code formatting
-- TypeScript configuration
-
-
-## 📄 License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-## 📞 Contact
-
-Project Link: [https://guillaumecrespel.fr](https://guillaumecrespel.fr)
-
-
+Pushing to `main` deploys to Fly.io (`.github/workflows/fly-deploy.yml`). The Docker image builds
+the site with Node 24 and serves `dist/` with nginx (`deploy/nginx.conf`: language redirect,
+caching, compression, security headers, 404 page). Pull requests run `pnpm check` and `pnpm build`
+(`.github/workflows/ci.yml`). See [DEPLOYMENT.md](DEPLOYMENT.md).

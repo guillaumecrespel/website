@@ -1,0 +1,182 @@
+---
+/**
+ * 1200×630 social card template. Not linked anywhere: the generate-assets
+ * script screenshots it into public/og/guillaume-crespel-<lang>.png.
+ */
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import avatar from '@/assets/images/avatar.png';
+import { LANGS, type Lang } from '@/i18n/ui';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getSiteContent } from '@/lib/content';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const { profile, ui, stats } = getSiteContent(lang);
+---
+
+<BaseLayout lang={lang} backdrop={false} bodyClass="og-body">
+  <Fragment slot="head">
+    <title>OG · {profile.name}</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <div class="og">
+    <svg class="og-shape og-shape--circle" viewBox="0 0 100 100"><circle cx="50" cy="50" r="47"></circle></svg>
+    <svg class="og-shape og-shape--half" viewBox="0 0 100 52"><path d="M2 50a48 48 0 0 1 96 0z"></path></svg>
+    <svg class="og-shape og-shape--spark" viewBox="0 0 100 100">
+      <path d="M50 2c4 30 18 44 48 48-30 4-44 18-48 48-4-30-18-44-48-48 30-4 44-18 48-48z"></path>
+    </svg>
+    <div class="og-text">
+      <p class="og-pill">
+        <Icon name="lucide:map-pin" aria-hidden="true" />
+        {profile.location.label}
+      </p>
+      <p class="og-name">{profile.name}</p>
+      <p class="og-role">{profile.role}</p>
+      <p class="og-title">{profile.title}</p>
+      <p class="og-stats">
+        <span><strong>{stats.years}</strong> {ui.stats.years}</span>
+        <span><strong>{stats.products}</strong> {ui.stats.products}</span>
+      </p>
+    </div>
+    <div class="og-photo">
+      <Image src={avatar} alt="" width={340} height={340} loading="eager" />
+    </div>
+    <p class="og-url">guillaumecrespel.fr</p>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  html,
+  body.og-body {
+    margin: 0;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #faf3ea;
+    color-scheme: light;
+  }
+  .og {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    align-items: center;
+    gap: 40px;
+    width: 1200px;
+    height: 630px;
+    padding: 64px 72px;
+    box-sizing: border-box;
+    overflow: hidden;
+    color: #0b0b0c;
+    background: #faf3ea;
+  }
+  /* Same edge shapes as the site background. */
+  .og-shape {
+    position: absolute;
+    overflow: visible;
+    stroke: rgb(11 11 12 / 0.55);
+    stroke-width: 3;
+    opacity: 0.6;
+  }
+  .og-shape--circle {
+    width: 200px;
+    left: -120px;
+    bottom: -125px;
+    fill: #5ef1a5;
+  }
+  .og-shape--half {
+    width: 170px;
+    top: -10px;
+    left: 520px;
+    fill: #ffc700;
+    rotate: 180deg;
+  }
+  .og-shape--spark {
+    width: 70px;
+    top: 36px;
+    right: 40px;
+    fill: #fca3ff;
+  }
+  .og-text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .og-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    padding: 6px 16px;
+    border: 2px solid #0b0b0c;
+    border-radius: 999px;
+    background: #fff;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .og-pill svg {
+    width: 20px;
+    height: 20px;
+  }
+  .og-name {
+    font-size: 84px;
+    line-height: 0.95;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: transparent;
+    -webkit-text-stroke: 2.5px #0b0b0c;
+  }
+  .og-role {
+    font-size: 28px;
+    font-weight: 600;
+    color: #3c3c42;
+  }
+  .og-title {
+    font-size: 40px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .og-stats {
+    display: flex;
+    gap: 24px;
+    margin-top: 6px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .og-stats strong {
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .og-photo {
+    position: relative;
+    width: 340px;
+    height: 400px;
+    overflow: hidden;
+    border: 3px solid #0b0b0c;
+    border-radius: 170px 170px 0 0;
+    background: #5ef1a5;
+    box-shadow: 10px 10px 0 0 #0b0b0c;
+  }
+  .og-photo img {
+    position: absolute;
+    /* The cut-out has a few transparent rows at the bottom: tuck them away. */
+    bottom: -1.5%;
+    width: 100%;
+    height: 106%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .og-url {
+    position: absolute;
+    right: 72px;
+    bottom: 28px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+</style>

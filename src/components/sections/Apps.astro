@@ -1,0 +1,181 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import unirakunLogo from '@/assets/images/unirakun.png';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { type SaaSList, UNIRAKUN_URL } from '@/i18n/data/saas';
+import { getDictionary, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  saas: SaaSList;
+  index: string;
+}
+
+const { lang, saas, index } = Astro.props;
+const ui = getDictionary(lang);
+const { apps } = ui;
+const brikia = saas.saas.find((product) => product.id === 'brikia');
+// The featured case study is not repeated in the grid below.
+const products = saas.saas.filter((product) => product.id !== brikia?.id);
+const stepColors = ['bg-yellow', 'bg-pink', 'bg-sky', 'bg-main'];
+const stepIcons = [
+  'lucide:message-circle-question',
+  'lucide:hammer',
+  'lucide:repeat',
+  'lucide:users',
+];
+---
+
+<section id="apps" aria-labelledby="apps-title" class="scroll-mt-24">
+  <SectionHeader headingId="apps-title" index={index} title={apps.title} lead={apps.lead} />
+
+  <h3 class="sr-only">{apps.stepsLabel}</h3>
+  <ol class="steps grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5" data-steps>
+    {
+      apps.steps.map((step, i) => (
+        <li class="step brutal relative flex flex-col gap-3 rounded-card bg-surface p-5" style={`--i: ${i}`}>
+          <div class="flex items-center justify-between">
+            <span
+              class:list={['step-icon brutal grid size-11 place-items-center rounded-xl text-[#0b0b0c]', stepColors[i]]}
+              aria-hidden="true"
+            >
+              <Icon name={stepIcons[i]} class="size-5" />
+            </span>
+            <span class="step-number text-4xl font-bold tabular-nums" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+          </div>
+          <h4 class="text-lg font-bold tracking-tight">{step.title}</h4>
+          <p class="text-sm text-pretty text-fg-muted">{step.description}</p>
+        </li>
+      ))
+    }
+  </ol>
+
+  {
+    brikia && (
+      <article class="brutal reveal mt-6 grid gap-5 overflow-hidden rounded-card bg-surface md:mt-8 md:grid-cols-[auto_1fr] md:gap-8">
+        <div
+          class="grid place-items-center border-b-2 border-line p-8 md:border-r-2 md:border-b-0 md:p-10 [&_svg_path]:!fill-current"
+          style={{ backgroundColor: brikia.bgColor, color: brikia.fgColor }}
+          aria-hidden="true"
+        >
+          <Icon name={brikia.icon} class="size-20 md:size-28" />
+        </div>
+        <div class="flex flex-col gap-3 p-5 pt-0 md:p-8 md:pl-0">
+          <p class="w-fit rounded-full border-2 border-line bg-yellow px-3 py-0.5 text-xs font-bold tracking-wide text-[#0b0b0c] uppercase">
+            {apps.caseLabel}
+          </p>
+          <h3 class="text-2xl leading-tight font-bold tracking-tight text-balance md:text-3xl">{apps.caseTitle}</h3>
+          <p class="max-w-2xl text-pretty text-fg-muted">{apps.caseDescription}</p>
+          <a
+            href={brikia.url}
+            target="_blank"
+            rel="noopener"
+            class="mt-1 inline-flex w-fit items-center gap-1.5 font-semibold underline decoration-2 underline-offset-4 hover:decoration-main"
+          >
+            {apps.caseCta}
+            <Icon name="lucide:arrow-up-right" class="size-4" aria-hidden="true" />
+          </a>
+        </div>
+      </article>
+    )
+  }
+
+  <aside
+    class="brutal reveal mt-12 flex flex-col gap-5 rounded-card bg-surface p-5 md:flex-row md:items-center md:gap-6 md:p-6"
+    aria-labelledby="studio-title"
+  >
+    <span
+      class="brutal grid h-24 w-28 shrink-0 place-items-center rounded-2xl bg-[#eeece8] p-3 text-[#1d1b19] md:h-28 md:w-32"
+      role="img"
+      aria-label={ui.studio.logoAlt}
+    >
+      <Icon name="unirakun" class="h-full w-full" aria-hidden="true" />
+    </span>
+    <div class="flex-1">
+      <p class="text-xs font-bold tracking-wide text-fg-muted uppercase">{ui.studio.eyebrow}</p>
+      <h3 id="studio-title" class="mt-1 text-xl leading-tight font-bold tracking-tight text-balance md:text-2xl">
+        {ui.studio.title}
+      </h3>
+      <p class="mt-2 max-w-3xl text-pretty text-fg-muted">{ui.studio.description}</p>
+    </div>
+    <a
+      href={UNIRAKUN_URL}
+      target="_blank"
+      rel="noopener"
+      class="brutal brutal-interactive inline-flex h-12 w-fit shrink-0 items-center gap-2.5 rounded-full bg-surface pr-5 pl-2 font-semibold"
+    >
+      <span class="grid size-8 place-items-center overflow-hidden rounded-full border-2 border-line bg-white">
+        <Image src={unirakunLogo} alt="" width={24} height={24} densities={[1, 2]} class="size-6" />
+      </span>
+      {ui.studio.cta}
+      <Icon name="lucide:arrow-up-right" class="size-4" aria-hidden="true" />
+    </a>
+  </aside>
+
+  <h3 class="mt-10 mb-4 text-sm font-bold tracking-wide uppercase">{saas.title}</h3>
+  <ul class="grid gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
+    {
+      products.map((product) => (
+        <li class="reveal">
+          <article class="brutal brutal-interactive group relative flex h-full flex-col gap-4 rounded-card bg-surface p-5">
+            <div class="flex items-start justify-between gap-3">
+              <span
+                class:list={[
+                  'brutal grid size-16 place-items-center overflow-hidden rounded-2xl',
+                  product.iconKind === 'logo' && '[&_svg_path]:!fill-current',
+                ]}
+                style={{ backgroundColor: product.bgColor, color: product.fgColor }}
+                aria-hidden="true"
+              >
+                <Icon
+                  name={product.icon}
+                  class={
+                    product.iconKind === 'logo'
+                      ? 'size-12'
+                      : product.iconKind === 'color'
+                        ? 'size-full'
+                        : 'size-8'
+                  }
+                />
+              </span>
+              <span class="flex items-center gap-2">
+                {product.status && (
+                  <span class="rounded-full border-2 border-line bg-yellow px-2.5 py-0.5 text-xs font-bold tracking-wide text-[#0b0b0c] uppercase">
+                    {ui.saas[product.status]}
+                  </span>
+                )}
+                <Icon
+                  name="lucide:arrow-up-right"
+                  class="size-6 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </span>
+            </div>
+            <h4 class="w-fit text-2xl font-bold tracking-tight">
+              <a href={product.url} target="_blank" rel="noopener" class="stretched">
+                <span class="marker" style={`--marker: ${product.accent}`}>
+                  {product.name}
+                </span>
+              </a>
+            </h4>
+            <p class="text-pretty text-fg-muted">{product.description}</p>
+            <p class="mt-auto text-sm font-medium text-fg-muted">{new URL(product.url).host}</p>
+          </article>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="mt-8">
+    <a
+      href="#contact"
+      class="brutal brutal-interactive inline-flex h-12 items-center gap-2 rounded-full bg-main px-6 font-semibold text-main-fg"
+    >
+      {apps.cta}
+      <Icon name="lucide:arrow-right" class="size-4" aria-hidden="true" />
+    </a>
+  </div>
+</section>

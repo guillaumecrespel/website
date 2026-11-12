@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  lead?: string;
+  /** Small label above the title, e.g. "01". */
+  index?: string;
+  headingId?: string;
+}
+
+const { title, lead, index, headingId } = Astro.props;
+---
+
+<div class="mb-6 flex flex-col gap-2 md:mb-8">
+  <h2 id={headingId} class="flex items-baseline gap-3 text-3xl font-bold tracking-tight md:text-4xl">
+    {
+      index && (
+        <span class="font-mono text-sm font-semibold text-fg-muted tabular-nums" aria-hidden="true">
+          {index}
+        </span>
+      )
+    }
+    <span>{title}</span>
+  </h2>
+  {lead && <p class="max-w-2xl text-base text-pretty text-fg-muted md:text-lg">{lead}</p>}
+</div>

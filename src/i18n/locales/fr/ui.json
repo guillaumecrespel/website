@@ -1,105 +1,353 @@
 {
+  "meta": {
+    "title": "Guillaume Crespel · Applications métier sur mesure & C(P)TO freelance à Nantes",
+    "description": "Une application métier taillée pour votre activité, sans gros investissement, ou un C(P)TO freelance pour lancer et faire grandir votre produit. Basé à Nantes.",
+    "cvTitle": "CV de Guillaume Crespel · C(P)TO & développeur freelance",
+    "cvDescription": "CV de Guillaume Crespel : {years} ans d'expérience produit et tech, missions de CTO de transition, lead dev et architecture, applications SaaS lancées.",
+    "notFoundTitle": "Page introuvable · Guillaume Crespel"
+  },
   "profile": {
     "name": "Guillaume Crespel",
-    "title": "Concepteur de solutions pragmatiques avec un impact business.",
-    "description": "C(P)TO & développeur freelance, j'accompagne les startups dans la création de produits innovants de A à Z."
+    "role": "Applications sur mesure & C(P)TO freelance",
+    "title": "Des logiciels qui font avancer votre business, sans sur-ingénierie.",
+    "description": "C(P)TO et développeur freelance basé à Nantes : des produits numériques qui répondent à de vrais besoins, livrés vite et pensés pour durer.",
+    "intro": "Vous dirigez une TPE ou une PME ? Obtenez une application taillée pour votre métier, par abonnement, sans gros chèque au départ. Vous êtes une startup ou une scale-up ? Profitez d'un C(P)TO qui transforme votre vision en produit, et votre produit en croissance.",
+    "location": "Nantes, France",
+    "currently": "Actuellement",
+    "at": "chez"
+  },
+  "nav": {
+    "label": "Navigation principale",
+    "expertise": "Expertise",
+    "offers": "Missions",
+    "products": "Produits",
+    "experience": "Parcours",
+    "stack": "Stack",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Fermer",
+    "skip": "Aller au contenu principal",
+    "home": "Accueil",
+    "apps": "Applications"
+  },
+  "actions": {
+    "contact": "Parlons de votre projet",
+    "downloadCv": "Télécharger le CV",
+    "viewCv": "Voir le CV en ligne",
+    "cv": "CV",
+    "switchLang": "Read in English",
+    "switchLangShort": "EN",
+    "printCv": "Imprimer / Enregistrer en PDF",
+    "backToSite": "Retour au site",
+    "seeMissions": "Voir les missions liées",
+    "seeDetails": "Voir le détail",
+    "hideDetails": "Masquer le détail",
+    "visit": "Visiter",
+    "close": "Fermer",
+    "learnMore": "Documentation officielle",
+    "appProject": "J'ai un besoin d'application"
   },
   "social": {
     "linkedin": "LinkedIn",
     "github": "GitHub",
     "malt": "Malt",
-    "strava": "Strava"
+    "strava": "Strava",
+    "follow": "Profil {network} de Guillaume Crespel"
+  },
+  "theme": {
+    "light": "Thème clair",
+    "dark": "Thème sombre",
+    "system": "Thème du système",
+    "toggle": "Changer de thème (actuel : {theme})"
+  },
+  "stats": {
+    "label": "En chiffres",
+    "years": "ans à livrer des produits",
+    "companies": "entreprises accompagnées",
+    "products": "SaaS conçus et lancés",
+    "sectors": "secteurs d'activité"
   },
   "softSkills": {
-    "title": "Je m'intègre à votre équipe",
+    "title": "Ce que gagne votre équipe",
     "pragmatism": {
       "name": "Pragmatisme",
-      "description": "Focus sur les solutions qui résolvent les vrais problèmes, pas les problèmes imaginaires"
+      "description": "On s'attaque à vos vrais problèmes, pas à des problèmes imaginaires"
     },
     "prioritization": {
       "name": "Priorisation",
-      "description": "Concentration sur les tâches à fort impact qui font avancer le projet rapidement"
+      "description": "Votre équipe se concentre sur ce qui a le plus d'impact, et le projet avance"
     },
     "leadership": {
       "name": "Leadership",
-      "description": "Mentorat technique et animation d'équipes pour maximiser la productivité collective"
+      "description": "Des développeurs accompagnés, une équipe soudée et une productivité collective qui décolle"
     }
   },
   "productSkills": {
-    "title": "J'apporte à votre produit",
+    "title": "Ce que gagne votre produit",
     "scalability": {
       "name": "Scalabilité",
-      "description": "Architectures cloud-native qui évoluent avec votre croissance sans refactoring coûteux"
+      "description": "Une architecture qui suit votre croissance, sans tout réécrire à chaque palier"
     },
     "business": {
       "name": "Business",
-      "description": "Décisions techniques qui optimisent les coûts et accélèrent le time-to-market"
+      "description": "Des choix techniques qui maîtrisent vos coûts et raccourcissent votre time-to-market"
     },
     "vision": {
       "name": "Vision",
-      "description": "Solutions pragmatiques qui évitent la sur-ingénierie et livrent de la valeur rapidement"
+      "description": "Des solutions simples qui livrent de la valeur vite, sans sur-ingénierie"
+    }
+  },
+  "expertise": {
+    "title": "Expertise",
+    "lead": "Le bon niveau de technique au service de vos objectifs : vous parlez métier, je le traduis en produit.",
+    "relatedCount": "La preuve en {count} missions"
+  },
+  "offers": {
+    "title": "Missions freelance : choisissez votre format",
+    "lead": "Pour les startups, scale-ups et grands comptes. Chaque format a déjà fait ses preuves en mission.",
+    "examples": "Par exemple",
+    "interim": {
+      "name": "CTO de transition",
+      "description": "Votre équipe garde un cap technique pendant que vous recrutez : architecture, roadmap, recrutement, puis une passation propre."
+    },
+    "build": {
+      "name": "Co-construction & MVP",
+      "description": "Votre idée devient un produit en production : cadrage, choix techniques, MVP et itérations avec vos premiers utilisateurs."
+    },
+    "architecture": {
+      "name": "Lead dev & architecture",
+      "description": "Votre produit exigeant gagne en solidité : architecture hexagonale, DDD, front modulaire et des tests qui rassurent."
+    },
+    "mentoring": {
+      "name": "Formation & mentorat",
+      "description": "Vos équipes montent en compétence sur Node.js, React et les bonnes pratiques, jusqu'à être autonomes."
     }
   },
   "saas": {
-    "title": "Développé par mes soins",
+    "title": "Applications déjà en service",
+    "lead": "Des produits que j'ai conçus, développés et que je fais vivre.",
     "kojimo": {
       "name": "Kojimo",
       "description": "L'Accélérateur de Business pour Agents Immobiliers."
     },
     "brikia": {
       "name": "Brikia",
-      "description": "Le logiciel BTP : demandes, rapports, devis et site, au même endroit."
+      "description": "Le logiciel BTP : demandes, rapports, devis et site, au même endroit."
     },
     "qrakun": {
       "name": "QRakun",
       "description": "Analysez en temps réel vos liens et QR Codes personnalisés."
+    },
+    "wagle": {
+      "name": "Wagle",
+      "description": "Feature flags et configuration à distance, pilotables par vos agents IA via MCP."
+    },
+    "woof": {
+      "name": "Woof",
+      "description": "Le tableau de travail de vos agents de code : ils livrent des pull requests, vous gardez la main."
+    },
+    "alpha": "Alpha",
+    "moovi": {
+      "name": "Moovi",
+      "description": "L'app de coaching sportif : vos séances arrivent dans votre agenda et sur votre montre."
+    },
+    "beta": "Bêta"
+  },
+  "experiences": {
+    "title": "Parcours",
+    "lead": "De la grande entreprise à la startup : des produits livrés dans des contextes exigeants, toujours au plus près du métier.",
+    "present": "aujourd'hui",
+    "ongoing": "En cours",
+    "achievements": "Réalisations",
+    "skills": "Compétences",
+    "stack": "Stack",
+    "noExperiences": "Aucune mission trouvée",
+    "workType": {
+      "Freelance": "Freelance",
+      "CDI": "CDI",
+      "CDD": "CDD",
+      "Stage": "Stage",
+      "Indépendant": "Indépendant"
     }
   },
   "technologies": {
-    "title": "J'assure la partie technique",
-    "viewAll": "Voir toutes les technologies",
-    "close": "Fermer",
-    "learnMore": "En savoir plus",
-    "description": "Description"
-  },
-  "experiences": {
-    "title": "Expériences",
-    "allExperiences": "Découvrir toutes mes expériences",
-    "close": "Fermer",
-    "noExperiences": "Aucune expérience trouvée",
-    "experienceCount": {
-      "one": "expérience liée",
-      "other": "expériences liées"
+    "title": "La technique, c'est mon affaire",
+    "lead": "Vous vous concentrez sur votre métier, je choisis et maîtrise les outils. Cliquez sur une techno pour voir où je l'ai utilisée en production.",
+    "seniority": "Pratique en mission",
+    "months": "mois",
+    "usedIn": "Utilisée en mission",
+    "personalProjects": "Projets personnels & veille",
+    "learningDescription": "J'explore cette technologie dans le cadre de projets personnels, de formations et d'expérimentations, pour rester à jour avec les dernières innovations.",
+    "levels": {
+      "expert": "Expert",
+      "senior": "Confirmé",
+      "intermediate": "Intermédiaire",
+      "beginner": "Notions",
+      "learning": "En veille"
     },
-    "seniority": {
-      "title": "Séniorité",
-      "months": "mois",
-      "years": "années",
-      "ongoing": "En cours d'apprentissage"
+    "categories": {
+      "frontend": "Frontend",
+      "state": "Gestion d'état",
+      "build": "Build",
+      "testing": "Tests",
+      "styling": "Style & UI",
+      "language": "Langages",
+      "backend": "Backend",
+      "database": "Données",
+      "container": "Infra & DevOps",
+      "cloud": "Cloud",
+      "vcs": "Versioning",
+      "design": "Design",
+      "api": "API",
+      "baas": "Backend as a Service",
+      "hosting": "Hébergement",
+      "monitoring": "Observabilité",
+      "security": "Sécurité",
+      "ai": "IA"
+    }
+  },
+  "sectors": {
+    "title": "Secteurs",
+    "agriculture": "AgriTech",
+    "retail": "Retail",
+    "finance": "Banque & finance",
+    "insurance": "Assurance",
+    "health": "Santé",
+    "public": "Secteur public & social",
+    "energy": "Énergie",
+    "media": "AdTech & médias",
+    "logistics": "Logistique",
+    "realEstate": "Immobilier",
+    "construction": "BTP",
+    "sport": "Sport & bien-être",
+    "language": "Traduction & localisation"
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "items": [
+      {
+        "q": "Combien coûte une application sur mesure ?",
+        "a": "Vous ne financez pas un gros développement d'un seul bloc. Vous payez un abonnement mensuel qui couvre l'hébergement, la maintenance et les mises à jour. L'application est ensuite proposée à d'autres pros de votre métier : les coûts sont partagés, c'est ce qui garde le prix accessible."
+      },
+      {
+        "q": "Je ne suis pas technique, est-ce un problème ?",
+        "a": "Au contraire : vous connaissez votre métier, c'est tout ce qu'il faut. Vous m'expliquez votre quotidien et vos outils actuels, je m'occupe de la technique et je vous montre l'avancement au fil de l'eau."
+      },
+      {
+        "q": "Avec quelle structure travaille-t-on pour une application ?",
+        "a": "Avec Unirakun, notre société de développement d'applications : c'est elle qui conçoit, héberge et maintient votre outil. Vous avez un interlocuteur direct, moi, et une structure qui fait vivre l'application dans la durée."
+      },
+      {
+        "q": "Qu'est-ce qu'un C(P)TO freelance ?",
+        "a": "Un directeur technique (CTO) qui porte aussi la casquette produit (CPO), en mission freelance. Vous bénéficiez de la vision business, de la roadmap produit et de l'exécution technique d'un profil senior, sans attendre un recrutement à temps plein."
+      },
+      {
+        "q": "Dans quels cas faire appel à vous ?",
+        "a": "Quand vous devez lancer un MVP, challenger un produit existant, préparer une architecture à passer à l'échelle, intégrer de l'IA générative dans votre produit, ou assurer l'intérim d'un CTO le temps de recruter."
+      },
+      {
+        "q": "Où êtes-vous basé ? Travaillez-vous à distance ?",
+        "a": "Je suis basé à Nantes et j'interviens sur site ou à distance, selon vos besoins. J'ai travaillé avec des équipes à Nantes, Paris et Niort."
+      },
+      {
+        "q": "Quelle est votre stack de prédilection ?",
+        "a": "TypeScript de bout en bout : React côté front, Node.js côté back, PostgreSQL ou Supabase pour les données, et le cloud (AWS, Google Cloud, Azure) selon votre contexte. Côté IA : OpenAI, Claude, Mistral et le RAG."
+      },
+      {
+        "q": "Comment démarrer ?",
+        "a": "Envoyez-moi quelques lignes sur votre contexte via LinkedIn ou Malt. Je vous réponds pour organiser un premier échange et voir ensemble comment je peux vous aider."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Un outil à créer ou un produit à accélérer ? Parlons-en.",
+    "lead": "Quelques lignes sur votre contexte suffisent. Je vous réponds avec un premier regard sur votre besoin et des pistes concrètes pour avancer.",
+    "linkedin": "M'écrire sur LinkedIn",
+    "malt": "Me contacter sur Malt",
+    "email": "M'envoyer un e-mail"
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "builtWith": "Site statique construit avec Astro, sans tracker.",
+    "forAi": "Résumé pour les IA (llms.txt)",
+    "unirakun": "Unirakun, notre société d'applications"
+  },
+  "cv": {
+    "profile": "Profil",
+    "experience": "Expérience professionnelle",
+    "expertise": "Expertise",
+    "stack": "Stack technique",
+    "products": "Produits SaaS",
+    "sectors": "Secteurs",
+    "links": "Liens",
+    "updated": "Mis à jour le",
+    "online": "Version en ligne",
+    "previewNote": "Aperçu du CV. Le PDF est généré à partir de cette page.",
+    "summary": "Ce que j'apporte : une vision produit et business, des architectures qui tiennent la croissance et des équipes qui gagnent en autonomie. {years} ans d'expérience de la startup au grand compte, et {products} applications SaaS conçues et lancées.",
+    "offers": "Formats de mission",
+    "earlier": "Missions antérieures",
+    "stackOther": "Notions & veille",
+    "apps": "Applications SaaS",
+    "overview": "En bref"
+  },
+  "notFound": {
+    "title": "Cette page n'existe pas (ou plus).",
+    "lead": "Le lien est peut-être ancien. Le plus simple : repartir de l'accueil.",
+    "back": "Retour à l'accueil"
+  },
+  "audiences": {
+    "label": "Deux façons de travailler ensemble",
+    "smb": {
+      "eyebrow": "Vous dirigez une TPE ou une PME",
+      "title": "Un outil qui colle à votre métier, sans exploser votre budget",
+      "description": "Fini les tableurs bricolés et les logiciels génériques : une application pensée pour votre façon de travailler, accessible par abonnement, maintenance comprise.",
+      "cta": "Voir comment ça marche"
     },
-    "skills": {
-      "title": "Compétences acquises",
-      "technologies": "Technologies utilisées"
-    },
-    "personalProjects": "Projets personnels & formation continue",
-    "learningDescription": "J'explore cette technologie dans le cadre de projets personnels, de formations et d'expérimentations. Toujours en veille technologique pour rester à jour avec les dernières innovations.",
-    "at": "chez"
+    "tech": {
+      "eyebrow": "Vous êtes une startup, une scale-up ou une équipe produit",
+      "title": "Un C(P)TO qui sécurise votre produit et accélère votre équipe",
+      "description": "Lancer un MVP, reprendre une architecture, structurer l'équipe ou assurer l'intérim d'un CTO : vous gagnez en vitesse sans sacrifier la qualité.",
+      "cta": "Voir les missions"
+    }
   },
-  "language": {
-    "switchTo": "Passer en anglais",
-    "currentLanguage": "Langue actuelle",
-    "languageToggle": "Basculement de langue"
+  "apps": {
+    "title": "Votre application sur mesure, au prix d'un abonnement",
+    "lead": "Pas besoin d'un budget à cinq chiffres pour travailler avec un outil fait pour vous. Vous m'expliquez votre métier, je construis l'application avec vous, et vous la payez au mois : hébergement, maintenance et mises à jour compris.",
+    "stepsLabel": "Comment ça marche",
+    "steps": [
+      {
+        "title": "Vous décrivez votre quotidien",
+        "description": "Demandes clients, devis, rapports, planning… Vous me montrez ce qui vous fait perdre du temps."
+      },
+      {
+        "title": "Je construis votre outil",
+        "description": "Une application adaptée à votre façon de travailler, testée avec vous, puis mise en service."
+      },
+      {
+        "title": "Vous payez au mois",
+        "description": "Pas de gros chèque au départ : un abonnement qui couvre l'hébergement, la maintenance et les mises à jour."
+      },
+      {
+        "title": "Votre outil s'améliore en continu",
+        "description": "D'autres pros de votre métier l'adoptent : les améliorations sont mutualisées, et vous en profitez aussi."
+      }
+    ],
+    "caseLabel": "Cas concret",
+    "caseTitle": "Brikia : d'un besoin terrain à un logiciel métier",
+    "caseDescription": "Un premier client du bâtiment voulait réunir ses demandes, ses rapports, ses devis et son site web au même endroit. Brikia a été construit avec lui, puis ouvert aux autres entreprises du secteur, par abonnement.",
+    "caseCta": "Découvrir Brikia",
+    "productsTitle": "Applications déjà en service",
+    "cta": "Décrivez-moi votre besoin"
   },
-  "theme": {
-    "light": "Mode clair",
-    "dark": "Mode sombre",
-    "system": "Mode système",
-    "toggleTheme": "Basculer le thème"
+  "punct": {
+    "colon": " :"
   },
-  "accessibility": {
-    "close": "Fermer",
-    "open": "Ouvrir",
-    "menu": "Menu",
-    "navigation": "Navigation"
+  "studio": {
+    "eyebrow": "Notre studio",
+    "title": "Unirakun, le studio derrière ces applications",
+    "description": "Unirakun, c'est notre studio de développement. Avec Fabien Juif, nous y concevons, hébergeons et maintenons nos propres applications, et celles que nous créons pour nos clients, avec la même exigence produit et technique.",
+    "cta": "Découvrir Unirakun",
+    "logoAlt": "Logo Unirakun"
   }
-} 
+}

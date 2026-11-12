@@ -1,0 +1,49 @@
+---
+import { Icon } from 'astro-icon/components';
+import { type Lang, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const paths = [
+  { key: 'smb', href: '#apps', icon: 'lucide:store', color: 'bg-yellow' },
+  { key: 'tech', href: '#services', icon: 'lucide:rocket', color: 'bg-sky' },
+] as const;
+---
+
+<section aria-label={t('audiences.label')}>
+  <ul class="grid gap-4 md:grid-cols-2 md:gap-5">
+    {
+      paths.map((path) => (
+        <li>
+          <article class="brutal brutal-interactive group relative flex h-full flex-col gap-3 rounded-card bg-surface p-5 md:p-7">
+            <div class="flex items-center justify-between gap-3">
+              <span class:list={['brutal grid size-12 place-items-center rounded-2xl text-[#0b0b0c]', path.color]} aria-hidden="true">
+                <Icon name={path.icon} class="size-6" />
+              </span>
+              <Icon
+                name="lucide:arrow-down-right"
+                class="size-7 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5"
+                aria-hidden="true"
+              />
+            </div>
+            <p class="text-sm font-semibold tracking-wide text-fg-muted uppercase">{t(`audiences.${path.key}.eyebrow`)}</p>
+            <h2 class="text-2xl leading-tight font-bold tracking-tight text-balance md:text-3xl">
+              <a href={path.href} class="stretched">
+                {t(`audiences.${path.key}.title`)}
+              </a>
+            </h2>
+            <p class="text-pretty text-fg-muted">{t(`audiences.${path.key}.description`)}</p>
+            <span class="mt-auto pt-1 text-sm font-semibold underline decoration-2 underline-offset-4 group-hover:decoration-main">
+              {t(`audiences.${path.key}.cta`)}
+            </span>
+          </article>
+        </li>
+      ))
+    }
+  </ul>
+</section>

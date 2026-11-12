@@ -1,0 +1,121 @@
+---
+import { Icon } from 'astro-icon/components';
+import ExperienceMini from '@/components/ExperienceMini.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import Sheet from '@/components/Sheet.astro';
+import { getSkillTags } from '@/i18n/data/experiences/skill-mapping';
+import type { Experience } from '@/i18n/data/experiences/types';
+import { filterByTags } from '@/i18n/data/experiences/utils';
+import type { ProductSkills } from '@/i18n/data/product-skills';
+import type { SoftSkills } from '@/i18n/data/soft-skills';
+import { type Lang, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Section number shown before the title. */
+  index: string;
+  productSkills: ProductSkills;
+  softSkills: SoftSkills;
+  experiences: Experience[];
+}
+
+const { lang, index, productSkills, softSkills, experiences } = Astro.props;
+const t = useTranslations(lang);
+
+// Product shapes are 72×72 badges: pinned in the corner with the card padding
+// as margin, vertically centred on the title. Team shapes are 100×50 strips
+// designed to bleed off the top edge (the card clips them).
+const ICON_CLASSES = {
+  square: { icon: 'top-5 right-5 size-12', title: 'min-h-12 pr-16' },
+  wide: { icon: '-top-2 -right-2 h-[50px] w-[100px]', title: 'pr-24' },
+} as const;
+
+// Highlighter colour of each title: the dominant colour of its illustration.
+const MARKER_COLORS: Record<string, string> = {
+  scalability: 'var(--violet)',
+  business: 'var(--yellow)',
+  vision: 'var(--main)',
+  pragmatism: 'var(--main)',
+  prioritization: 'var(--yellow)',
+  leadership: 'var(--violet)',
+};
+
+const groups = [
+  { ...productSkills, iconClass: ICON_CLASSES.square },
+  { ...softSkills, iconClass: ICON_CLASSES.wide },
+].map((group) => ({
+  title: group.title,
+  iconClass: group.iconClass,
+  skills: group.skills.map((skill) => ({
+    ...skill,
+    sheetId: `skill-${skill.id}`,
+    related: filterByTags(experiences, getSkillTags(skill.id)),
+  })),
+}));
+---
+
+<section id="expertise" aria-labelledby="expertise-title" class="scroll-mt-24">
+  <SectionHeader headingId="expertise-title" index={index} title={t('expertise.title')} lead={t('expertise.lead')} />
+
+  <div class="flex flex-col gap-10">
+    {
+      groups.map((group) => (
+        <div>
+          <h3 class="mb-4 text-sm font-bold tracking-wide uppercase">{group.title}</h3>
+          <ul class="grid gap-4 md:grid-cols-3 md:gap-5">
+            {group.skills.map((skill) => (
+              <li class="reveal">
+                <article class="brutal brutal-interactive group relative flex h-full flex-col gap-3 overflow-hidden rounded-card bg-surface p-5">
+                  <Icon
+                    name={skill.icon}
+                    class:list={['pointer-events-none absolute', group.iconClass.icon]}
+                    aria-hidden="true"
+                  />
+                  <h4
+                    class:list={[
+                      'flex w-fit items-center text-2xl font-bold tracking-tight',
+                      group.iconClass.title,
+                    ]}
+                  >
+                    <span class="marker" style={`--marker: ${MARKER_COLORS[skill.id]}`}>
+                      {skill.name}
+                    </span>
+                  </h4>
+                  <p class="text-pretty text-fg-muted">{skill.description}</p>
+                  {skill.related.length > 0 && (
+                    <button
+                      type="button"
+                      commandfor={skill.sheetId}
+                      command="show-modal"
+                      aria-haspopup="dialog"
+                      class="stretched mt-auto inline-flex w-fit items-center gap-1.5 pt-2 text-sm font-semibold underline decoration-2 underline-offset-4 group-hover:decoration-main"
+                    >
+                      {t('expertise.relatedCount', { count: skill.related.length })}
+                      <Icon name="lucide:arrow-up-right" class="size-4" aria-hidden="true" />
+                    </button>
+                  )}
+                </article>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    groups.flatMap((group) =>
+      group.skills.map((skill) => (
+        <Sheet id={skill.sheetId} lang={lang} title={skill.name} subtitle={skill.description}>
+          <ul class="flex flex-col gap-3">
+            {skill.related.map((experience) => (
+              <li>
+                <ExperienceMini lang={lang} experience={experience} href={`#xp-${experience.id}`} />
+              </li>
+            ))}
+          </ul>
+        </Sheet>
+      )),
+    )
+  }
+</section>

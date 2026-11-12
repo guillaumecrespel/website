@@ -1,3 +1,6 @@
+import en from './locales/en/ui.json';
+import fr from './locales/fr/ui.json';
+
 export const languages = {
   fr: 'Français',
   en: 'English',
@@ -7,35 +10,52 @@ export const defaultLang = 'fr' as const;
 
 export type Lang = keyof typeof languages;
 
-export function getLangFromUrl(url: URL) {
+export const LANGS = Object.keys(languages) as Lang[];
+
+export type UIDictionary = typeof fr;
+
+const dictionaries: Record<Lang, UIDictionary> = { fr, en };
+
+export function isLang(value: unknown): value is Lang {
+  return typeof value === 'string' && value in languages;
+}
+
+export function getLangFromUrl(url: URL): Lang {
   const [, lang] = url.pathname.split('/');
-  if (lang in languages) return lang as Lang;
-  return defaultLang;
+  return isLang(lang) ? lang : defaultLang;
 }
 
-export function useTranslations(lang: Lang) {
-  return function t(key: string) {
-    return String(getTranslation(lang, key));
-  };
+/** Full, typed dictionary for a language (for lists such as FAQ items). */
+export function getDictionary(lang: Lang): UIDictionary {
+  return dictionaries[lang];
 }
 
-export function getTranslation(lang: Lang, key: string) {
-  const keys = key.split('.');
-  let value = translations[lang] as Record<string, object | string>;
+type Vars = Record<string, string | number>;
 
-  for (const k of keys) {
-    if (value && typeof value === 'object' && k in value) {
-      value = value[k] as Record<string, object | string>;
+function lookup(lang: Lang, key: string): unknown {
+  let value: unknown = dictionaries[lang];
+  for (const part of key.split('.')) {
+    if (value && typeof value === 'object' && part in value) {
+      value = (value as Record<string, unknown>)[part];
     } else {
-      return key; // Fallback to key if translation not found
+      return undefined;
     }
   }
-
-  return value || key;
+  return value;
 }
 
-// Import translations dynamically
-const translations = {
-  fr: await import('./locales/fr/ui.json').then((m) => m.default),
-  en: await import('./locales/en/ui.json').then((m) => m.default),
-};
+/**
+ * Returns a translator for a language. Keys use dot notation
+ * (`nav.contact`) and `{name}` placeholders are interpolated.
+ * Missing keys fall back to French, then to the key itself.
+ */
+export function useTranslations(lang: Lang) {
+  return function t(key: string, vars?: Vars): string {
+    const raw = lookup(lang, key) ?? lookup(defaultLang, key) ?? key;
+    const text = typeof raw === 'string' ? raw : key;
+    if (!vars) return text;
+    return text.replace(/\{(\w+)\}/g, (match, name: string) =>
+      name in vars ? String(vars[name]) : match,
+    );
+  };
+}

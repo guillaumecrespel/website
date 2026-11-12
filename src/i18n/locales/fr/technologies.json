@@ -59,6 +59,14 @@
     "name": "JavaScript",
     "description": "Langage de programmation principal du web."
   },
+  "java": {
+    "name": "Java",
+    "description": "Langage robuste et typé, au cœur des systèmes d'entreprise et des backends à fort volume."
+  },
+  "dotnet": {
+    "name": "C# / .NET",
+    "description": "Plateforme et langage de Microsoft pour des APIs et services robustes, très présents en entreprise."
+  },
   "nodejs": {
     "name": "Node.js",
     "description": "Environnement d'exécution JavaScript côté serveur."
@@ -193,11 +201,11 @@
   },
   "mcp": {
     "name": "MCP (Model Context Protocol)",
-    "description": "Protocole pour la gestion du contexte des modèles IA."
+    "description": "Protocole ouvert qui permet aux assistants et agents IA de se connecter de façon standard à des outils, des API et des sources de données."
   },
   "vibeCoding": {
     "name": "Vibe Coding",
-    "description": "Plateforme ou outil lié au développement IA."
+    "description": "Développement assisté par IA : décrire l'intention en langage naturel et itérer avec un agent de code, sous revue humaine."
   },
   "claude": {
     "name": "Anthropic Claude",
@@ -211,4 +219,4 @@
     "name": "Pinecone",
     "description": "Base de données vectorielle pour l'IA et la recherche sémantique."
   }
-} 
+}

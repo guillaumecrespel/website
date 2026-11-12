@@ -1,124 +1,54 @@
-# Automatic Deployment to Fly.io
+# Deployment
 
-This project is configured to automatically deploy to Fly.io on every push to the `main` branch, following [Fly.io's official recommendations](https://fly.io/docs/launch/continuous-deployment-with-github-actions/).
+The site is deployed to [Fly.io](https://fly.io) on every push to `main`
+(`.github/workflows/fly-deploy.yml`, [Fly's recommended setup](https://fly.io/docs/launch/continuous-deployment-with-github-actions/)).
 
-## CV PDF Generation
+## How it works
 
-CV PDFs are generated locally and committed to the repository:
+1. GitHub Actions runs `flyctl deploy --remote-only`.
+2. Fly builds the `Dockerfile`:
+   - **build stage** (Node 24, pnpm via Corepack): `pnpm install --frozen-lockfile` then
+     `pnpm build`. `PUPPETEER_SKIP_DOWNLOAD=true` keeps Chrome out of the image.
+   - **runtime stage**: `nginx:stable-alpine` serving `dist/` with `deploy/nginx.conf`.
+3. Fly serves the app on port 80 behind its HTTPS proxy (`fly.toml`).
 
-### Generation Process
+## nginx behaviour (`deploy/nginx.conf`)
 
-1. **Local Generation**: Run `pnpm generate-cv` to generate CVs locally
-2. **Static Files**: CVs are saved to `public/cv/` directory
-3. **Build Inclusion**: Files in `public/` are automatically included in the build
-4. **Deployment**: CVs are deployed as static files with the application
+- `/` answers `302` to `/fr/` or `/en/` from `Accept-Language` (`Vary: Accept-Language`).
+- `/_astro/*` (hashed files) cached one year, immutable; HTML always revalidated.
+- gzip for text assets, security headers (`deploy/security-headers.conf`), custom `404.html`.
+- `/sw.js` is never cached: it is a kill switch that removes the cache-first service worker
+  shipped by an earlier version of the site. Keep it deployed for a few months.
 
-### CV Files
+## Generated assets
 
-- **French CV**: `public/cv/cv-fr.pdf`
-- **English CV**: `public/cv/cv-en.pdf`
-- **Access**: Available at `https://your-domain.com/cv/guillaume_crespel-fr.pdf` and `https://your-domain.com/cv/guillaume_crespel-en.pdf`
-
-### Usage
+The resume PDFs (`public/cv/`) and social cards (`public/og/`) are generated locally and committed:
 
 ```bash
-# Generate CVs locally
-pnpm generate-cv
-
-# Commit the generated files
-git add public/cv/
-git commit -m "Update CV PDFs"
-
-# Deploy normally
-flyctl deploy
+pnpm generate:assets
+git add public/cv public/og
 ```
 
-## Required Configuration
+## Secrets
 
-### 1. Fly.io API Token
+`FLY_API_TOKEN` must exist in the repository secrets:
 
-To enable automatic deployment, you need to configure a Fly.io API token in GitHub secrets:
-
-#### Option A: Deploy Token (recommended)
 ```bash
 flyctl tokens create deploy -x 999999h
 ```
 
-#### Option B: Full Authentication Token
-```bash
-flyctl auth token
-```
+Copy the whole value (including the `FlyV1 ` prefix) into
+GitHub → Settings → Secrets and variables → Actions → `FLY_API_TOKEN`.
 
-**Important**: Copy the complete token, including the `FlyV1` prefix and space at the beginning.
-
-### 2. GitHub Secret Configuration
-
-1. Go to your GitHub repository → Settings → Secrets and variables → Actions
-2. Click "New repository secret"
-3. Name the secret `FLY_API_TOKEN`
-4. Paste the API token
-
-### 3. Fly.io Configuration
-
-Make sure your application is configured on Fly.io:
+## Checking the image locally
 
 ```bash
-# If not already done, create the application
-flyctl apps create guillaume-crepel-website
-
-# Deploy once to configure the application
-flyctl deploy
+docker build -t website .
+docker run --rm -p 8080:80 website
+curl -sI -H 'Accept-Language: en' http://localhost:8080/   # 302 → /en/
 ```
-
-## How It Works
-
-The GitHub Action automatically triggers on every push to the `main` branch.
-
-### Deployment Steps
-
-1. **Checkout**: Source code retrieval with `actions/checkout@v4`
-2. **Setup Flyctl**: Fly.io tool configuration with `superfly/flyctl-actions/setup-flyctl@master`
-3. **Deploy**: Deployment to Fly.io with `flyctl deploy --remote-only`
-
-### Advantages of This Approach
-
-- **Simplicity**: Uses the existing Dockerfile directly for building
-- **Reliability**: Follows Fly.io's official recommendations
-- **Performance**: Build happens on Fly.io servers, not on GitHub Actions
-- **Security**: Uses `--remote-only` to avoid context issues
-
-### Protection Against Concurrent Deployments
-
-The action uses `concurrency: deploy-group` to prevent simultaneous deployments that could cause conflicts.
-
-## Monitoring
-
-You can monitor your deployments:
-- In the "Actions" tab of your GitHub repository
-- In the Fly.io dashboard to see your application status
 
 ## Troubleshooting
 
-### Token Error
-If you get an authentication error:
-- Verify that the `FLY_API_TOKEN` secret is properly configured in GitHub
-- Make sure you copied the complete token (with the `FlyV1` prefix)
-
-### Deployment Error
-Check Fly.io logs:
-```bash
-flyctl logs
-```
-
-### Local Verification
-Test your application locally:
-```bash
-pnpm install
-pnpm run build
-flyctl deploy
-```
-
-## References
-
-- [Fly.io Official Documentation - Continuous Deployment](https://fly.io/docs/launch/continuous-deployment-with-github-actions/)
-- [GitHub Actions for flyctl](https://github.com/superfly/flyctl-actions) 
+- Authentication error in the workflow: check the `FLY_API_TOKEN` secret.
+- Runtime problem: `flyctl logs`.

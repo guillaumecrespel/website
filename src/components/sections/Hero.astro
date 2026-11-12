@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import avatar from '@/assets/images/avatar.png';
+import SocialLinks from '@/components/SocialLinks.astro';
+import type { Experience } from '@/i18n/data/experiences/types';
+import type { Profile } from '@/i18n/data/profile';
+import { type Lang, useTranslations } from '@/i18n/ui';
+import { cvPdfPath } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  profile: Profile;
+  currentMissions: Experience[];
+}
+
+const { lang, profile, currentMissions } = Astro.props;
+const t = useTranslations(lang);
+// The personal studio is implied; highlight the client mission first.
+const highlighted =
+  currentMissions.find((mission) => mission.workType !== 'Indépendant') ?? currentMissions[0];
+---
+
+<section id="top" class="relative grid items-center gap-6 pt-6 pb-4 md:grid-cols-[1fr_auto] md:gap-14 md:pt-16">
+  <div class="order-2 flex flex-col gap-6 md:order-1">
+    <ul class="flex flex-wrap gap-2 text-sm font-medium" aria-label={profile.role}>
+      {
+        highlighted && (
+          <li class="inline-flex items-center gap-2 rounded-full border-2 border-line bg-surface px-3 py-1">
+            <span class="relative flex size-2.5" aria-hidden="true">
+              <span class="absolute inline-flex size-full rounded-full bg-main motion-safe:animate-ping" />
+              <span class="relative inline-flex size-2.5 rounded-full bg-main ring-1 ring-line" />
+            </span>
+            <span>
+              {t('profile.currently')}{t('punct.colon')} <strong class="font-semibold">{highlighted.position}</strong> {t('profile.at')}{' '}
+              {highlighted.company.name}
+            </span>
+          </li>
+        )
+      }
+      <li class="inline-flex items-center gap-1.5 rounded-full border-2 border-line bg-surface px-3 py-1">
+        <Icon name="lucide:map-pin" class="size-4" aria-hidden="true" />
+        {profile.location.label}
+      </li>
+    </ul>
+
+    <h1 class="flex flex-col gap-3">
+      <span class="text-outline text-5xl leading-[0.95] font-bold tracking-tight sm:text-6xl lg:text-7xl">
+        {profile.name}
+      </span>
+      <span class="text-lg font-semibold tracking-tight text-fg-muted sm:text-xl">{profile.role}</span>
+    </h1>
+
+    <p class="max-w-3xl text-3xl leading-[1.1] font-bold tracking-tight text-balance sm:text-4xl lg:text-[2.75rem]">
+      {profile.title}
+    </p>
+
+    <p class="max-w-2xl text-lg leading-relaxed text-pretty text-fg-muted">{profile.intro}</p>
+
+    <div class="flex flex-wrap items-center gap-3 pt-1">
+      <a
+        href="#contact"
+        class="brutal brutal-interactive inline-flex h-12 items-center gap-2 rounded-full bg-main px-6 font-semibold text-main-fg"
+      >
+        {t('actions.contact')}
+        <Icon name="lucide:arrow-right" class="size-4" aria-hidden="true" />
+      </a>
+      <a
+        href={cvPdfPath(lang)}
+        download
+        class="brutal brutal-interactive inline-flex h-12 items-center gap-2 rounded-full bg-surface px-6 font-semibold"
+      >
+        <Icon name="lucide:file-down" class="size-4" aria-hidden="true" />
+        {t('actions.downloadCv')}
+      </a>
+    </div>
+
+    <SocialLinks lang={lang} links={profile.socialLinks} />
+  </div>
+
+  <div class="relative order-1 w-fit pt-6 md:order-2 md:pt-10">
+    <div class="portrait relative h-[8rem] w-[7rem] sm:h-[12rem] sm:w-[10.5rem] md:h-[22rem] md:w-[19rem]">
+      <!-- The arch: background, border and hard shadow. -->
+      <div class="brutal absolute inset-0 rounded-t-full bg-main" aria-hidden="true"></div>
+      <!-- Clip box: square bottom, follows the arch sides, open at the top,
+           so the (transparent) cut-out photo pops out of the frame. -->
+      <div class="portrait__clip absolute overflow-hidden">
+        <Image
+          src={avatar}
+          alt={profile.name}
+          widths={[160, 320, 500]}
+          sizes="(min-width: 768px) 380px, (min-width: 640px) 208px, 140px"
+          loading="eager"
+          fetchpriority="high"
+          class="portrait__img absolute left-1/2 aspect-square w-auto max-w-none -translate-x-1/2 object-contain"
+        />
+      </div>
+    </div>
+    <span
+      class="brutal absolute -right-3 bottom-6 hidden rotate-[-6deg] xl:-right-6 rounded-full bg-yellow px-4 py-1.5 text-sm font-bold text-[#0b0b0c] md:inline-block"
+      aria-hidden="true"
+    >
+      Product × Tech
+    </span>
+  </div>
+</section>
+
+<style>
+  /* The photo is 10% taller than the arch and bottom-aligned: the head rises
+     above the arch while shoulders stay inside its sides. */
+  .portrait__clip {
+    inset: -14% 2px 2px 2px;
+  }
+  .portrait__img {
+    /* 110% of the arch height, expressed in the clip box (114% tall). */
+    height: calc(110% / 1.14);
+    /* The cut-out has a few transparent rows at the bottom: tuck them away. */
+    bottom: -1.5%;
+  }
+</style>

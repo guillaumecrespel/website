@@ -1,0 +1,35 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Technology } from '@/i18n/data/technologies';
+
+interface Props {
+  technology: Technology;
+  class?: string;
+}
+
+const { technology, class: className = 'size-8' } = Astro.props;
+const icon = technology.iconColor || technology.iconBlack;
+const initials = technology.name
+  .replace(/\(.*\)/, '')
+  .split(/[\s-]+/)
+  .map((word) => word[0])
+  .join('')
+  .slice(0, 3)
+  .toUpperCase();
+---
+
+{
+  icon ? (
+    <Icon name={icon} class={className} aria-hidden="true" />
+  ) : (
+    <span
+      class:list={[
+        'grid shrink-0 place-items-center rounded-lg border-2 border-line bg-yellow text-[0.6rem] font-bold text-[#0b0b0c]',
+        className,
+      ]}
+      aria-hidden="true"
+    >
+      {initials}
+    </span>
+  )
+}

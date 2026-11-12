@@ -1,7 +1,7 @@
-import type { Lang } from "../ui";
+import { getDictionary, type Lang } from '../ui';
 
 export interface SoftSkill {
-  id: string;
+  id: 'pragmatism' | 'prioritization' | 'leadership';
   name: string;
   description: string;
   icon: string;
@@ -12,30 +12,22 @@ export interface SoftSkills {
   skills: SoftSkill[];
 }
 
-export async function getSoftSkills(lang: Lang): Promise<SoftSkills> {
-  const ui = await import(`../locales/${lang}/ui.json`).then((m) => m.default);
+const SKILLS = [
+  { id: 'pragmatism', icon: 'shape1' },
+  { id: 'prioritization', icon: 'shape2' },
+  { id: 'leadership', icon: 'shape3' },
+] as const;
+
+export function getSoftSkills(lang: Lang): SoftSkills {
+  const ui = getDictionary(lang).softSkills;
 
   return {
-    title: ui.softSkills.title,
-    skills: [
-      {
-        id: 'pragmatism',
-        name: ui.softSkills.pragmatism.name,
-        description: ui.softSkills.pragmatism.description,
-        icon: 'shape1',
-      },
-      {
-        id: 'prioritization',
-        name: ui.softSkills.prioritization.name,
-        description: ui.softSkills.prioritization.description,
-        icon: 'shape2',
-      },
-      {
-        id: 'leadership',
-        name: ui.softSkills.leadership.name,
-        description: ui.softSkills.leadership.description,
-        icon: 'shape3',
-      },
-    ],
+    title: ui.title,
+    skills: SKILLS.map(({ id, icon }) => ({
+      id,
+      icon,
+      name: ui[id].name,
+      description: ui[id].description,
+    })),
   };
 }

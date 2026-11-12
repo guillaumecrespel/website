@@ -1,0 +1,110 @@
+---
+import { Icon } from 'astro-icon/components';
+import { type Lang, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  id: string;
+  lang: Lang;
+  title: string;
+  subtitle?: string;
+}
+
+const { id, lang, title, subtitle } = Astro.props;
+const t = useTranslations(lang);
+const titleId = `${id}-title`;
+---
+
+<dialog id={id} class="sheet" aria-labelledby={titleId} closedby="any">
+  <div class="sheet__frame">
+    <div class="sheet__grip" aria-hidden="true"></div>
+    <header class="sheet__header">
+      <div class="sheet__heading">
+        <slot name="media" />
+        <div>
+          <h2 id={titleId}>{title}</h2>
+          {subtitle && <p>{subtitle}</p>}
+        </div>
+      </div>
+      <button
+        type="button"
+        commandfor={id}
+        command="close"
+        class="brutal brutal-interactive sheet__close"
+        aria-label={t('actions.close')}
+      >
+        <Icon name="lucide:x" class="size-5" aria-hidden="true" />
+      </button>
+    </header>
+    <div class="sheet__body">
+      <slot />
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .sheet__frame {
+    display: flex;
+    flex-direction: column;
+    max-height: inherit;
+  }
+  .sheet__grip {
+    width: 3rem;
+    height: 0.375rem;
+    margin: 0.75rem auto 0;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--fg) 25%, transparent);
+  }
+  .sheet__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 2px solid var(--line);
+  }
+  .sheet__heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+  .sheet__heading h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .sheet__heading p {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--fg-muted);
+  }
+  .sheet__close {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--surface);
+  }
+  .sheet__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+  }
+  @media (min-width: 768px) {
+    .sheet__grip {
+      display: none;
+    }
+    .sheet__header {
+      padding: 1.5rem 1.5rem 1rem;
+    }
+    .sheet__heading h2 {
+      font-size: 1.5rem;
+    }
+    .sheet__body {
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+  }
+</style>

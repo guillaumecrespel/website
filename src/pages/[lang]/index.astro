@@ -1,81 +1,117 @@
 ---
-import AllExperiencesButton from "@/components/AllExperiencesButton";
-import ProductSkills from "@/components/sections/ProductSkills.astro";
-import Profile from "@/components/sections/Profile.astro";
-import SaaS from "@/components/sections/SaaS.astro";
-import SoftSkills from "@/components/sections/SoftSkills.astro";
-import Technologies from "@/components/sections/Technologies";
-import { loadExperiences } from "@/i18n/data/experiences/utils.js";
-import { getProductSkills } from "@/i18n/data/product-skills.js";
-import { getProfile } from "@/i18n/data/profile.js";
-import { getSaaS } from "@/i18n/data/saas.js";
-import { getSoftSkills } from "@/i18n/data/soft-skills.js";
-import { getTechnologies } from "@/i18n/data/technologies.js";
-import type { Lang } from "@/i18n/ui";
-import { getOppositeLang } from "@/i18n/utils.js";
-import DefaultLayout from "@/layouts/DefaultLayout.astro";
+import Footer from '@/components/Footer.astro';
+import Header from '@/components/Header.astro';
+import SEO from '@/components/SEO.astro';
+import Apps from '@/components/sections/Apps.astro';
+import Audiences from '@/components/sections/Audiences.astro';
+import Contact from '@/components/sections/Contact.astro';
+import Expertise from '@/components/sections/Expertise.astro';
+import Faq from '@/components/sections/Faq.astro';
+import Hero from '@/components/sections/Hero.astro';
+import Offers from '@/components/sections/Offers.astro';
+import Stack from '@/components/sections/Stack.astro';
+import Stats from '@/components/sections/Stats.astro';
+import Timeline from '@/components/sections/Timeline.astro';
+import { LANGS, type Lang, useTranslations } from '@/i18n/ui';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { BUILD_DATE, expertiseTopics, getSiteContent } from '@/lib/content';
+import { absoluteUrl, homePath, ogImagePath, otherLang } from '@/lib/site';
+import {
+  faqNode,
+  graph,
+  personNode,
+  profilePageNode,
+  softwareNodes,
+  unirakunNode,
+  websiteNode,
+} from '@/lib/structured-data';
 
-export async function getStaticPaths() {
-  return [{ params: { lang: "fr" } }, { params: { lang: "en" } }];
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
 }
 
-const { lang } = Astro.params as { lang: Lang };
-const profile = await getProfile(lang);
-const softSkills = await getSoftSkills(lang);
-const productSkills = await getProductSkills(lang);
-const saas = await getSaaS(lang);
-const technologies = await getTechnologies(lang);
-const experiences = await loadExperiences(lang);
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+const content = getSiteContent(lang);
+const { profile, experiences, currentMissions, ui } = content;
 
-// SEO metadata
-const title = `${profile.name} - ${profile.title}`;
-const description = profile.description;
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  Astro.site || "https://guillaumecrespel.fr"
-);
-const alternateURLs = {
-  fr: new URL("/fr", Astro.site || "https://guillaumecrespel.fr"),
-  en: new URL("/en", Astro.site || "https://guillaumecrespel.fr"),
-};
+const path = homePath(lang);
+const title = t('meta.title');
+const description = t('meta.description');
+const pageUrl = absoluteUrl(path);
+
+const jsonLd = graph([
+  websiteNode(profile),
+  profilePageNode({
+    lang,
+    url: pageUrl,
+    title,
+    description,
+    imageUrl: absoluteUrl(ogImagePath(lang)),
+    dateModified: BUILD_DATE.toISOString(),
+  }),
+  personNode({
+    lang,
+    profile,
+    imageUrl: absoluteUrl('/og/portrait.jpg'),
+    currentMissions,
+    technologies: content.technologies.technologies,
+    knowsAbout: expertiseTopics(lang),
+  }),
+  unirakunNode(content.saas.saas),
+  ...softwareNodes(content.saas.saas, lang),
+  faqNode(ui.faq.items, pageUrl),
+]);
+
+const sections = [
+  { id: 'apps', label: t('nav.apps') },
+  { id: 'expertise', label: t('nav.expertise') },
+  { id: 'services', label: t('nav.offers') },
+  { id: 'experience', label: t('nav.experience') },
+  { id: 'stack', label: t('nav.stack') },
+  { id: 'contact', label: t('nav.contact') },
+];
 ---
 
-<DefaultLayout>
-  <head>
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
+<BaseLayout lang={lang}>
+  <SEO
+    slot="head"
+    lang={lang}
+    title={title}
+    description={description}
+    path={path}
+    alternatePath={homePath(otherLang(lang))}
+    jsonLd={jsonLd}
+  />
 
-    <!-- Language alternates for SEO -->
-    <link rel="alternate" hreflang="fr" href={alternateURLs.fr} />
-    <link rel="alternate" hreflang="en" href={alternateURLs.en} />
-    <link rel="alternate" hreflang="x-default" href={alternateURLs.fr} />
+  <Header slot="header" lang={lang} alternatePath={homePath(otherLang(lang))} sections={sections} />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:locale" content={lang} />
-    <meta property="og:locale:alternate" content={getOppositeLang(lang)} />
-
-    <!-- Twitter -->
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-  </head>
-
-  <section
-    class="flex flex-col gap-10 items-start md:p-6 p-4 w-full md:max-w-screen-lg mx-auto"
-  >
-    <Profile profile={profile} lang={lang} />
-    <SoftSkills softSkills={softSkills} experiences={experiences} lang={lang} />
-    <ProductSkills productSkills={productSkills} experiences={experiences} lang={lang} />
-    <SaaS saas={saas} lang={lang} />
-    
-    <!-- Bouton pour voir toutes les expériences -->
-    <div class="flex justify-center w-full">
-      <AllExperiencesButton experiences={experiences} lang={lang} client:load />
+  <div class="mx-auto flex max-w-6xl flex-col gap-20 px-4 md:gap-28 md:px-6">
+    <div class="flex flex-col gap-6 md:gap-8">
+      <Hero lang={lang} profile={profile} currentMissions={currentMissions} />
+      <Audiences lang={lang} />
+      <Stats lang={lang} {...content.stats} />
     </div>
-  </section>
+    <Apps lang={lang} index="01" saas={content.saas} />
+    <Expertise
+      lang={lang}
+      index="02"
+      productSkills={content.productSkills}
+      softSkills={content.softSkills}
+      experiences={experiences}
+    />
+    <Offers lang={lang} index="03" {...content.offers} experiences={experiences} />
+    <Timeline lang={lang} index="04" experiences={experiences} />
+  </div>
 
-  <Technologies technologies={technologies} experiences={experiences} client:load />
-</DefaultLayout>
+  <div class="mt-20 md:mt-28">
+    <Stack lang={lang} index="05" technologies={content.technologies} experiences={experiences} />
+  </div>
+
+  <div class="mx-auto mt-20 flex max-w-6xl flex-col gap-20 px-4 md:mt-28 md:gap-28 md:px-6">
+    <Faq lang={lang} index="06" />
+    <Contact lang={lang} profile={profile} />
+  </div>
+
+  <Footer slot="footer" lang={lang} profile={profile} />
+</BaseLayout>

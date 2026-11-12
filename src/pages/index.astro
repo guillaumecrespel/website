@@ -1,1 +1,57 @@
-<meta http-equiv="refresh" content="0;url=/fr" />
+---
+/**
+ * Language negotiation for `/`.
+ * In production nginx answers `/` with a 302 based on Accept-Language
+ * (see nginx.conf); this page is the fallback for other hosts and previews.
+ */
+import { absoluteUrl } from '@/lib/site';
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Guillaume Crespel · C(P)TO & développeur freelance</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={absoluteUrl('/fr/')} />
+    <link rel="alternate" hreflang="fr-FR" href={absoluteUrl('/fr/')} />
+    <link rel="alternate" hreflang="en-US" href={absoluteUrl('/en/')} />
+    <link rel="alternate" hreflang="x-default" href={absoluteUrl('/')} />
+    <script is:inline>
+      (function () {
+        var langs = navigator.languages || [navigator.language || 'fr'];
+        for (var i = 0; i < langs.length; i++) {
+          var code = String(langs[i]).slice(0, 2).toLowerCase();
+          if (code === 'fr' || code === 'en') {
+            location.replace('/' + code + '/');
+            return;
+          }
+        }
+        location.replace('/fr/');
+      })();
+    </script>
+    <meta http-equiv="refresh" content="2;url=/fr/" />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: #faf3ea;
+      }
+      a {
+        color: #0b0b0c;
+        font-weight: 600;
+        margin: 0 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <a href="/fr/" hreflang="fr" lang="fr">Français</a>
+      <a href="/en/" hreflang="en" lang="en">English</a>
+    </p>
+  </body>
+</html>

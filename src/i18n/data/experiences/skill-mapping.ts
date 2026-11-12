@@ -10,43 +10,78 @@ export interface SkillMapping {
 // Product skills mapping
 export const productSkillMapping: SkillMapping = {
   scalability: [
-    'Scalabilité', 'Scalability', 'Architecture', 'Performance', 
-    'Full-stack', 'Infrastructure', 'Modular', 'Cloud', 'Scalable'
+    'Scalabilité',
+    'Scalability',
+    'Architecture',
+    'Performance',
+    'Full-stack',
+    'Infrastructure',
+    'Modular',
+    'Cloud',
+    'Scalable',
   ],
   business: [
-    'Business', 'Product Management', 'Leadership', 'CTO', 
-    'Entrepreneurship', 'Partnership', 'Strategy', 'Product Strategy'
+    'Business',
+    'Product Management',
+    'Leadership',
+    'CTO',
+    'Entrepreneurship',
+    'Partnership',
+    'Strategy',
+    'Product Strategy',
   ],
   vision: [
-    'Vision', 'Product Development', 'Strategy', 'Innovation', 
-    'Startup', 'UX', 'Product Design', 'Product Vision'
-  ]
+    'Vision',
+    'Product Development',
+    'Strategy',
+    'Innovation',
+    'Startup',
+    'UX',
+    'Product Design',
+    'Product Vision',
+  ],
 };
 
 // Soft skills mapping
 export const softSkillMapping: SkillMapping = {
   pragmatism: [
-    'Pragmatisme', 'Pragmatism', 'Efficiency', 'Problem Solving', 
-    'Optimization', 'Results', 'Practical'
+    'Pragmatisme',
+    'Pragmatism',
+    'Efficiency',
+    'Problem Solving',
+    'Optimization',
+    'Results',
+    'Practical',
   ],
   prioritization: [
-    'Priorisation', 'Prioritization', 'Time Management', 'Focus', 
-    'Strategy', 'Planning', 'Priority'
+    'Priorisation',
+    'Prioritization',
+    'Time Management',
+    'Focus',
+    'Strategy',
+    'Planning',
+    'Priority',
   ],
   leadership: [
-    'Leadership', 'Team Management', 'Mentoring', 'Communication', 
-    'Decision Making', 'Team Leadership'
-  ]
+    'Leadership',
+    'Team Management',
+    'Mentoring',
+    'Communication',
+    'Decision Making',
+    'Team Leadership',
+  ],
 };
 
 /**
  * Get relevant tags for a skill by ID
  */
 export function getSkillTags(skillId: string): string[] {
-  return {
-    ...productSkillMapping,
-    ...softSkillMapping
-  }[skillId] || [];
+  return (
+    {
+      ...productSkillMapping,
+      ...softSkillMapping,
+    }[skillId] || []
+  );
 }
 
 /**
@@ -61,4 +96,4 @@ export function isProductSkill(skillId: string): boolean {
  */
 export function isSoftSkill(skillId: string): boolean {
   return skillId in softSkillMapping;
-} 
+}

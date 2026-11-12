@@ -1,4 +1,8 @@
+# Everyone is welcome, including search engines and AI assistants
+# (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, …).
+# /og/ is not disallowed on purpose: social networks must be able to fetch the
+# preview images. The OG template pages carry a noindex meta instead.
 User-agent: *
 Allow: /
 
-Sitemap: https://guillaumecrespel.fr/sitemap.xml 
+Sitemap: https://guillaumecrespel.fr/sitemap-index.xml

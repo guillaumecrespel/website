@@ -1,47 +1,132 @@
 {
+  "meta": {
+    "title": "Guillaume Crespel · Custom business apps & freelance C(P)TO in Nantes, France",
+    "description": "A business app built around the way you work, without a big upfront investment, or a freelance C(P)TO to launch and grow your product. Based in Nantes, France.",
+    "cvTitle": "Guillaume Crespel resume · Freelance C(P)TO & developer",
+    "cvDescription": "Resume of Guillaume Crespel: {years} years in product and tech, interim CTO, lead developer and architecture missions, SaaS apps shipped.",
+    "notFoundTitle": "Page not found · Guillaume Crespel"
+  },
   "profile": {
     "name": "Guillaume Crespel",
-    "title": "Pragmatic solutions designer with business impact.",
-    "description": "C(P)TO & freelance developer, I support startups in creating innovative products from A to Z."
+    "role": "Custom apps & freelance C(P)TO",
+    "title": "Software that moves your business forward, without the over-engineering.",
+    "description": "Freelance C(P)TO and developer based in Nantes, France: digital products that solve real needs, shipped fast and built to last.",
+    "intro": "Running a small or medium business? Get an app built around your trade, as a subscription, with no big upfront cheque. A startup or scale-up? Get a C(P)TO who turns your vision into a product, and your product into growth.",
+    "location": "Nantes, France",
+    "currently": "Currently",
+    "at": "at"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "expertise": "Expertise",
+    "offers": "Missions",
+    "products": "Products",
+    "experience": "Experience",
+    "stack": "Stack",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Close",
+    "skip": "Skip to main content",
+    "home": "Home",
+    "apps": "Apps"
+  },
+  "actions": {
+    "contact": "Let's talk about your project",
+    "downloadCv": "Download resume",
+    "viewCv": "View resume online",
+    "cv": "Resume",
+    "switchLang": "Lire en français",
+    "switchLangShort": "FR",
+    "printCv": "Print / Save as PDF",
+    "backToSite": "Back to website",
+    "seeMissions": "See related missions",
+    "seeDetails": "Show details",
+    "hideDetails": "Hide details",
+    "visit": "Visit",
+    "close": "Close",
+    "learnMore": "Official documentation",
+    "appProject": "I need an app"
   },
   "social": {
     "linkedin": "LinkedIn",
     "github": "GitHub",
     "malt": "Malt",
-    "strava": "Strava"
+    "strava": "Strava",
+    "follow": "Guillaume Crespel on {network}"
+  },
+  "theme": {
+    "light": "Light theme",
+    "dark": "Dark theme",
+    "system": "System theme",
+    "toggle": "Change theme (current: {theme})"
+  },
+  "stats": {
+    "label": "Key figures",
+    "years": "years shipping products",
+    "companies": "companies supported",
+    "products": "SaaS products shipped",
+    "sectors": "industries"
   },
   "softSkills": {
-    "title": "I integrate into your team",
+    "title": "What your team gains",
     "pragmatism": {
       "name": "Pragmatism",
-      "description": "Focus on solutions that solve real problems, not imaginary ones"
+      "description": "We tackle your real problems, not imaginary ones"
     },
     "prioritization": {
       "name": "Prioritization",
-      "description": "Concentration on high-impact tasks that move the project forward quickly"
+      "description": "Your team focuses on what has the most impact, and the project moves forward"
     },
     "leadership": {
       "name": "Leadership",
-      "description": "Technical mentoring and team facilitation to maximize collective productivity"
+      "description": "Mentored developers, a tight-knit team and collective productivity that takes off"
     }
   },
   "productSkills": {
-    "title": "I bring to your product",
+    "title": "What your product gains",
     "scalability": {
       "name": "Scalability",
-      "description": "Cloud-native architectures that evolve with your growth without costly refactoring"
+      "description": "An architecture that keeps up with your growth, without a rewrite at every stage"
     },
     "business": {
       "name": "Business",
-      "description": "Technical decisions that optimize costs and accelerate time-to-market"
+      "description": "Technical choices that keep costs under control and shorten your time-to-market"
     },
     "vision": {
       "name": "Vision",
-      "description": "Pragmatic solutions that avoid over-engineering and deliver value quickly"
+      "description": "Simple solutions that deliver value fast, without over-engineering"
+    }
+  },
+  "expertise": {
+    "title": "Expertise",
+    "lead": "The right level of tech in service of your goals: you talk business, I turn it into product.",
+    "relatedCount": "Proven in {count} missions"
+  },
+  "offers": {
+    "title": "Freelance missions: pick your format",
+    "lead": "For startups, scale-ups and large companies. Every format has already proven itself on real missions.",
+    "examples": "For example",
+    "interim": {
+      "name": "Interim CTO",
+      "description": "Your team keeps a clear technical direction while you hire: architecture, roadmap, hiring, then a clean handover."
+    },
+    "build": {
+      "name": "Co-building & MVP",
+      "description": "Your idea becomes a product in production: scoping, technical choices, MVP and iterations with your first users."
+    },
+    "architecture": {
+      "name": "Lead dev & architecture",
+      "description": "Your demanding product gets sturdier: hexagonal architecture, DDD, modular frontends and tests you can rely on."
+    },
+    "mentoring": {
+      "name": "Training & mentoring",
+      "description": "Your teams level up on Node.js, React and engineering best practices, all the way to full autonomy."
     }
   },
   "saas": {
-    "title": "Developed by me",
+    "title": "Apps already in service",
+    "lead": "Products I designed, built and keep running.",
     "kojimo": {
       "name": "Kojimo",
       "description": "The Business Accelerator for Real Estate Agents."
@@ -53,53 +138,216 @@
     "qrakun": {
       "name": "QRakun",
       "description": "Analyze your links and personalized QR Codes in real time."
+    },
+    "wagle": {
+      "name": "Wagle",
+      "description": "Feature flags & remote config, agent-native over MCP."
+    },
+    "woof": {
+      "name": "Woof",
+      "description": "A work board for your coding agents: they ship pull requests, you stay in the loop."
+    },
+    "alpha": "Alpha",
+    "moovi": {
+      "name": "Moovi",
+      "description": "A sports coaching app: your training sessions land in your calendar and on your watch."
+    },
+    "beta": "Beta"
+  },
+  "experiences": {
+    "title": "Experience",
+    "lead": "From large companies to startups: products shipped in demanding contexts, always close to the business.",
+    "present": "present",
+    "ongoing": "Ongoing",
+    "achievements": "Achievements",
+    "skills": "Skills",
+    "stack": "Stack",
+    "noExperiences": "No missions found",
+    "workType": {
+      "Freelance": "Freelance",
+      "CDI": "Permanent",
+      "CDD": "Fixed-term",
+      "Stage": "Internship",
+      "Indépendant": "Self-employed"
     }
   },
   "technologies": {
-    "title": "I handle the technical part",
-    "viewAll": "View all technologies",
-    "close": "Close",
-    "learnMore": "Learn more",
-    "description": "Description"
-  },
-  "experiences": {
-    "title": "Experiences",
-    "allExperiences": "Discover all my experiences",
-    "close": "Close",
-    "noExperiences": "No experiences found",
-    "experienceCount": {
-      "one": "related experience",
-      "other": "related experiences"
-    },
-    "seniority": {
-      "title": "Seniority",
-      "months": "months",
-      "years": "years",
-      "ongoing": "Learning in progress"
-    },
-    "skills": {
-      "title": "Acquired skills",
-      "technologies": "Technologies used"
-    },
+    "title": "Tech is my job, so it doesn't have to be yours",
+    "lead": "You focus on your business, I pick and master the tools. Click a technology to see where I used it in production.",
+    "seniority": "Hands-on mission time",
+    "months": "months",
+    "usedIn": "Used in missions",
     "personalProjects": "Personal projects & continuous learning",
-    "learningDescription": "I explore this technology through personal projects, training and experimentation. Always keeping up with the latest technological innovations.",
-    "at": "at"
+    "learningDescription": "I explore this technology through personal projects, training and experimentation, to keep up with the latest innovations.",
+    "levels": {
+      "expert": "Expert",
+      "senior": "Advanced",
+      "intermediate": "Intermediate",
+      "beginner": "Familiar",
+      "learning": "Exploring"
+    },
+    "categories": {
+      "frontend": "Frontend",
+      "state": "State management",
+      "build": "Build",
+      "testing": "Testing",
+      "styling": "Styling & UI",
+      "language": "Languages",
+      "backend": "Backend",
+      "database": "Data",
+      "container": "Infra & DevOps",
+      "cloud": "Cloud",
+      "vcs": "Version control",
+      "design": "Design",
+      "api": "API",
+      "baas": "Backend as a Service",
+      "hosting": "Hosting",
+      "monitoring": "Observability",
+      "security": "Security",
+      "ai": "AI"
+    }
   },
-  "language": {
-    "switchTo": "Switch to French",
-    "currentLanguage": "Current language",
-    "languageToggle": "Language toggle"
+  "sectors": {
+    "title": "Industries",
+    "agriculture": "AgriTech",
+    "retail": "Retail",
+    "finance": "Banking & finance",
+    "insurance": "Insurance",
+    "health": "Healthcare",
+    "public": "Public & social sector",
+    "energy": "Energy",
+    "media": "AdTech & media",
+    "logistics": "Logistics",
+    "realEstate": "Real estate",
+    "construction": "Construction",
+    "sport": "Sports & wellness",
+    "language": "Translation & localization"
   },
-  "theme": {
-    "light": "Light mode",
-    "dark": "Dark mode",
-    "system": "System mode",
-    "toggleTheme": "Toggle theme"
+  "faq": {
+    "title": "Frequently asked questions",
+    "items": [
+      {
+        "q": "How much does a custom app cost?",
+        "a": "You don't fund one big development project upfront. You pay a monthly subscription that covers hosting, maintenance and updates. The app is then offered to other professionals in your trade: costs are shared, which is what keeps the price affordable."
+      },
+      {
+        "q": "I'm not technical. Is that a problem?",
+        "a": "Quite the opposite: you know your trade, and that's all it takes. You walk me through your day-to-day and your current tools, I handle the tech and show you progress along the way."
+      },
+      {
+        "q": "Who do we work with for an app?",
+        "a": "With Unirakun, our app development company: it designs, hosts and maintains your tool. You get a direct contact, me, and a company that keeps the app running over time."
+      },
+      {
+        "q": "What is a freelance C(P)TO?",
+        "a": "A Chief Technology Officer (CTO) who also wears the product hat (CPO), working as a freelancer. You get the business vision, product roadmap and technical execution of a senior profile, without waiting for a full-time hire."
+      },
+      {
+        "q": "When should you bring me in?",
+        "a": "When you need to launch an MVP, challenge an existing product, prepare an architecture to scale, bring generative AI into your product, or cover as interim CTO while you hire."
+      },
+      {
+        "q": "Where are you based? Do you work remotely?",
+        "a": "I am based in Nantes, France, and work on site or remotely depending on your needs. I have worked with teams in Nantes, Paris and Niort."
+      },
+      {
+        "q": "What is your preferred stack?",
+        "a": "TypeScript end to end: React on the frontend, Node.js on the backend, PostgreSQL or Supabase for data, and the cloud (AWS, Google Cloud, Azure) depending on your context. For AI: OpenAI, Claude, Mistral and RAG."
+      },
+      {
+        "q": "How do we get started?",
+        "a": "Send me a few lines about your context on LinkedIn or Malt. I'll get back to you to set up a first call and see together how I can help."
+      }
+    ]
   },
-  "accessibility": {
-    "close": "Close",
-    "open": "Open",
-    "menu": "Menu",
-    "navigation": "Navigation"
+  "contact": {
+    "title": "A tool to build or a product to speed up? Let's talk.",
+    "lead": "A few lines about your context are enough. I'll get back to you with a first take on your need and concrete next steps.",
+    "linkedin": "Message me on LinkedIn",
+    "malt": "Contact me on Malt",
+    "email": "Send me an email"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Static site built with Astro, no trackers.",
+    "forAi": "Summary for AI assistants (llms.txt)",
+    "unirakun": "Unirakun, our app company"
+  },
+  "cv": {
+    "profile": "Profile",
+    "experience": "Professional experience",
+    "expertise": "Expertise",
+    "stack": "Tech stack",
+    "products": "SaaS products",
+    "sectors": "Industries",
+    "links": "Links",
+    "updated": "Updated on",
+    "online": "Online version",
+    "previewNote": "Resume preview. The PDF is generated from this page.",
+    "summary": "What I bring: product and business vision, architectures that keep up with growth, and teams that become autonomous. {years} years of experience from startups to large companies, and {products} SaaS apps designed and launched.",
+    "offers": "Engagement models",
+    "earlier": "Earlier missions",
+    "stackOther": "Familiar & exploring",
+    "apps": "SaaS apps",
+    "overview": "At a glance"
+  },
+  "notFound": {
+    "title": "This page doesn't exist (anymore).",
+    "lead": "The link may be outdated. The easiest way forward: start again from the home page.",
+    "back": "Back to home"
+  },
+  "audiences": {
+    "label": "Two ways to work together",
+    "smb": {
+      "eyebrow": "You run a small or medium business",
+      "title": "A tool that fits your trade, without blowing your budget",
+      "description": "No more patched-up spreadsheets or one-size-fits-all software: an app designed around the way you work, as a subscription, maintenance included.",
+      "cta": "See how it works"
+    },
+    "tech": {
+      "eyebrow": "You are a startup, a scale-up or a product team",
+      "title": "A C(P)TO who secures your product and speeds up your team",
+      "description": "Launching an MVP, taking over an architecture, structuring the team or covering as interim CTO: you move faster without trading off quality.",
+      "cta": "See the missions"
+    }
+  },
+  "apps": {
+    "title": "Your custom app, for the price of a subscription",
+    "lead": "You don't need a five-figure budget to work with a tool made for you. You explain your trade, I build the app with you, and you pay monthly: hosting, maintenance and updates included.",
+    "stepsLabel": "How it works",
+    "steps": [
+      {
+        "title": "You describe your day-to-day",
+        "description": "Customer requests, quotes, reports, scheduling… You show me what wastes your time."
+      },
+      {
+        "title": "I build your tool",
+        "description": "An app that fits the way you work, tested with you, then put into service."
+      },
+      {
+        "title": "You pay monthly",
+        "description": "No big cheque upfront: a subscription that covers hosting, maintenance and updates."
+      },
+      {
+        "title": "Your tool keeps improving",
+        "description": "Other professionals in your trade adopt it: improvements are shared, and you benefit too."
+      }
+    ],
+    "caseLabel": "Case study",
+    "caseTitle": "Brikia: from a real need on site to trade software",
+    "caseDescription": "A first client in the building trade wanted requests, reports, quotes and a website in one place. Brikia was built with them, then opened up to other companies in the sector, as a subscription.",
+    "caseCta": "Discover Brikia",
+    "productsTitle": "Apps already in service",
+    "cta": "Tell me about your need"
+  },
+  "punct": {
+    "colon": ":"
+  },
+  "studio": {
+    "eyebrow": "Our studio",
+    "title": "Unirakun, the studio behind these apps",
+    "description": "Unirakun is our development studio. With Fabien Juif, we design, host and maintain our own apps, and the ones we build for clients, with the same care for product and engineering.",
+    "cta": "Discover Unirakun",
+    "logoAlt": "Unirakun logo"
   }
-} 
+}

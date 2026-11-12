@@ -1,0 +1,35 @@
+---
+import { Icon } from 'astro-icon/components';
+import Header from '@/components/Header.astro';
+import { useTranslations } from '@/i18n/ui';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+// Static 404: French by default, with a link to the English home page.
+const lang = 'fr';
+const t = useTranslations(lang);
+const en = useTranslations('en');
+---
+
+<BaseLayout lang={lang}>
+  <Fragment slot="head">
+    <title>{t('meta.notFoundTitle')}</title>
+    <meta name="robots" content="noindex" />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternatePath="/en/" />
+
+  <section class="mx-auto flex min-h-[70dvh] max-w-3xl flex-col items-start justify-center gap-6 px-4 py-16 md:px-6">
+    <p class="text-outline text-8xl font-bold md:text-9xl" aria-hidden="true">404</p>
+    <h1 class="text-3xl font-bold tracking-tight text-balance md:text-5xl">{t('notFound.title')}</h1>
+    <p class="text-lg text-fg-muted">{t('notFound.lead')}</p>
+    <div class="flex flex-wrap gap-3">
+      <a href="/fr/" class="brutal brutal-interactive inline-flex h-12 items-center gap-2 rounded-full bg-main px-6 font-semibold text-main-fg">
+        <Icon name="lucide:arrow-left" class="size-4" aria-hidden="true" />
+        {t('notFound.back')}
+      </a>
+      <a href="/en/" lang="en" hreflang="en" class="brutal brutal-interactive inline-flex h-12 items-center gap-2 rounded-full bg-surface px-6 font-semibold">
+        {en('notFound.back')} (EN)
+      </a>
+    </div>
+  </section>
+</BaseLayout>
