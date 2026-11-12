@@ -314,6 +314,10 @@ dialog.sheet {
 }
 
 dialog.sheet[open] {
+  /* The frame fills the box minus its border: no second scrollbar on the dialog. */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   transform: translateY(0);
 }
 

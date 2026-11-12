@@ -42,10 +42,12 @@ const titleId = `${id}-title`;
 </dialog>
 
 <style>
+  /* Fills the dialog (a flex column) so only the body scrolls. */
   .sheet__frame {
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
-    max-height: inherit;
+    min-height: 0;
   }
   .sheet__grip {
     width: 3rem;
