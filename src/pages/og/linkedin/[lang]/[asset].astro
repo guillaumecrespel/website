@@ -1,0 +1,694 @@
+---
+/**
+ * LinkedIn kit templates (banner, profile photo, featured images, launch post
+ * visual), screenshotted by `pnpm generate:linkedin` into docs/linkedin/.
+ * Only built when LINKEDIN_KIT=1, so they never ship with the site.
+ */
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import avatar from '@/assets/images/avatar.png';
+import { LANGS, type Lang } from '@/i18n/ui';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getSiteContent } from '@/lib/content';
+import { LINKEDIN_ASSETS, type LinkedinAsset } from '@/lib/linkedin';
+
+type Asset = LinkedinAsset;
+
+export function getStaticPaths() {
+  if (process.env.LINKEDIN_KIT !== '1') return [];
+  return LANGS.flatMap((lang) =>
+    (Object.keys(LINKEDIN_ASSETS) as Asset[]).map((asset) => ({ params: { lang, asset } })),
+  );
+}
+
+const lang = Astro.params.lang as Lang;
+const asset = Astro.params.asset as Asset;
+const { width, height } = LINKEDIN_ASSETS[asset];
+const { profile, ui, stats, saas, offers } = getSiteContent(lang);
+
+const N = ' ';
+const KIT = {
+  fr: {
+    location: 'Nantes · Freelance',
+    headlineStart: 'Des logiciels qui font avancer ',
+    headlineMark: 'votre business',
+    headlineEnd: ', sans sur-ingénierie.',
+    appsChip: 'Applications métier sur mesure, par abonnement',
+    cptoChip: 'C(P)TO freelance pour startups & scale-ups',
+    appsKicker: 'Pour les TPE et PME',
+    appsTitle: 'Votre application métier, au prix d’un abonnement',
+    appsText: `Vous décrivez votre quotidien, je construis l’outil avec vous, vous payez au mois${N}: hébergement, maintenance et mises à jour compris.`,
+    appsProof: 'Déjà en service, conçues et maintenues par uni rakun',
+    missionsKicker: 'Pour les startups, scale-ups et grands comptes',
+    missionsTitle: `C(P)TO freelance${N}: choisissez votre format`,
+    missions: {
+      interim: 'Un cap technique clair pendant que vous recrutez',
+      build: 'De l’idée au produit en production',
+      architecture: 'Un produit exigeant qui gagne en solidité',
+      mentoring: 'Des équipes autonomes sur Node.js et React',
+    },
+    postBadge: 'Nouveau site',
+    smbQuestion: `Vous dirigez une TPE ou une PME${N}?`,
+    smbAnswer: 'Votre application métier, taillée pour votre activité, payée au mois.',
+    startupQuestion: `Startup ou scale-up${N}?`,
+    startupAnswer: 'Un C(P)TO freelance pour lancer et faire grandir votre produit.',
+  },
+  en: {
+    location: 'Nantes, France · Freelance',
+    headlineStart: 'Software that moves ',
+    headlineMark: 'your business',
+    headlineEnd: ' forward, without the over-engineering.',
+    appsChip: 'Custom business apps, as a subscription',
+    cptoChip: 'Freelance C(P)TO for startups & scale-ups',
+    appsKicker: 'For small and medium businesses',
+    appsTitle: 'Your business app, for the price of a subscription',
+    appsText:
+      'You describe your day-to-day, I build the tool with you, you pay monthly: hosting, maintenance and updates included.',
+    appsProof: 'Already in service, built and run by uni rakun',
+    missionsKicker: 'For startups, scale-ups and large companies',
+    missionsTitle: 'Freelance C(P)TO: pick your format',
+    missions: {
+      interim: 'A clear technical direction while you hire',
+      build: 'From idea to a product in production',
+      architecture: 'A demanding product that gets sturdier',
+      mentoring: 'Teams that become autonomous on Node.js and React',
+    },
+    postBadge: 'New website',
+    smbQuestion: 'Running a small or medium business?',
+    smbAnswer: 'A business app built around your trade, paid monthly.',
+    startupQuestion: 'Startup or scale-up?',
+    startupAnswer: 'A freelance C(P)TO to launch and grow your product.',
+  },
+}[lang];
+
+const OFFER_COLORS = ['#5ef1a5', '#ffc700', '#fca3ff', '#68d4fb'];
+
+const iconClass = (kind: string) =>
+  kind === 'logo' ? 'kit-app__logo' : kind === 'color' ? 'kit-app__color' : 'kit-app__glyph';
+---
+
+<BaseLayout lang={lang} backdrop={false} share={false} bodyClass="kit-body">
+  <Fragment slot="head">
+    <title>LinkedIn {asset} · {profile.name}</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <div class:list={['kit', `kit--${asset}`]} style={`width:${width}px;height:${height}px`}>
+    <!-- Edge shapes, same family as the site background. -->
+    <svg class="kit-shape kit-shape--circle" viewBox="0 0 100 100"><circle cx="50" cy="50" r="47"></circle></svg>
+    <svg class="kit-shape kit-shape--half" viewBox="0 0 100 52"><path d="M2 50a48 48 0 0 1 96 0z"></path></svg>
+    <svg class="kit-shape kit-shape--ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"></circle></svg>
+    <svg class="kit-shape kit-shape--spark" viewBox="0 0 100 100">
+      <path d="M50 2c4 30 18 44 48 48-30 4-44 18-48 48-4-30-18-44-48-48 30-4 44-18 48-48z"></path>
+    </svg>
+    <svg class="kit-shape kit-shape--square" viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="14"></rect></svg>
+
+    {
+      asset === 'banner' && (
+        <div class="banner">
+          <p class="kit-pill">
+            <Icon name="lucide:map-pin" aria-hidden="true" />
+            {KIT.location}
+          </p>
+          <p class="banner__title">
+            {KIT.headlineStart}
+            <span class="kit-mark">{KIT.headlineMark}</span>
+            {KIT.headlineEnd}
+          </p>
+          <div class="banner__chips">
+            <span class="kit-chip" style="background:#5ef1a5">
+              <Icon name="lucide:app-window" aria-hidden="true" />
+              {KIT.appsChip}
+            </span>
+            <span class="kit-chip" style="background:#ffc700">
+              <Icon name="lucide:compass" aria-hidden="true" />
+              {KIT.cptoChip}
+            </span>
+          </div>
+          <p class="banner__url">guillaumecrespel.fr</p>
+        </div>
+      )
+    }
+
+    {
+      asset === 'photo' && (
+        <div class="photo">
+          <Image src={avatar} alt="" width={500} height={500} loading="eager" class="photo__img" />
+        </div>
+      )
+    }
+
+    {
+      asset === 'apps' && (
+        <div class="card">
+          <div class="card__text">
+            <p class="kit-pill">{KIT.appsKicker}</p>
+            <p class="card__title">{KIT.appsTitle}</p>
+            <p class="card__lead">{KIT.appsText}</p>
+            <p class="card__url">guillaumecrespel.fr</p>
+          </div>
+          <div class="apps">
+            <ul class="apps__grid">
+              {saas.saas.map((product) => (
+                <li class="kit-app">
+                  <span
+                    class:list={['kit-app__tile', product.iconKind === 'logo' && 'kit-app__tile--logo']}
+                    style={{ backgroundColor: product.bgColor, color: product.fgColor }}
+                  >
+                    <Icon name={product.icon} class={iconClass(product.iconKind)} aria-hidden="true" />
+                  </span>
+                  <span class="kit-app__name">{product.name}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="apps__proof">{KIT.appsProof}</p>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      asset === 'missions' && (
+        <div class="missions">
+          <p class="kit-pill">{KIT.missionsKicker}</p>
+          <p class="card__title">{KIT.missionsTitle}</p>
+          <ul class="missions__grid">
+            {offers.offers.map((offer, index) => (
+              <li class="missions__item">
+                <span class="missions__icon" style={`background:${OFFER_COLORS[index % OFFER_COLORS.length]}`}>
+                  <Icon name={offer.icon} aria-hidden="true" />
+                </span>
+                <span>
+                  <span class="missions__name">{offer.name}</span>
+                  <span class="missions__text">{KIT.missions[offer.id]}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p class="card__url missions__url">guillaumecrespel.fr</p>
+        </div>
+      )
+    }
+
+    {
+      asset === 'post' && (
+        <div class="post">
+          <div class="post__top">
+            <p class="kit-pill kit-pill--main">{KIT.postBadge}</p>
+            <p class="kit-pill">guillaumecrespel.fr</p>
+          </div>
+          <p class="post__name">{profile.name}</p>
+          <p class="post__title">
+            {KIT.headlineStart}
+            <span class="kit-mark">{KIT.headlineMark}</span>
+            {KIT.headlineEnd}
+          </p>
+          <div class="post__cards">
+            <div class="post__card" style="background:#5ef1a5">
+              <p class="post__q">{KIT.smbQuestion}</p>
+              <p class="post__a">{KIT.smbAnswer}</p>
+            </div>
+            <div class="post__card" style="background:#ffc700">
+              <p class="post__q">{KIT.startupQuestion}</p>
+              <p class="post__a">{KIT.startupAnswer}</p>
+            </div>
+          </div>
+          <div class="post__bottom">
+            <ul class="post__stats">
+              <li><strong>{stats.years}</strong> {ui.stats.years}</li>
+              <li><strong>{stats.companies}</strong> {ui.stats.companies}</li>
+              <li><strong>{stats.products}</strong> {ui.stats.products}</li>
+            </ul>
+            <div class="post__photo">
+              <span class="post__arch" />
+              <Image src={avatar} alt="" width={500} height={500} loading="eager" class="post__img" />
+            </div>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style is:global>
+  html,
+  body.kit-body {
+    margin: 0;
+    background: #faf3ea;
+    color-scheme: light;
+    overflow: hidden;
+  }
+  .kit {
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: #faf3ea;
+    color: #0b0b0c;
+    font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  }
+  .kit *,
+  .kit *::before,
+  .kit *::after {
+    box-sizing: border-box;
+  }
+
+  /* Shapes ---------------------------------------------------------------- */
+  .kit-shape {
+    position: absolute;
+    overflow: visible;
+    stroke: rgb(11 11 12 / 0.55);
+    stroke-width: 3;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.6;
+  }
+  .kit-shape--circle {
+    fill: #5ef1a5;
+  }
+  .kit-shape--half {
+    fill: #ffc700;
+  }
+  .kit-shape--ring {
+    fill: none;
+    stroke: #6f61fe;
+    stroke-width: 12;
+  }
+  .kit-shape--spark {
+    fill: #fca3ff;
+  }
+  .kit-shape--square {
+    fill: #68d4fb;
+  }
+
+  /* Shared pieces --------------------------------------------------------- */
+  .kit-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin: 0;
+    padding: 6px 16px;
+    border: 2px solid #0b0b0c;
+    border-radius: 999px;
+    background: #fff;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .kit-pill svg {
+    width: 20px;
+    height: 20px;
+  }
+  .kit-pill--main {
+    background: #5ef1a5;
+    box-shadow: 3px 3px 0 0 #0b0b0c;
+  }
+  .kit-mark {
+    background: linear-gradient(transparent 58%, #5ef1a5 58%, #5ef1a5 92%, transparent 92%);
+  }
+  .kit-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border: 2px solid #0b0b0c;
+    border-radius: 999px;
+    box-shadow: 4px 4px 0 0 #0b0b0c;
+    font-size: 22px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .kit-chip svg {
+    width: 22px;
+    height: 22px;
+  }
+  .card__url {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  /* Banner 1584×396: text right of the profile photo zone (bottom left). -- */
+  .kit--banner .kit-shape--circle {
+    width: 330px;
+    left: -110px;
+    bottom: -170px;
+  }
+  .kit--banner .kit-shape--half {
+    width: 190px;
+    top: -12px;
+    left: 250px;
+    rotate: 180deg;
+  }
+  .kit--banner .kit-shape--ring {
+    width: 150px;
+    bottom: -88px;
+    left: 360px;
+  }
+  .kit--banner .kit-shape--spark {
+    width: 64px;
+    top: 34px;
+    right: 44px;
+  }
+  .kit--banner .kit-shape--square {
+    width: 72px;
+    top: 72px;
+    left: 70px;
+    rotate: 14deg;
+  }
+  .banner {
+    position: absolute;
+    inset: 0 120px 0 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+  }
+  .banner__title {
+    margin: 0;
+    font-size: 50px;
+    line-height: 1.04;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  .banner__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .banner__url {
+    position: absolute;
+    right: -76px;
+    bottom: 24px;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* Profile photo 800×800 (LinkedIn crops it to a circle). ---------------- */
+  .kit--photo {
+    background: #5ef1a5;
+  }
+  .kit--photo .kit-shape {
+    display: none;
+  }
+  .photo__img {
+    position: absolute;
+    left: 50%;
+    bottom: -2%;
+    width: 92%;
+    height: auto;
+    translate: -50% 0;
+  }
+
+  /* Featured cards 1200×627 ----------------------------------------------- */
+  .kit--apps .kit-shape--circle,
+  .kit--missions .kit-shape--circle {
+    width: 220px;
+    left: -130px;
+    bottom: -130px;
+  }
+  .kit--apps .kit-shape--spark,
+  .kit--missions .kit-shape--spark {
+    width: 56px;
+    top: 30px;
+    right: 34px;
+  }
+  .kit--apps .kit-shape--half,
+  .kit--missions .kit-shape--half {
+    width: 150px;
+    top: -10px;
+    left: 470px;
+    rotate: 180deg;
+  }
+  .kit--apps .kit-shape--ring,
+  .kit--apps .kit-shape--square,
+  .kit--missions .kit-shape--ring,
+  .kit--missions .kit-shape--square {
+    display: none;
+  }
+  .card {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    align-items: center;
+    gap: 48px;
+    padding: 56px 64px;
+  }
+  .card__text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .card__title {
+    margin: 0;
+    font-size: 48px;
+    line-height: 1.04;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  .card__lead {
+    margin: 0;
+    font-size: 23px;
+    line-height: 1.4;
+    color: #3c3c42;
+  }
+  .card__text .card__url {
+    margin-top: 8px;
+  }
+  .apps {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .apps__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .kit-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .kit-app__tile {
+    display: grid;
+    place-items: center;
+    width: 112px;
+    height: 112px;
+    overflow: hidden;
+    border: 2px solid #0b0b0c;
+    border-radius: 26px;
+    box-shadow: 4px 4px 0 0 #0b0b0c;
+  }
+  .kit-app__tile--logo svg path {
+    fill: currentColor !important;
+  }
+  .kit-app__logo {
+    width: 84px;
+    height: 84px;
+  }
+  .kit-app__color {
+    width: 100%;
+    height: 100%;
+  }
+  .kit-app__glyph {
+    width: 56px;
+    height: 56px;
+  }
+  .kit-app__name {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .apps__proof {
+    margin: 0;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 500;
+    color: #45454b;
+  }
+
+  .missions {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 56px 64px;
+  }
+  .missions__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .missions__item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 22px;
+    border: 2px solid #0b0b0c;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 4px 4px 0 0 #0b0b0c;
+  }
+  .missions__icon {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #0b0b0c;
+    border-radius: 999px;
+  }
+  .missions__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  .missions__name {
+    display: block;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .missions__text {
+    display: block;
+    margin-top: 4px;
+    font-size: 19px;
+    line-height: 1.3;
+    color: #3c3c42;
+  }
+  .missions__url {
+    position: absolute;
+    right: 64px;
+    bottom: 40px;
+  }
+
+  /* Launch post 1080×1350 -------------------------------------------------- */
+  .kit--post .kit-shape--circle {
+    width: 300px;
+    right: -150px;
+    top: 330px;
+  }
+  .kit--post .kit-shape--half {
+    width: 170px;
+    left: 420px;
+    bottom: -40px;
+  }
+  .kit--post .kit-shape--spark {
+    width: 80px;
+    top: 140px;
+    right: 70px;
+  }
+  .kit--post .kit-shape--ring,
+  .kit--post .kit-shape--square {
+    display: none;
+  }
+  .post {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 72px 72px 0;
+  }
+  .post__top {
+    display: flex;
+    gap: 12px;
+  }
+  .post__name {
+    margin: 12px 0 0;
+    font-size: 104px;
+    line-height: 0.95;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: transparent;
+    -webkit-text-stroke: 2.5px #0b0b0c;
+  }
+  .post__title {
+    margin: 0;
+    font-size: 58px;
+    line-height: 1.06;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  .post__cards {
+    display: grid;
+    gap: 22px;
+    margin-top: 6px;
+  }
+  .post__card {
+    padding: 24px 28px;
+    border: 2px solid #0b0b0c;
+    border-radius: 26px;
+    box-shadow: 6px 6px 0 0 #0b0b0c;
+  }
+  .post__q {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .post__a {
+    margin: 6px 0 0;
+    font-size: 26px;
+    line-height: 1.3;
+  }
+  .post__bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: auto;
+  }
+  .post__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin: 0 0 72px;
+    padding: 0;
+    list-style: none;
+    font-size: 26px;
+    font-weight: 500;
+    color: #3c3c42;
+  }
+  .post__stats strong {
+    display: block;
+    font-size: 60px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #0b0b0c;
+  }
+  .post__photo {
+    position: relative;
+    flex-shrink: 0;
+    width: 420px;
+    height: 480px;
+  }
+  .post__arch {
+    position: absolute;
+    inset: 0 0 -4px;
+    border: 2px solid #0b0b0c;
+    border-bottom: 0;
+    border-radius: 999px 999px 0 0;
+    background: #5ef1a5;
+  }
+  .post__img {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 470px;
+    height: auto;
+    translate: -50% 0;
+  }
+</style>

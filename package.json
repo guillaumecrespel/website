@@ -16,7 +16,8 @@
     "lint": "biome lint .",
     "format": "biome check --write .",
     "generate:assets": "tsx scripts/generate-assets.ts",
-    "generate:icons": "tsx scripts/generate-icons.ts"
+    "generate:icons": "tsx scripts/generate-icons.ts",
+    "generate:linkedin": "tsx scripts/generate-linkedin.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
