@@ -474,22 +474,6 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 
-details .when-open {
-  display: none;
-}
-
-details[open] .when-open {
-  display: inline;
-}
-
-details[open] .when-closed {
-  display: none;
-}
-
-details[open] .chevron {
-  transform: rotate(180deg);
-}
-
 /* Smoothly animate <details> height where supported. */
 @supports (interpolate-size: allow-keywords) {
   :root {
