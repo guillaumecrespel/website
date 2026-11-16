@@ -14,7 +14,11 @@ The site is deployed to [Fly.io](https://fly.io) on every push to `main`
 
 ## nginx behaviour (`deploy/nginx.conf`)
 
+- `www.guillaumecrespel.fr` answers `301` to `https://guillaumecrespel.fr` (path and query kept).
 - `/` answers `302` to `/fr/` or `/en/` from `Accept-Language` (`Vary: Accept-Language`).
+- Indexing hints for files that are not pages: the resume PDFs send
+  `Link: <…/{lang}/cv/>; rel="canonical"`, `llms*.txt` and `.vcf` send `X-Robots-Tag: noindex`
+  (still readable by anyone, just kept out of search results).
 - `/_astro/*` (hashed files) cached one year, immutable; HTML always revalidated.
 - gzip for text assets, security headers (`deploy/security-headers.conf`), custom `404.html`.
 - `/sw.js` is never cached: it is a kill switch that removes the cache-first service worker
