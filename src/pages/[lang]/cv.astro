@@ -38,7 +38,9 @@ const path = cvPath(lang);
 const title = t('meta.cvTitle');
 const description = t('meta.cvDescription', { years: stats.years });
 
-// Ongoing missions show the most; older ones are summarised (full detail stays online).
+// Achievements printed in the PDF: ongoing missions show the most, older ones
+// are summarised. The online page shows them all (.cv-screen-only), and is the
+// only place on the site with this detail (the home timeline links here).
 function achievementLimit(startDate: string, ongoing: boolean): number {
   if (ongoing) return 5;
   if (startDate >= '2020-01-01') return 4;
@@ -291,9 +293,9 @@ const jsonLd = graph([
         {
           detailed.map((exp) => {
             const p = period(exp);
-            const achievements = exp.achievements.slice(0, achievementLimit(exp.startDate, isOngoing(exp)));
+            const printed = achievementLimit(exp.startDate, isOngoing(exp));
             return (
-              <li class="cv-job">
+              <li id={`xp-${exp.id}`} class="cv-job">
                 <div class="cv-job__aside">
                   <img src={exp.company.logo} alt="" width="40" height="40" class="cv-job__logo" />
                   <p class="cv-job__dates">
@@ -308,12 +310,18 @@ const jsonLd = graph([
                     <strong>{exp.company.name}</strong> · {jobMeta(exp)}
                   </p>
                   <p class="cv-job__desc">{exp.description}</p>
-                  {achievements.length > 0 && (
+                  {exp.achievements.length > 0 && (
                     <ul class="cv-job__bullets">
-                      {achievements.map((item) => (
-                        <li>{item}</li>
+                      {exp.achievements.map((item, i) => (
+                        <li class:list={{ 'cv-screen-only': i >= printed }}>{item}</li>
                       ))}
                     </ul>
+                  )}
+                  {exp.skills.length > 0 && (
+                    <p class="cv-job__skills cv-screen-only">
+                      <strong>{t('experiences.skills')}</strong>
+                      {exp.skills.join(' · ')}
+                    </p>
                   )}
                   {exp.technologies.length > 0 && (
                     <p class="cv-job__stack">{exp.technologies.join(' · ')}</p>
@@ -333,11 +341,27 @@ const jsonLd = graph([
               {compact.map((exp) => {
                 const p = period(exp);
                 return (
-                  <li>
+                  <li id={`xp-${exp.id}`}>
                     <img src={exp.company.logo} alt="" width="24" height="24" />
                     <div>
                       <strong>{exp.position}</strong> · {exp.company.name}
                       <span class="cv-earlier__stack">{exp.technologies.slice(0, 6).join(' · ')}</span>
+                      <div class="cv-earlier__more cv-screen-only">
+                        <p class="cv-job__desc">{exp.description}</p>
+                        {exp.achievements.length > 0 && (
+                          <ul class="cv-job__bullets">
+                            {exp.achievements.map((item) => (
+                              <li>{item}</li>
+                            ))}
+                          </ul>
+                        )}
+                        {exp.skills.length > 0 && (
+                          <p class="cv-job__skills">
+                            <strong>{t('experiences.skills')}</strong>
+                            {exp.skills.join(' · ')}
+                          </p>
+                        )}
+                      </div>
                     </div>
                     <time datetime={exp.startDate.slice(0, 7)}>
                       {p.start} – {p.end}
@@ -861,12 +885,12 @@ const jsonLd = graph([
     line-height: 16px;
     color: var(--ink-2);
   }
-  .cv-earlier ul {
+  .cv-earlier > ul {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
-  .cv-earlier li {
+  .cv-earlier > ul > li {
     display: grid;
     grid-template-columns: 24px 1fr auto;
     gap: 12px;
@@ -894,6 +918,49 @@ const jsonLd = graph([
     font-size: 11px;
     color: var(--ink-2);
     white-space: nowrap;
+  }
+
+  /* Online-only detail: extra achievements, skills, earlier missions in full.
+     Hidden in print so the PDF keeps its length. */
+  .cv-job__skills {
+    margin-top: 8px;
+    font-size: 10.5px;
+    line-height: 16px;
+    color: var(--ink-2);
+  }
+  .cv-job__skills strong {
+    display: block;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .cv-earlier__more {
+    margin-bottom: 4px;
+  }
+  .cv-job,
+  .cv-earlier > ul > li {
+    scroll-margin-top: 88px;
+  }
+  .cv-job:target,
+  .cv-earlier > ul > li:target {
+    animation: cv-target-flash 1.6s ease-out;
+    border-radius: 8px;
+  }
+  @keyframes cv-target-flash {
+    0%,
+    40% {
+      background: color-mix(in oklab, var(--main) 25%, transparent);
+      box-shadow: 0 0 0 10px color-mix(in oklab, var(--main) 25%, transparent);
+    }
+  }
+  @media screen {
+    .cv-earlier > ul > li {
+      align-items: start;
+    }
+  }
+  @media print {
+    .cv-screen-only {
+      display: none;
+    }
   }
 
   .cv-foot {
